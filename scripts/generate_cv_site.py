@@ -31,6 +31,7 @@ SECTION_DEFINITIONS = (
 )
 
 SECTION_KEYS = tuple(section for section, _ in SECTION_DEFINITIONS)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 FIRST_PAGE_BODY_LIMIT = 1015
 FOLLOWING_PAGE_BODY_LIMIT = 1050
@@ -154,6 +155,20 @@ def write_profile_image(source: Path, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(source) as image:
         image.convert("RGB").save(output, "JPEG", quality=92)
+
+
+def copy_font_assets(out: Path) -> None:
+    source = PROJECT_ROOT / "assets" / "fonts"
+    target = out / "assets" / "fonts"
+
+    if not source.exists():
+        print(f"Warning: font assets not found at {source}", file=sys.stderr)
+        return
+
+    if source.resolve() == target.resolve():
+        return
+
+    shutil.copytree(source, target, dirs_exist_ok=True)
 
 
 def sectionize(text: str) -> tuple[dict[str, list[LineRecord]], int]:
@@ -343,16 +358,22 @@ def normalize_item(raw_item: Any, section: str, index: int, errors: list[str]) -
 
     page = raw_item.get("page")
     if page not in (None, ""):
-        if isinstance(page, bool):
-            errors.append(f"`{path}.page` debe ser un número entero positivo.")
+        if isinstance(page, int) and not isinstance(page, bool):
+            page_number = page
+        elif isinstance(page, str) and page.isdigit():
+            page_number = int(page)
         else:
-            try:
-                page_number = int(page)
-                if page_number < 1:
-                    raise ValueError
-                normalized["page"] = page_number
-            except (TypeError, ValueError):
+            errors.append(f"`{path}.page` debe ser un número entero positivo.")
+            page_number = None
+
+        if page_number is not None:
+            if page_number < 1:
                 errors.append(f"`{path}.page` debe ser un número entero positivo.")
+            else:
+                normalized["page"] = page_number
+
+    if "bullet" in raw_item and "bullets" not in raw_item:
+        errors.append(f"`{path}.bullet` no es válido; usa `bullets` como lista.")
 
     return normalized
 
@@ -516,12 +537,32 @@ def render_inline(value: Any) -> str:
     for match in URL_RE.finditer(text):
         rendered.append(esc(text[position : match.start()]))
         url_text = match.group("url")
+        trailing = ""
+        while url_text and url_text[-1] in ".,;:":
+            trailing = url_text[-1] + trailing
+            url_text = url_text[:-1]
+
         href = url_text if url_text.startswith(("http://", "https://")) else f"https://{url_text}"
-        rendered.append(f'<a href="{esc(href)}">{esc(url_text)}</a>')
+        rendered.append(f'<a href="{esc(href)}">{esc(url_text)}</a>{esc(trailing)}')
         position = match.end()
 
     rendered.append(esc(text[position:]))
     return "".join(rendered)
+
+
+def render_contact(data: dict[str, Any]) -> str:
+    parts = []
+    phone = compact_spaces(data.get("phone", ""))
+    email = compact_spaces(data.get("email", ""))
+
+    if phone:
+        tel = re.sub(r"(?!^)[^\d]", "", phone)
+        parts.append(f'<a href="tel:{esc(tel)}">{esc(phone)}</a>')
+
+    if email:
+        parts.append(f'<a href="mailto:{esc(email)}">{esc(email)}</a>')
+
+    return ", ".join(parts)
 
 
 def render_items(items: list[dict[str, Any]], section: str) -> str:
@@ -532,9 +573,13 @@ def render_items(items: list[dict[str, Any]], section: str) -> str:
             bullets = "<ul>" + "".join(f"<li>{render_inline(bullet)}</li>" for bullet in item["bullets"]) + "</ul>"
 
         meta = f' <span class="meta">{esc(item["meta"])}</span>' if item.get("meta") else ""
+        classes = ["cv-item", f"cv-item--{section}"]
+        if bullets:
+            classes.append("cv-item--with-bullets")
+
         rendered.append(
             f"""
-            <article class="cv-item cv-item--{section}">
+            <article class="{esc(' '.join(classes))}">
               <time>{esc(format_date(item["date"]))}</time>
               <div class="item-body">
                 <h3>{esc(item["title"])}{meta}</h3>
@@ -566,7 +611,7 @@ def render_section(data: dict[str, Any], section: str, title: str, page_number: 
 
 def render_pages(data: dict[str, Any], profile: str) -> str:
     title = f"{data['name']}, {data['title']}" if data.get("title") else data["name"]
-    contact = ", ".join(part for part in [data.get("phone"), data.get("email")] if part)
+    contact = render_contact(data)
     page_count = int(data.get("page_count") or 1)
     pages = []
 
@@ -577,7 +622,7 @@ def render_pages(data: dict[str, Any], profile: str) -> str:
           <header class="cv-header">
             <div>
               <h1>{esc(title)}</h1>
-              <p class="contact">{esc(contact)}</p>
+              <p class="contact">{contact}</p>
             </div>
             {profile}
           </header>
@@ -595,13 +640,22 @@ def render_pages(data: dict[str, Any], profile: str) -> str:
     return "\n".join(pages)
 
 
-def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -> str:
+def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str | None) -> str:
     profile = (
         f'<img class="profile-photo" src="{esc(profile_path)}" alt="Foto de {esc(data["name"])}" />'
         if profile_path
         else ""
     )
     page_count = int(data.get("page_count") or 1)
+    download_button = (
+        f"""
+        <a class="icon-btn" href="{esc(pdf_path)}" download aria-label="Descargar PDF" title="Descargar PDF">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg>
+        </a>
+        """
+        if pdf_path
+        else ""
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -760,6 +814,7 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
       .cv-page {{
         width: var(--page-width);
         min-height: var(--page-height);
+        height: var(--page-height);
         zoom: calc(var(--zoom) / 100);
         margin: 0;
         padding: 20px 60px 50px;
@@ -769,6 +824,9 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         font-family: "EB Garamond CV", "Times New Roman", Times, serif;
         font-size: 12px;
         line-height: 1.24;
+        font-kerning: normal;
+        text-rendering: geometricPrecision;
+        font-feature-settings: "kern" 1, "liga" 1;
       }}
 
       .cv-header {{
@@ -776,33 +834,38 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         min-height: 84px;
         display: grid;
         place-items: center;
-        border-bottom: 1.3px solid var(--rule);
+        border-bottom: 1pt solid var(--rule);
         padding-bottom: 0;
         margin-bottom: 7px;
       }}
 
       .cv-header > div {{
-        transform: translateY(4px);
+        transform: translateY(1px);
       }}
 
       .cv-header h1 {{
         margin: 0 58px 14px;
         text-align: center;
-        font-size: 16.5px;
+        font-size: 16.55px;
         line-height: 1.1;
         white-space: nowrap;
-        transform: scaleX(0.86);
       }}
 
       .contact {{
         margin: 0;
         text-align: center;
         font-size: 12px;
+        font-weight: 500;
+      }}
+
+      .contact a {{
+        color: inherit;
+        text-decoration: none;
       }}
 
       .profile-photo {{
         position: absolute;
-        right: 4px;
+        right: 5px;
         top: 0;
         width: 80.5px;
         height: 80.5px;
@@ -810,13 +873,13 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
       }}
 
       .cv-section {{
-        border-top: 1.3px solid var(--rule);
+        border-top: 1pt solid var(--rule);
         margin-top: 11px;
         padding-top: 9px;
       }}
 
       .cv-page + .cv-page {{
-        padding-top: 42px;
+        padding-top: 40px;
       }}
 
       .cv-header + .cv-section {{
@@ -834,7 +897,7 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
       .section-title {{
         margin: 0 0 13px;
         font-size: 11.35px;
-        font-weight: 400;
+        font-weight: 500;
         letter-spacing: 0.12em;
         line-height: 1.16;
       }}
@@ -858,10 +921,23 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         font-weight: 500;
       }}
 
+      .item-body {{
+        min-width: 0;
+      }}
+
+      .cv-item--experience.cv-item--with-bullets {{
+        margin-bottom: 19px;
+      }}
+
+      .cv-item--experience.cv-item--with-bullets .item-body h3 {{
+        margin-bottom: 9px;
+      }}
+
       .cv-item--education h3 {{
         display: flex;
         gap: 16px;
         justify-content: space-between;
+        align-items: baseline;
       }}
 
       .cv-item--education {{
@@ -876,7 +952,7 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
 
       ul {{
         margin: 0;
-        padding-left: 26px;
+        padding-left: 30px;
       }}
 
       li {{
@@ -890,8 +966,18 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         text-underline-offset: 1px;
       }}
 
+      .cv-page .contact a {{
+        text-decoration: none;
+      }}
+
+      .cv-item--awards .item-body a {{
+        text-decoration: none;
+      }}
+
       .cv-item--awards .item-body h3 {{
         font-size: 14.55px;
+        max-width: 380px;
+        margin-bottom: 7px;
       }}
 
       .cv-footer {{
@@ -917,7 +1003,8 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         .toolbar {{ display: none; }}
         .viewer {{ height: auto; overflow: visible; background: #ffffff; }}
         .pages {{ display: block; padding: 0; width: auto; }}
-        .cv-page {{ zoom: 1; width: var(--page-width); min-height: var(--page-height); box-shadow: none; page-break-after: always; }}
+        .cv-page {{ zoom: 1; width: var(--page-width); min-height: var(--page-height); height: var(--page-height); box-shadow: none; }}
+        .cv-page:not(:last-child) {{ break-after: page; page-break-after: always; }}
       }}
     </style>
   </head>
@@ -951,9 +1038,7 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h5V5H5v7h2V7zm10 0v5h2V5h-7v2h5zm0 10h-5v2h7v-7h-2v5zM7 12H5v7h7v-2H7v-5z"></path></svg>
         </button>
         <div class="divider" aria-hidden="true"></div>
-        <a class="icon-btn" href="{esc(pdf_path)}" download aria-label="Descargar PDF" title="Descargar PDF">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg>
-        </a>
+        {download_button}
         <button class="icon-btn" type="button" aria-label="Imprimir" onclick="window.print()">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8V3H7v5H5a2 2 0 0 0-2 2v6h4v5h10v-5h4v-6a2 2 0 0 0-2-2h-2zm-8-3h6v3H9V5zm6 14H9v-5h6v5zm4-5h-2v-2H7v2H5v-4h14v4z"></path></svg>
         </button>
@@ -1072,6 +1157,8 @@ def main() -> None:
     out = args.out.resolve()
     assets = out / "assets"
     assets.mkdir(parents=True, exist_ok=True)
+    copy_font_assets(out)
+    data_dir = args.data.resolve().parent if args.data else None
 
     try:
         if args.data:
@@ -1088,6 +1175,12 @@ def main() -> None:
     if args.pdf and args.pdf.resolve() != pdf_output.resolve():
         pdf = args.pdf.resolve()
         shutil.copy2(pdf, pdf_output)
+    elif not args.pdf and data_dir:
+        pdf_source = data_dir / args.pdf_name
+        if pdf_source.exists() and pdf_source.resolve() != pdf_output.resolve():
+            shutil.copy2(pdf_source, pdf_output)
+
+    pdf_rel = f"./{args.pdf_name}" if pdf_output.exists() else None
 
     profile_rel = None
     profile_output = assets / "profile.jpg"
@@ -1100,6 +1193,12 @@ def main() -> None:
         extracted = extract_profile_image(args.pdf.resolve(), profile_output)
         if extracted:
             profile_rel = "./assets/profile.jpg"
+    elif data_dir:
+        profile_source = data_dir / "assets" / "profile.jpg"
+        if profile_source.exists():
+            if profile_source.resolve() != profile_output.resolve():
+                write_profile_image(profile_source, profile_output)
+            profile_rel = "./assets/profile.jpg"
     else:
         profile_rel = None
 
@@ -1110,7 +1209,7 @@ def main() -> None:
         wrote_data = True
 
     render_data = paginate_manual(data) if args.manual_pages else paginate_auto(data)
-    html_output = render_html(render_data, profile_rel, f"./{args.pdf_name}")
+    html_output = render_html(render_data, profile_rel, pdf_rel)
     (out / "index.html").write_text(html_output, encoding="utf-8")
 
     print(f"Generated {out / 'index.html'}")
