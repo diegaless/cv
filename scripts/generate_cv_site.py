@@ -63,6 +63,7 @@ DATE_RE = re.compile(
 
 EMAIL_RE = re.compile(r"[\w.+-]+@[\w.-]+\.\w+")
 PHONE_RE = re.compile(r"\+?\d[\d\s]{6,}\d")
+URL_RE = re.compile(r"(?P<url>(?:https?://)?(?:www\.)?(?:bit\.ly|[\w.-]+\.\w{2,})/[^\s)]+)")
 
 
 def run_command(args: list[str], cwd: Path | None = None) -> str:
@@ -140,6 +141,19 @@ def extract_profile_image(pdf: Path, output: Path) -> str | None:
         with Image.open(image_path) as image:
             image.convert("RGB").save(output, quality=92)
         return output.as_posix()
+
+
+def write_profile_image(source: Path, output: Path) -> None:
+    """Write any supported image input as a browser-friendly JPEG."""
+    try:
+        from PIL import Image
+    except Exception:
+        shutil.copy2(source, output)
+        return
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(source) as image:
+        image.convert("RGB").save(output, "JPEG", quality=92)
 
 
 def sectionize(text: str) -> tuple[dict[str, list[LineRecord]], int]:
@@ -367,9 +381,15 @@ def normalize_data(data: dict[str, Any]) -> dict[str, Any]:
             continue
 
         items = []
+        previous_source_page = None
         for index, raw_item in enumerate(section_value):
             item = normalize_item(raw_item, section, index, errors)
             if item is not None:
+                source_page = raw_item.get("_source_page") if isinstance(raw_item, dict) else None
+                if isinstance(source_page, int):
+                    if previous_source_page is not None and source_page > previous_source_page:
+                        item["page_break_before"] = True
+                    previous_source_page = source_page
                 items.append(item)
         normalized[section] = items
 
@@ -484,20 +504,40 @@ def esc(value: Any) -> str:
     return html.escape(str(value or ""), quote=True)
 
 
+def format_date(value: Any) -> str:
+    return re.sub(r"\s+-\s+", " — ", str(value or ""))
+
+
+def render_inline(value: Any) -> str:
+    text = str(value or "")
+    rendered = []
+    position = 0
+
+    for match in URL_RE.finditer(text):
+        rendered.append(esc(text[position : match.start()]))
+        url_text = match.group("url")
+        href = url_text if url_text.startswith(("http://", "https://")) else f"https://{url_text}"
+        rendered.append(f'<a href="{esc(href)}">{esc(url_text)}</a>')
+        position = match.end()
+
+    rendered.append(esc(text[position:]))
+    return "".join(rendered)
+
+
 def render_items(items: list[dict[str, Any]], section: str) -> str:
     rendered = []
     for item in items:
         bullets = ""
         if item.get("bullets"):
-            bullets = "<ul>" + "".join(f"<li>{esc(bullet)}</li>" for bullet in item["bullets"]) + "</ul>"
+            bullets = "<ul>" + "".join(f"<li>{render_inline(bullet)}</li>" for bullet in item["bullets"]) + "</ul>"
 
-        meta = f'<span class="meta">{esc(item["meta"])}</span>' if item.get("meta") else ""
+        meta = f' <span class="meta">{esc(item["meta"])}</span>' if item.get("meta") else ""
         rendered.append(
             f"""
             <article class="cv-item cv-item--{section}">
-              <time>{esc(item["date"])}</time>
+              <time>{esc(format_date(item["date"]))}</time>
               <div class="item-body">
-                <h3>{esc(item["title"])} {meta}</h3>
+                <h3>{esc(item["title"])}{meta}</h3>
                 {bullets}
               </div>
             </article>
@@ -583,6 +623,30 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         --paper: #ffffff;
         --ink: #1f1f1f;
         --rule: #1e1e1e;
+      }}
+
+      @font-face {{
+        font-family: "EB Garamond CV";
+        src: url("./assets/fonts/EBGaramond-Regular.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }}
+
+      @font-face {{
+        font-family: "EB Garamond CV";
+        src: url("./assets/fonts/EBGaramond-Medium.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+      }}
+
+      @font-face {{
+        font-family: "EB Garamond CV";
+        src: url("./assets/fonts/EBGaramond-Bold.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
       }}
 
       * {{ box-sizing: border-box; }}
@@ -698,52 +762,61 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         min-height: var(--page-height);
         zoom: calc(var(--zoom) / 100);
         margin: 0;
-        padding: 22px 60px 50px;
+        padding: 20px 60px 50px;
         background: var(--paper);
         color: var(--ink);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.32);
-        font-family: "Times New Roman", Times, serif;
-        font-size: 11.3px;
+        font-family: "EB Garamond CV", "Times New Roman", Times, serif;
+        font-size: 12px;
         line-height: 1.24;
       }}
 
       .cv-header {{
         position: relative;
-        min-height: 74px;
+        min-height: 84px;
         display: grid;
         place-items: center;
-        border-bottom: 1.5px solid var(--rule);
-        padding-bottom: 5px;
-        margin-bottom: 14px;
+        border-bottom: 1.3px solid var(--rule);
+        padding-bottom: 0;
+        margin-bottom: 7px;
+      }}
+
+      .cv-header > div {{
+        transform: translateY(4px);
       }}
 
       .cv-header h1 {{
-        margin: 0 116px 14px 58px;
+        margin: 0 58px 14px;
         text-align: center;
-        font-size: 16px;
+        font-size: 16.5px;
         line-height: 1.1;
         white-space: nowrap;
+        transform: scaleX(0.86);
       }}
 
       .contact {{
         margin: 0;
         text-align: center;
-        font-size: 12.5px;
+        font-size: 12px;
       }}
 
       .profile-photo {{
         position: absolute;
         right: 4px;
         top: 0;
-        width: 82px;
-        height: 82px;
+        width: 80.5px;
+        height: 80.5px;
         object-fit: cover;
       }}
 
       .cv-section {{
-        border-top: 1.5px solid var(--rule);
+        border-top: 1.3px solid var(--rule);
         margin-top: 11px;
-        padding-top: 7px;
+        padding-top: 9px;
+      }}
+
+      .cv-page + .cv-page {{
+        padding-top: 42px;
       }}
 
       .cv-header + .cv-section {{
@@ -760,28 +833,29 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
 
       .section-title {{
         margin: 0 0 13px;
-        font-size: 11.8px;
+        font-size: 11.35px;
         font-weight: 400;
-        letter-spacing: 0.34em;
+        letter-spacing: 0.12em;
+        line-height: 1.16;
       }}
 
       .cv-item {{
         display: grid;
-        grid-template-columns: 188px 1fr;
+        grid-template-columns: 150px 1fr;
         column-gap: 18px;
-        margin-bottom: 12px;
+        margin-bottom: 24px;
       }}
 
       .cv-item time {{
-        font-size: 11.3px;
+        font-size: 12px;
         white-space: nowrap;
       }}
 
       .item-body h3 {{
         margin: 0 0 4px;
-        font-size: 13.4px;
+        font-size: 14.55px;
         line-height: 1.15;
-        font-weight: 700;
+        font-weight: 500;
       }}
 
       .cv-item--education h3 {{
@@ -790,8 +864,12 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
         justify-content: space-between;
       }}
 
+      .cv-item--education {{
+        margin-bottom: 22.75px;
+      }}
+
       .meta {{
-        font-size: 11.3px;
+        font-size: 12px;
         font-weight: 400;
         white-space: nowrap;
       }}
@@ -802,11 +880,18 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
       }}
 
       li {{
-        margin: 0 0 1px;
+        margin: 0 0 0;
+      }}
+
+      .cv-page a {{
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-thickness: 0.8px;
+        text-underline-offset: 1px;
       }}
 
       .cv-item--awards .item-body h3 {{
-        font-size: 13.4px;
+        font-size: 14.55px;
       }}
 
       .cv-footer {{
@@ -827,11 +912,12 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
       }}
 
       @media print {{
+        @page {{ size: A4; margin: 0; }}
         body {{ background: #ffffff; overflow: visible; }}
         .toolbar {{ display: none; }}
         .viewer {{ height: auto; overflow: visible; background: #ffffff; }}
         .pages {{ display: block; padding: 0; width: auto; }}
-        .cv-page {{ zoom: 1; width: auto; min-height: 0; box-shadow: none; page-break-after: always; }}
+        .cv-page {{ zoom: 1; width: var(--page-width); min-height: var(--page-height); box-shadow: none; page-break-after: always; }}
       }}
     </style>
   </head>
@@ -908,7 +994,7 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str) -
       function fitToWidth() {{
         const available = Math.max(viewer.clientWidth - 120, 320);
         const fitZoom = Math.round((available / pageBaseWidth) * 100);
-        zoomIndex = nearestZoomIndex(Math.min(Math.max(fitZoom, zoomSteps[0]), zoomSteps.at(-1)));
+        zoomIndex = nearestZoomIndex(Math.min(Math.max(fitZoom, zoomSteps[0]), zoomSteps[zoomSteps.length - 1]));
         setZoom(zoomSteps[zoomIndex]);
         viewer.scrollLeft = 0;
       }}
@@ -1006,7 +1092,7 @@ def main() -> None:
     profile_rel = None
     profile_output = assets / "profile.jpg"
     if args.photo:
-        shutil.copy2(args.photo, profile_output)
+        write_profile_image(args.photo, profile_output)
         profile_rel = "./assets/profile.jpg"
     elif profile_output.exists():
         profile_rel = "./assets/profile.jpg"

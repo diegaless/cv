@@ -20,6 +20,30 @@
         --rule: #1e1e1e;
       }
 
+      @font-face {
+        font-family: "EB Garamond CV";
+        src: url("./assets/fonts/EBGaramond-Regular.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "EB Garamond CV";
+        src: url("./assets/fonts/EBGaramond-Medium.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "EB Garamond CV";
+        src: url("./assets/fonts/EBGaramond-Bold.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+      }
+
       * { box-sizing: border-box; }
 
       html,
@@ -133,52 +157,61 @@
         min-height: var(--page-height);
         zoom: calc(var(--zoom) / 100);
         margin: 0;
-        padding: 22px 60px 50px;
+        padding: 20px 60px 50px;
         background: var(--paper);
         color: var(--ink);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.32);
-        font-family: "Times New Roman", Times, serif;
-        font-size: 11.3px;
+        font-family: "EB Garamond CV", "Times New Roman", Times, serif;
+        font-size: 12px;
         line-height: 1.24;
       }
 
       .cv-header {
         position: relative;
-        min-height: 74px;
+        min-height: 84px;
         display: grid;
         place-items: center;
-        border-bottom: 1.5px solid var(--rule);
-        padding-bottom: 5px;
-        margin-bottom: 14px;
+        border-bottom: 1.3px solid var(--rule);
+        padding-bottom: 0;
+        margin-bottom: 7px;
+      }
+
+      .cv-header > div {
+        transform: translateY(4px);
       }
 
       .cv-header h1 {
-        margin: 0 116px 14px 58px;
+        margin: 0 58px 14px;
         text-align: center;
-        font-size: 16px;
+        font-size: 16.5px;
         line-height: 1.1;
         white-space: nowrap;
+        transform: scaleX(0.86);
       }
 
       .contact {
         margin: 0;
         text-align: center;
-        font-size: 12.5px;
+        font-size: 12px;
       }
 
       .profile-photo {
         position: absolute;
         right: 4px;
         top: 0;
-        width: 82px;
-        height: 82px;
+        width: 80.5px;
+        height: 80.5px;
         object-fit: cover;
       }
 
       .cv-section {
-        border-top: 1.5px solid var(--rule);
+        border-top: 1.3px solid var(--rule);
         margin-top: 11px;
-        padding-top: 7px;
+        padding-top: 9px;
+      }
+
+      .cv-page + .cv-page {
+        padding-top: 42px;
       }
 
       .cv-header + .cv-section {
@@ -195,28 +228,29 @@
 
       .section-title {
         margin: 0 0 13px;
-        font-size: 11.8px;
+        font-size: 11.35px;
         font-weight: 400;
-        letter-spacing: 0.34em;
+        letter-spacing: 0.12em;
+        line-height: 1.16;
       }
 
       .cv-item {
         display: grid;
-        grid-template-columns: 188px 1fr;
+        grid-template-columns: 150px 1fr;
         column-gap: 18px;
-        margin-bottom: 12px;
+        margin-bottom: 24px;
       }
 
       .cv-item time {
-        font-size: 11.3px;
+        font-size: 12px;
         white-space: nowrap;
       }
 
       .item-body h3 {
         margin: 0 0 4px;
-        font-size: 13.4px;
+        font-size: 14.55px;
         line-height: 1.15;
-        font-weight: 700;
+        font-weight: 500;
       }
 
       .cv-item--education h3 {
@@ -225,8 +259,12 @@
         justify-content: space-between;
       }
 
+      .cv-item--education {
+        margin-bottom: 22.75px;
+      }
+
       .meta {
-        font-size: 11.3px;
+        font-size: 12px;
         font-weight: 400;
         white-space: nowrap;
       }
@@ -237,11 +275,18 @@
       }
 
       li {
-        margin: 0 0 1px;
+        margin: 0 0 0;
+      }
+
+      .cv-page a {
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-thickness: 0.8px;
+        text-underline-offset: 1px;
       }
 
       .cv-item--awards .item-body h3 {
-        font-size: 13.4px;
+        font-size: 14.55px;
       }
 
       .cv-footer {
@@ -262,11 +307,12 @@
       }
 
       @media print {
+        @page { size: A4; margin: 0; }
         body { background: #ffffff; overflow: visible; }
         .toolbar { display: none; }
         .viewer { height: auto; overflow: visible; background: #ffffff; }
         .pages { display: block; padding: 0; width: auto; }
-        .cv-page { zoom: 1; width: auto; min-height: 0; box-shadow: none; page-break-after: always; }
+        .cv-page { zoom: 1; width: var(--page-width); min-height: var(--page-height); box-shadow: none; page-break-after: always; }
       }
     </style>
   </head>
@@ -327,63 +373,63 @@
             <h2 class="section-title">EXPERIENCIA LABORAL</h2>
             
             <article class="cv-item cv-item--experience">
-              <time>Oct 2023 - Presente</time>
+              <time>Oct 2023 — Presente</time>
               <div class="item-body">
-                <h3>Docente FP Grado Superior, Cesur </h3>
+                <h3>Docente FP Grado Superior, Cesur</h3>
                 <ul><li>Docente de los modulos DAM, DAW y ASIR.</li></ul>
               </div>
             </article>
             
 
             <article class="cv-item cv-item--experience">
-              <time>Sep 2023 - Presente</time>
+              <time>Sep 2023 — Presente</time>
               <div class="item-body">
-                <h3>Docente FP Grado Superior y Grado Medio, Colegio Miralmonte </h3>
+                <h3>Docente FP Grado Superior y Grado Medio, Colegio Miralmonte</h3>
                 <ul><li>Docente de los módulos DAM y SMR.</li><li>Clases impartidas a grupos bilingües.</li><li>Tutor 2°DAM, coordinador FCT.</li></ul>
               </div>
             </article>
             
 
             <article class="cv-item cv-item--experience">
-              <time>Mayo 2023 - Ago 2023</time>
+              <time>Mayo 2023 — Ago 2023</time>
               <div class="item-body">
-                <h3>Docente Titular de Grado Superior, Universae </h3>
+                <h3>Docente Titular de Grado Superior, Universae</h3>
                 <ul><li>Responsable de crear material didáctico e impartir clases en las titulaciones de DAW, DAM y ASIR.</li></ul>
               </div>
             </article>
             
 
             <article class="cv-item cv-item--experience">
-              <time>Ene 2023 - Mayo 2023</time>
+              <time>Ene 2023 — Mayo 2023</time>
               <div class="item-body">
-                <h3>Profesor de educación secundaria Bilingüe, CEIPS Torre Salinas </h3>
+                <h3>Profesor de educación secundaria Bilingüe, CEIPS Torre Salinas</h3>
                 
               </div>
             </article>
             
 
             <article class="cv-item cv-item--experience">
-              <time>Feb 2021 - Abr 2022</time>
+              <time>Feb 2021 — Abr 2022</time>
               <div class="item-body">
-                <h3>Freelance Ingeniero Software </h3>
+                <h3>Freelance Ingeniero Software</h3>
                 <ul><li>Numerosos proyectos de diversa índole.</li></ul>
               </div>
             </article>
             
 
             <article class="cv-item cv-item--experience">
-              <time>Ene 2021 - Feb 2022</time>
+              <time>Ene 2021 — Feb 2022</time>
               <div class="item-body">
-                <h3>Profesor Particular </h3>
+                <h3>Profesor Particular</h3>
                 <ul><li>Enfocadas al alumnado de Bachillerato, FP, Universidad, Master.</li><li>Flexibles y adaptadas a los requisitos solicitados por el alumno.</li></ul>
               </div>
             </article>
             
 
             <article class="cv-item cv-item--experience">
-              <time>Ene 2020 - Abr 2021</time>
+              <time>Ene 2020 — Abr 2021</time>
               <div class="item-body">
-                <h3>Ingeniero Software Junior, Tecnoavanz S.L </h3>
+                <h3>Ingeniero Software Junior, Tecnoavanz S.L</h3>
                 <ul><li>Startup Tecnológica subsidiaria de Orange.</li><li>Construí características clave del CRM, como desarrollador Symfony, dentro de un equipo ágil de 5 personas.</li><li>Implementación de reglas de negocio, para mejorar la calidad de los datos de los clientes.</li></ul>
               </div>
             </article>
@@ -394,7 +440,7 @@
             <h2 class="section-title">FORMACIÓN</h2>
             
             <article class="cv-item cv-item--education">
-              <time>Oct 2022 - Jun 2023</time>
+              <time>Oct 2022 — Jun 2023</time>
               <div class="item-body">
                 <h3>Máster Universitario en Formación del Profesorado, VIU <span class="meta">Media de 8.9</span></h3>
                 
@@ -403,27 +449,27 @@
             
 
             <article class="cv-item cv-item--education">
-              <time>Sep 2014 - Jul 2019</time>
+              <time>Sep 2014 — Jul 2019</time>
               <div class="item-body">
-                <h3>Ingeniería Informática Mención en Software, Universidad Murcia </h3>
+                <h3>Ingeniería Informática Mención en Software, Universidad Murcia</h3>
                 
               </div>
             </article>
             
 
             <article class="cv-item cv-item--education">
-              <time>Jul 2022 - Jul 2022</time>
+              <time>Jul 2022 — Jul 2022</time>
               <div class="item-body">
-                <h3>Overall CEFR Grade English C, British Council Aptis </h3>
+                <h3>Overall CEFR Grade English C, British Council Aptis</h3>
                 
               </div>
             </article>
             
 
             <article class="cv-item cv-item--education">
-              <time>Ene 2022 - Mayo 2022</time>
+              <time>Ene 2022 — Mayo 2022</time>
               <div class="item-body">
-                <h3>Lengua de Signos Española A2, Lengua de Signos </h3>
+                <h3>Lengua de Signos Española A2, Lengua de Signos</h3>
                 
               </div>
             </article>
@@ -436,16 +482,16 @@
             <article class="cv-item cv-item--awards">
               <time>Ene 2023</time>
               <div class="item-body">
-                <h3>3 Cartas de recomendación expedidas por profesores titulados de la Universidad de Murcia </h3>
-                <ul><li>3 cartas de recomendación redactadas y firmadas por profesores titulados de la Universidad de Murcia, donde se da muestra de mis conocimientos, cualidades e hitos alcanzados en mi paso por la facultad de Informática. (adjuntadas en el propio correo o en el siguiente link: bit.ly/4deEQHl )</li></ul>
+                <h3>3 Cartas de recomendación expedidas por profesores titulados de la Universidad de Murcia</h3>
+                <ul><li>3 cartas de recomendación redactadas y firmadas por profesores titulados de la Universidad de Murcia, donde se da muestra de mis conocimientos, cualidades e hitos alcanzados en mi paso por la facultad de Informática. (adjuntadas en el propio correo o en el siguiente link: <a href="https://bit.ly/4deEQHl">bit.ly/4deEQHl</a> )</li></ul>
               </div>
             </article>
             
 
             <article class="cv-item cv-item--awards">
-              <time>Mar 2021 - Ago 2021</time>
+              <time>Mar 2021 — Ago 2021</time>
               <div class="item-body">
-                <h3>Finalista Lanzadera, Marina de Empresas </h3>
+                <h3>Finalista Lanzadera, Marina de Empresas</h3>
                 <ul><li>Finalista en Lanzadera (2021), la mayor aceleradora e incubadora de startups a nivel nacional, con una iniciativa de corte educativo, realizando un pitch presencial ante el jurado en la sede de Lanzadera. Siendo finalista junto a otros 30 proyectos restantes de entre los 2500 iniciales.</li></ul>
               </div>
             </article>
@@ -462,9 +508,9 @@
             
             
             <article class="cv-item cv-item--awards">
-              <time>Ago 2021 - Dic 2021</time>
+              <time>Ago 2021 — Dic 2021</time>
               <div class="item-body">
-                <h3>Entrepreneurship World Cup (EWC) - Preseleccionado </h3>
+                <h3>Entrepreneurship World Cup (EWC) - Preseleccionado</h3>
                 <ul><li>Preseleccionado en la mayor iniciativa de emprendimiento a nivel global, Entrepreneurship World Cup (EWC), con una iniciativa de corte educativo.</li></ul>
               </div>
             </article>
@@ -473,7 +519,7 @@
             <article class="cv-item cv-item--awards">
               <time>Dic 2021</time>
               <div class="item-body">
-                <h3>NextCarm (Next Generation) - Aprobación y remisión del proyecto por la Región de Murcia al Gobierno Central. </h3>
+                <h3>NextCarm (Next Generation) - Aprobación y remisión del proyecto por la Región de Murcia al Gobierno Central.</h3>
                 <ul><li>Propuesta integrada y aprobada en el documento conjunto de iniciativas de la Región de Murcia que se remitió al Gobierno de España para su evaluación y financiación a través de los fondos Next Generation.</li></ul>
               </div>
             </article>
@@ -513,7 +559,7 @@
       function fitToWidth() {
         const available = Math.max(viewer.clientWidth - 120, 320);
         const fitZoom = Math.round((available / pageBaseWidth) * 100);
-        zoomIndex = nearestZoomIndex(Math.min(Math.max(fitZoom, zoomSteps[0]), zoomSteps.at(-1)));
+        zoomIndex = nearestZoomIndex(Math.min(Math.max(fitZoom, zoomSteps[0]), zoomSteps[zoomSteps.length - 1]));
         setZoom(zoomSteps[zoomIndex]);
         viewer.scrollLeft = 0;
       }
