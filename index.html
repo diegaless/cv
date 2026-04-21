@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diego Ayala Bernal | CV</title>
+    <meta name="description" content="CV web generado desde PDF para Diego Ayala Bernal." />
+    <style>
+      :root {
+        --toolbar-height: 58px;
+        --toolbar-bg: #333333;
+        --viewer-bg: #2d2d2d;
+        --text: #f2f2f2;
+        --muted: #c7c7c7;
+        --page-width: 794px;
+        --page-height: 1123px;
+        --zoom: 129;
+        --paper: #ffffff;
+        --ink: #1f1f1f;
+        --rule: #1e1e1e;
+      }
+
+      * { box-sizing: border-box; }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--viewer-bg);
+        color: var(--text);
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      .toolbar {
+        height: var(--toolbar-height);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px;
+        background: var(--toolbar-bg);
+        border-bottom: 1px solid #404040;
+      }
+
+      .toolbar-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .toolbar-group.center { justify-content: center; }
+      .toolbar-group.right { justify-content: flex-end; }
+
+      .icon-btn,
+      .zoom-display,
+      .page-display {
+        height: 32px;
+        min-width: 32px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text);
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        line-height: 1;
+      }
+
+      .icon-btn { cursor: pointer; }
+      .icon-btn:hover { background: rgba(255, 255, 255, 0.08); }
+      .icon-btn svg { width: 18px; height: 18px; display: block; fill: currentColor; }
+
+      .title {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .page-display { gap: 6px; padding: 0 10px; }
+      .current-page {
+        background: #111111;
+        min-width: 28px;
+        min-height: 28px;
+        padding: 4px 8px;
+        border-radius: 2px;
+        font-weight: 600;
+      }
+
+      .page-total { color: var(--muted); }
+      .zoom-display {
+        background: #202020;
+        border: 1px solid #4a4a4a;
+        min-width: 62px;
+        padding: 0 10px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .divider { width: 1px; height: 26px; background: rgba(255, 255, 255, 0.18); }
+
+      .viewer {
+        height: calc(100% - var(--toolbar-height));
+        overflow: auto;
+        background: var(--viewer-bg);
+        scrollbar-color: #8b8b8b #2b2b2b;
+      }
+
+      .viewer::-webkit-scrollbar { width: 16px; height: 16px; }
+      .viewer::-webkit-scrollbar-track { background: #2b2b2b; }
+      .viewer::-webkit-scrollbar-thumb {
+        border: 3px solid #2b2b2b;
+        border-radius: 999px;
+        background: #8b8b8b;
+      }
+
+      .pages {
+        width: max(100%, calc(var(--page-width) * var(--zoom) / 100));
+        min-height: 100%;
+        padding: 4px 0 28px;
+        display: grid;
+        gap: 18px;
+        justify-items: center;
+      }
+
+      .cv-page {
+        width: var(--page-width);
+        min-height: var(--page-height);
+        zoom: calc(var(--zoom) / 100);
+        margin: 0;
+        padding: 22px 60px 50px;
+        background: var(--paper);
+        color: var(--ink);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.32);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 11.3px;
+        line-height: 1.24;
+      }
+
+      .cv-header {
+        position: relative;
+        min-height: 74px;
+        display: grid;
+        place-items: center;
+        border-bottom: 1.5px solid var(--rule);
+        padding-bottom: 5px;
+        margin-bottom: 14px;
+      }
+
+      .cv-header h1 {
+        margin: 0 116px 14px 58px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+
+      .contact {
+        margin: 0;
+        text-align: center;
+        font-size: 12.5px;
+      }
+
+      .profile-photo {
+        position: absolute;
+        right: 4px;
+        top: 0;
+        width: 82px;
+        height: 82px;
+        object-fit: cover;
+      }
+
+      .cv-section {
+        border-top: 1.5px solid var(--rule);
+        margin-top: 11px;
+        padding-top: 7px;
+      }
+
+      .cv-header + .cv-section {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      .cv-section--continued {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      .section-title {
+        margin: 0 0 13px;
+        font-size: 11.8px;
+        font-weight: 400;
+        letter-spacing: 0.34em;
+      }
+
+      .cv-item {
+        display: grid;
+        grid-template-columns: 188px 1fr;
+        column-gap: 18px;
+        margin-bottom: 12px;
+      }
+
+      .cv-item time {
+        font-size: 11.3px;
+        white-space: nowrap;
+      }
+
+      .item-body h3 {
+        margin: 0 0 4px;
+        font-size: 13.4px;
+        line-height: 1.15;
+        font-weight: 700;
+      }
+
+      .cv-item--education h3 {
+        display: flex;
+        gap: 16px;
+        justify-content: space-between;
+      }
+
+      .meta {
+        font-size: 11.3px;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 26px;
+      }
+
+      li {
+        margin: 0 0 1px;
+      }
+
+      .cv-item--awards .item-body h3 {
+        font-size: 13.4px;
+      }
+
+      .cv-footer {
+        display: none;
+      }
+
+      @media (max-width: 860px) {
+        .toolbar {
+          grid-template-columns: 1fr;
+          height: auto;
+          padding: 10px;
+        }
+
+        .toolbar-group.center,
+        .toolbar-group.right { justify-content: flex-start; }
+
+        .viewer { height: calc(100% - 120px); }
+      }
+
+      @media print {
+        body { background: #ffffff; overflow: visible; }
+        .toolbar { display: none; }
+        .viewer { height: auto; overflow: visible; background: #ffffff; }
+        .pages { display: block; padding: 0; width: auto; }
+        .cv-page { zoom: 1; width: auto; min-height: 0; box-shadow: none; page-break-after: always; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="toolbar">
+      <div class="toolbar-group">
+        <button class="icon-btn" type="button" aria-label="Menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v2H4V7zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"></path></svg>
+        </button>
+        <div class="title">Ingeniero Informático, Docente</div>
+      </div>
+
+      <div class="toolbar-group center">
+        <div class="page-display" aria-label="Paginacion">
+          <span class="current-page" id="current-page">1</span>
+          <span class="page-total">/</span>
+          <span class="page-total">2</span>
+        </div>
+        <div class="divider" aria-hidden="true"></div>
+        <button class="icon-btn" type="button" aria-label="Reducir zoom" id="zoom-out">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v2H5z"></path></svg>
+        </button>
+        <div class="zoom-display" id="zoom-display">129%</div>
+        <button class="icon-btn" type="button" aria-label="Aumentar zoom" id="zoom-in">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"></path></svg>
+        </button>
+      </div>
+
+      <div class="toolbar-group right">
+        <button class="icon-btn" type="button" aria-label="Ajustar a pagina" id="fit-width">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h5V5H5v7h2V7zm10 0v5h2V5h-7v2h5zm0 10h-5v2h7v-7h-2v5zM7 12H5v7h7v-2H7v-5z"></path></svg>
+        </button>
+        <div class="divider" aria-hidden="true"></div>
+        <a class="icon-btn" href="./cv.pdf" download aria-label="Descargar PDF" title="Descargar PDF">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg>
+        </a>
+        <button class="icon-btn" type="button" aria-label="Imprimir" onclick="window.print()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8V3H7v5H5a2 2 0 0 0-2 2v6h4v5h10v-5h4v-6a2 2 0 0 0-2-2h-2zm-8-3h6v3H9V5zm6 14H9v-5h6v5zm4-5h-2v-2H7v2H5v-4h14v4z"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="viewer" id="viewer">
+      <section class="pages">
+        
+        <article class="cv-page" aria-label="Página 1 del curriculum de Diego Ayala Bernal">
+          
+          <header class="cv-header">
+            <div>
+              <h1>Diego Ayala Bernal, Ingeniero Informático, Docente</h1>
+              <p class="contact">+34601250396, diego.ayala2@um.es</p>
+            </div>
+            <img class="profile-photo" src="./assets/profile.jpg" alt="Foto de Diego Ayala Bernal" />
+          </header>
+            
+          
+          <section class="cv-section">
+            <h2 class="section-title">EXPERIENCIA LABORAL</h2>
+            
+            <article class="cv-item cv-item--experience">
+              <time>Oct 2023 - Presente</time>
+              <div class="item-body">
+                <h3>Docente FP Grado Superior, Cesur </h3>
+                <ul><li>Docente de los modulos DAM, DAW y ASIR.</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--experience">
+              <time>Sep 2023 - Presente</time>
+              <div class="item-body">
+                <h3>Docente FP Grado Superior y Grado Medio, Colegio Miralmonte </h3>
+                <ul><li>Docente de los módulos DAM y SMR.</li><li>Clases impartidas a grupos bilingües.</li><li>Tutor 2°DAM, coordinador FCT.</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--experience">
+              <time>Mayo 2023 - Ago 2023</time>
+              <div class="item-body">
+                <h3>Docente Titular de Grado Superior, Universae </h3>
+                <ul><li>Responsable de crear material didáctico e impartir clases en las titulaciones de DAW, DAM y ASIR.</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--experience">
+              <time>Ene 2023 - Mayo 2023</time>
+              <div class="item-body">
+                <h3>Profesor de educación secundaria Bilingüe, CEIPS Torre Salinas </h3>
+                
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--experience">
+              <time>Feb 2021 - Abr 2022</time>
+              <div class="item-body">
+                <h3>Freelance Ingeniero Software </h3>
+                <ul><li>Numerosos proyectos de diversa índole.</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--experience">
+              <time>Ene 2021 - Feb 2022</time>
+              <div class="item-body">
+                <h3>Profesor Particular </h3>
+                <ul><li>Enfocadas al alumnado de Bachillerato, FP, Universidad, Master.</li><li>Flexibles y adaptadas a los requisitos solicitados por el alumno.</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--experience">
+              <time>Ene 2020 - Abr 2021</time>
+              <div class="item-body">
+                <h3>Ingeniero Software Junior, Tecnoavanz S.L </h3>
+                <ul><li>Startup Tecnológica subsidiaria de Orange.</li><li>Construí características clave del CRM, como desarrollador Symfony, dentro de un equipo ágil de 5 personas.</li><li>Implementación de reglas de negocio, para mejorar la calidad de los datos de los clientes.</li></ul>
+              </div>
+            </article>
+            
+          </section>
+    
+          <section class="cv-section">
+            <h2 class="section-title">FORMACIÓN</h2>
+            
+            <article class="cv-item cv-item--education">
+              <time>Oct 2022 - Jun 2023</time>
+              <div class="item-body">
+                <h3>Máster Universitario en Formación del Profesorado, VIU <span class="meta">Media de 8.9</span></h3>
+                
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--education">
+              <time>Sep 2014 - Jul 2019</time>
+              <div class="item-body">
+                <h3>Ingeniería Informática Mención en Software, Universidad Murcia </h3>
+                
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--education">
+              <time>Jul 2022 - Jul 2022</time>
+              <div class="item-body">
+                <h3>Overall CEFR Grade English C, British Council Aptis </h3>
+                
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--education">
+              <time>Ene 2022 - Mayo 2022</time>
+              <div class="item-body">
+                <h3>Lengua de Signos Española A2, Lengua de Signos </h3>
+                
+              </div>
+            </article>
+            
+          </section>
+    
+          <section class="cv-section">
+            <h2 class="section-title">RECONOCIMIENTOS, PREMIOS E HITOS</h2>
+            
+            <article class="cv-item cv-item--awards">
+              <time>Ene 2023</time>
+              <div class="item-body">
+                <h3>3 Cartas de recomendación expedidas por profesores titulados de la Universidad de Murcia </h3>
+                <ul><li>3 cartas de recomendación redactadas y firmadas por profesores titulados de la Universidad de Murcia, donde se da muestra de mis conocimientos, cualidades e hitos alcanzados en mi paso por la facultad de Informática. (adjuntadas en el propio correo o en el siguiente link: bit.ly/4deEQHl )</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--awards">
+              <time>Mar 2021 - Ago 2021</time>
+              <div class="item-body">
+                <h3>Finalista Lanzadera, Marina de Empresas </h3>
+                <ul><li>Finalista en Lanzadera (2021), la mayor aceleradora e incubadora de startups a nivel nacional, con una iniciativa de corte educativo, realizando un pitch presencial ante el jurado en la sede de Lanzadera. Siendo finalista junto a otros 30 proyectos restantes de entre los 2500 iniciales.</li></ul>
+              </div>
+            </article>
+            
+          </section>
+    
+        </article>
+            
+
+        <article class="cv-page" aria-label="Página 2 del curriculum de Diego Ayala Bernal">
+          
+          
+          <section class="cv-section cv-section--continued">
+            
+            
+            <article class="cv-item cv-item--awards">
+              <time>Ago 2021 - Dic 2021</time>
+              <div class="item-body">
+                <h3>Entrepreneurship World Cup (EWC) - Preseleccionado </h3>
+                <ul><li>Preseleccionado en la mayor iniciativa de emprendimiento a nivel global, Entrepreneurship World Cup (EWC), con una iniciativa de corte educativo.</li></ul>
+              </div>
+            </article>
+            
+
+            <article class="cv-item cv-item--awards">
+              <time>Dic 2021</time>
+              <div class="item-body">
+                <h3>NextCarm (Next Generation) - Aprobación y remisión del proyecto por la Región de Murcia al Gobierno Central. </h3>
+                <ul><li>Propuesta integrada y aprobada en el documento conjunto de iniciativas de la Región de Murcia que se remitió al Gobierno de España para su evaluación y financiación a través de los fondos Next Generation.</li></ul>
+              </div>
+            </article>
+            
+          </section>
+    
+        </article>
+            
+      </section>
+    </main>
+
+    <script>
+      const root = document.documentElement;
+      const viewer = document.getElementById("viewer");
+      const currentPage = document.getElementById("current-page");
+      const zoomDisplay = document.getElementById("zoom-display");
+      const zoomIn = document.getElementById("zoom-in");
+      const zoomOut = document.getElementById("zoom-out");
+      const fitWidth = document.getElementById("fit-width");
+      const pages = Array.from(document.querySelectorAll(".cv-page"));
+      const pageBaseWidth = 794;
+      const zoomSteps = [70, 80, 90, 100, 110, 120, 129, 140, 150, 160, 175, 200];
+      let zoomIndex = zoomSteps.indexOf(129);
+
+      function setZoom(value) {
+        root.style.setProperty("--zoom", String(value));
+        zoomDisplay.textContent = `${value}%`;
+      }
+
+      function nearestZoomIndex(value) {
+        return zoomSteps.reduce((bestIndex, candidate, index) => {
+          const best = zoomSteps[bestIndex];
+          return Math.abs(candidate - value) < Math.abs(best - value) ? index : bestIndex;
+        }, 0);
+      }
+
+      function fitToWidth() {
+        const available = Math.max(viewer.clientWidth - 120, 320);
+        const fitZoom = Math.round((available / pageBaseWidth) * 100);
+        zoomIndex = nearestZoomIndex(Math.min(Math.max(fitZoom, zoomSteps[0]), zoomSteps.at(-1)));
+        setZoom(zoomSteps[zoomIndex]);
+        viewer.scrollLeft = 0;
+      }
+
+      function updateCurrentPage() {
+        const viewportTop = viewer.scrollTop + 24;
+        const activeIndex = pages.reduce((best, page, index) => {
+          const bestPage = pages[best];
+          return Math.abs(page.offsetTop - viewportTop) < Math.abs(bestPage.offsetTop - viewportTop)
+            ? index
+            : best;
+        }, 0);
+        currentPage.textContent = String(activeIndex + 1);
+      }
+
+      zoomIn.addEventListener("click", () => {
+        zoomIndex = Math.min(zoomIndex + 1, zoomSteps.length - 1);
+        setZoom(zoomSteps[zoomIndex]);
+        updateCurrentPage();
+      });
+
+      zoomOut.addEventListener("click", () => {
+        zoomIndex = Math.max(zoomIndex - 1, 0);
+        setZoom(zoomSteps[zoomIndex]);
+        updateCurrentPage();
+      });
+
+      fitWidth.addEventListener("click", fitToWidth);
+      viewer.addEventListener("scroll", updateCurrentPage, { passive: true });
+
+      document.addEventListener("keydown", (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === "+") {
+          event.preventDefault();
+          zoomIn.click();
+        }
+
+        if ((event.ctrlKey || event.metaKey) && event.key === "-") {
+          event.preventDefault();
+          zoomOut.click();
+        }
+
+        if ((event.ctrlKey || event.metaKey) && event.key === "0") {
+          event.preventDefault();
+          zoomIndex = zoomSteps.indexOf(100);
+          setZoom(100);
+        }
+      });
+
+      setZoom(zoomSteps[zoomIndex]);
+      updateCurrentPage();
+    </script>
+  </body>
+</html>

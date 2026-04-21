@@ -1,43 +1,99 @@
-# Sahil Gogna
+# CV Web Generado Desde PDF
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue)](https://linkedin.com/in/gognasahil)
+Este proyecto genera una interfaz web estática a partir de un CV en PDF. No usa capturas de las páginas: extrae texto, secciones, fechas, bullets, saltos de página y la foto embebida para renderizar HTML/CSS editable y reutilizable.
 
-## About Me
-I am a Senior Data Engineer with expertise in AI-driven backend systems, data engineering, and data modeling. Passionate about leveraging technology to build scalable and efficient data solutions.
+## Generar La Web
 
-## Skills
-- **Languages:** Java, Python, Scala
-- **Frameworks & Tools:** Snowflake, Spark, Hadoop, Kafka, Tableau, Talend, SQL, AWS
-- **DevOps & Cloud:** Airflow, OpenShift, Jenkins, Docker, Kubernetes, Git
+Requisitos en Linux/WSL:
 
-## Experience
+```bash
+sudo apt-get install poppler-utils
+python3 -m pip install Pillow
+```
 
-### **Senior Data Engineer** @ RBC, Toronto *(May 2022 - Present)*
-- Developed AI-driven backend systems using OpenAI’s GPT models and Langchain.
-- Built productivity-boosting tools, improving analyst efficiency by 20%.
-- Designed data pipelines for industry attractiveness analysis, contributing to $5M in annual revenue.
-- Technologies: Python, Redis, Postgres, Spark SQL, Snowflake, Tableau.
+Generar la primera versión desde un PDF:
 
-### **Data Integrations Developer** @ ALDO Group, Montreal *(Jan 2021 - May 2022)*
-- Developed ETL pipelines for historical sales data processing, reducing time by 40%.
-- Implemented data integration components using Talend, AWS S3, SQL, and microservices.
+```bash
+python3 scripts/generate_cv_site.py /ruta/al/cv.pdf --out .
+```
 
-### **Java Developer** @ Nagarro, India *(Jan 2017 - Aug 2018)*
-- Led development of a microservices-based ERP system, improving order processing time by 30%.
-- Built and maintained backend using Java 8, Spring Boot, Hibernate ORM, and PostgreSQL.
+Usar una foto externa en vez de la foto embebida del PDF:
 
-## Education
-- **Big Data Development**, Montreal College of Information Technology *(2019 - 2020)*
-- **Mobile Application Development**, College Lasalle *(2018 - 2019)*
-- **B.E. in ECE**, Thapar University, India *(2013 - 2017)*
+```bash
+python3 scripts/generate_cv_site.py /ruta/al/cv.pdf --out . --photo /ruta/foto.jpg
+```
 
-## Projects & Contributions
-- Built AI-powered tools using OpenAI’s GPT models.
-- Designed and optimized scalable ETL pipelines.
-- Developed microservices-based ERP systems for manufacturing.
+El comando crea o actualiza:
 
-## Contact
-📧 gogna.sahil95@gmail.com | 📍 Toronto, Canada
+- `index.html`: web estática final.
+- `cv-data.json`: datos estructurados extraídos del PDF.
+- `cv.pdf`: copia descargable del PDF original.
+- `assets/profile.jpg`: foto extraída del PDF o la indicada con `--photo`.
 
----
-This portfolio is hosted on GitHub Pages. Feel free to explore my projects and connect!
+## Añadir Datos Sin Modificar El PDF
+
+Después de la primera extracción, edita `cv-data.json` y regenera solo la web:
+
+```bash
+python3 scripts/generate_cv_site.py --data cv-data.json --out .
+```
+
+En este modo el PDF ya no se reprocesa y `cv-data.json` no se sobrescribe, por lo que puedes añadir, corregir o borrar datos directamente en el JSON.
+
+Ejemplo de nueva entrada en `experience`:
+
+```json
+{
+  "date": "Abr 2026 - Presente",
+  "title": "Nuevo puesto, Empresa",
+  "meta": null,
+  "bullets": [
+    "Primer punto del puesto.",
+    "Segundo punto del puesto."
+  ]
+}
+```
+
+Las secciones editables son:
+
+- `experience`: experiencia laboral.
+- `education`: formación.
+- `awards`: reconocimientos, premios e hitos.
+
+La paginación es automática. Si una página se llena, el generador mueve las siguientes entradas a una nueva hoja.
+
+Si quieres forzar que una entrada empiece en una hoja nueva, añade:
+
+```json
+"page_break_before": true
+```
+
+El generador valida el JSON antes de crear la web. Si falta un campo obligatorio como `date` o `title`, muestra un error indicando la ruta exacta del dato que hay que corregir.
+
+Existe un modo de compatibilidad para respetar campos `page` escritos a mano:
+
+```bash
+python3 scripts/generate_cv_site.py --data cv-data.json --out . --manual-pages
+```
+
+## Previsualizar
+
+Puedes abrir `index.html` directamente con `file://` o levantar un servidor local:
+
+```bash
+python3 -m http.server 4000
+```
+
+Después abre `http://127.0.0.1:4000/`.
+
+## Formato Esperado
+
+El extractor está orientado a CVs con estructura similar a este PDF:
+
+- Cabecera con `Nombre Apellidos, Título`.
+- Teléfono y email en la segunda línea.
+- Secciones en mayúsculas como `EXPERIENCIA LABORAL`, `FORMACIÓN` y `RECONOCIMIENTOS, PREMIOS E HITOS`.
+- Fechas en la columna izquierda y títulos en la derecha.
+- Bullets marcados con `•`.
+
+Para otros alumnos funcionará mejor si usan la misma plantilla o una estructura parecida.
