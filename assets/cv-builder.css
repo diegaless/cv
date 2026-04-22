@@ -931,16 +931,16 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
   top: 0;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 298.67px);
   gap: 0;
   margin: 0 -28px 0;
-  padding: 0 28px;
+  padding: 16px 32px 0;
   background: #ffffff;
   border-bottom: 1px solid #edf1f7;
 }
 
 .design-toolbar button {
-  min-height: 50px;
+  min-height: 56px;
   border: 0;
   border-bottom: 2px solid transparent;
   background: transparent;
@@ -963,11 +963,12 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
   margin: 0 -28px;
   background: #f7f9fc;
   color: #263247;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .design-color-row span {
   margin-right: 2px;
+  line-height: 20px;
 }
 
 .design-color-row button {
@@ -1007,23 +1008,54 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 46px 0 32px;
+  padding: 24px 0 32px;
+  transform: translateX(-3.5px);
 }
 
 .design-filter-row button {
+  flex: 0 0 auto;
   min-height: 40px;
-  border: 0;
+  border: 1px solid #d9e2ef;
   border-radius: 999px;
-  padding: 0 16px;
-  background: transparent;
-  color: #6f798d;
+  padding: 0;
+  background: #ffffff;
+  color: #172033;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 700;
+}
+
+.design-filter-row button:nth-child(1) {
+  width: 72px;
+}
+
+.design-filter-row button:nth-child(2) {
+  width: 96px;
+}
+
+.design-filter-row button:nth-child(3) {
+  width: 130px;
+}
+
+.design-filter-row button:nth-child(4) {
+  width: 64px;
+}
+
+.design-filter-row button:nth-child(5) {
+  width: 79px;
+}
+
+.design-filter-row button:nth-child(6) {
+  width: 129px;
+}
+
+.design-filter-row button:nth-child(7) {
+  width: 78px;
 }
 
 .design-filter-row button.is-active,
 .design-filter-row button:hover {
-  background: #eef6ff;
+  border-color: #1a91f0;
+  background: #eef8ff;
   color: #1a91f0;
 }
 
@@ -1049,7 +1081,7 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
 
 .template-preview {
   position: relative;
-  height: 298px;
+  height: 298.578125px;
   border: 1px solid #d7dfeb;
   border-radius: 2px;
   overflow: hidden;
@@ -1093,27 +1125,29 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
 
 .template-tags {
   position: absolute;
-  right: 10px;
-  bottom: 8px;
+  right: 6px;
+  bottom: 6px;
   display: flex;
   gap: 4px;
 }
 
 .template-tags i {
-  min-width: 26px;
-  border-radius: 3px;
-  padding: 2px 4px;
-  background: #fff7df;
-  color: #c59013;
+  min-width: 0;
+  height: 18px;
+  border-radius: 2px;
+  padding: 1px 6px;
+  background: #ec930c;
+  color: #ffffff;
   font-style: normal;
-  font-size: 9px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  text-transform: lowercase;
 }
 
 .template-tags i + i {
-  background:
-    #f3f5f9;
-  color: #7b8496;
+  background: #ec930c;
+  color: #ffffff;
 }
 
 .template-traditional {
