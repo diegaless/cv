@@ -2659,6 +2659,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   height: var(--page-height);
   zoom: var(--preview-zoom);
   margin: 0;
+  transform: translateX(-1px);
   padding: 20px 60px 50px;
   background: var(--paper);
   color: var(--ink);
@@ -2688,7 +2689,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
 .cv-header h1 {
   margin: 0 58px 14px;
   text-align: center;
-  font-size: 16.55px;
+  font-size: 17px;
   line-height: 1.1;
   white-space: nowrap;
 }
