@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currículums y cartas de presentación · cvapp.es</title>
+    <meta name="description" content="Panel local de currículums inspirado en cvapp.es." />
+    <link rel="stylesheet" href="./assets/cv-builder.css" />
+    <script src="./assets/resumes-dashboard.js" defer></script>
+  </head>
+  <body class="dashboard-page">
+    <main class="documents-app" id="resumes-dashboard">
+      <aside class="documents-sidebar" aria-label="Navegación principal">
+        <a class="dashboard-logo" href="./resumes.html" aria-label="cvapp.es">
+          <span class="dashboard-logo-mark" aria-hidden="true"></span>
+          <span>
+            <strong>cvapp.es</strong>
+            <small>by career.io</small>
+          </span>
+        </a>
+
+        <a class="dashboard-user-card" href="./builder.html">
+          <span class="dashboard-avatar" aria-hidden="true"><span>%</span></span>
+          <span>
+            <strong>Diego Cascado Nieto</strong>
+            <small>Establece tu rol objetivo</small>
+          </span>
+        </a>
+
+        <nav class="dashboard-menu">
+          <a href="./resumes.html" data-dashboard-nav="home"><span class="dashboard-menu-icon dots"></span>Panel de control</a>
+          <a href="./resumes.html" class="is-active"><span class="dashboard-menu-icon document"></span>Documentos</a>
+          <a href="#" data-dashboard-nav="jobs"><span class="dashboard-menu-icon briefcase"></span>Empleos</a>
+          <a href="#" data-dashboard-nav="tracker"><span class="dashboard-menu-icon nodes"></span>Rastreador de Empleos <span class="premium-lock">▾</span></a>
+          <a href="#" data-dashboard-nav="interview"><span class="dashboard-menu-icon chat"></span>Preparación para la entrevista <span class="premium-lock">▾</span></a>
+          <a href="#" data-dashboard-nav="distribution"><span class="dashboard-menu-icon share"></span>Distribución de Currículum <span class="premium-lock">▾</span></a>
+        </nav>
+      </aside>
+
+      <section class="documents-main">
+        <header class="documents-topbar">
+          <button class="side-menu-toggle" type="button" aria-label="Abrir menú" data-dashboard-action="menu"></button>
+          <div class="topbar-spacer"></div>
+          <span class="premium-days">0 días</span>
+          <button class="premium-renew" type="button" data-dashboard-action="premium">Renovar Premium</button>
+          <button class="dashboard-settings" type="button" aria-label="Ajustes" data-dashboard-action="settings"></button>
+        </header>
+
+        <div class="documents-content">
+          <div class="documents-heading-row">
+            <div>
+              <h1>Currículums y cartas de presentación</h1>
+              <div class="documents-tabs" role="tablist" aria-label="Tipo de documento">
+                <button class="is-active" type="button" data-document-tab="resumes">Currículos</button>
+                <button type="button" data-document-tab="letters">Cartas de presentación</button>
+              </div>
+            </div>
+            <button class="create-new-button" id="create-resume-button" type="button">Crear nuevo</button>
+          </div>
+
+          <section class="visibility-banner">
+            <span class="banner-illustration" aria-hidden="true">😊</span>
+            <div>
+              <strong>¿Listo para darle un impulso a tu búsqueda de empleo y obtener más visibilidad?</strong>
+              <p>Elige tu currículum y lo enviaremos a cientos de reclutadores en tu campo en solo unos pocos clics</p>
+            </div>
+            <button type="button" data-dashboard-action="boost">Comienza ahora</button>
+          </section>
+
+          <section class="documents-list" id="resume-list" aria-live="polite"></section>
+
+          <section class="new-document-card">
+            <button type="button" id="create-resume-card">
+              <span class="new-document-plus" aria-hidden="true">+</span>
+              <span>
+                <strong>Nuevo CV</strong>
+                <small>Crea un CV a medida para cada solicitud de empleo. ¡Duplica las posibilidades de que te contrateten!</small>
+              </span>
+            </button>
+          </section>
+
+          <section class="cover-letter-empty" id="cover-letter-panel" hidden>
+            <h2>Cartas de presentación</h2>
+            <p>Genera una carta a partir de tu CV cuando quieras preparar una candidatura concreta.</p>
+            <button type="button" data-dashboard-action="new-letter">Crear carta de presentación</button>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

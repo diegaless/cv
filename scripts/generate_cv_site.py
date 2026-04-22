@@ -171,6 +171,22 @@ def copy_font_assets(out: Path) -> None:
     shutil.copytree(source, target, dirs_exist_ok=True)
 
 
+def copy_builder_assets(out: Path) -> None:
+    source = PROJECT_ROOT / "assets"
+    target = out / "assets"
+
+    for filename in ("cv-builder.css", "cv-builder.js", "firebase-config.js"):
+        source_file = source / filename
+        target_file = target / filename
+        if not source_file.exists():
+            print(f"Warning: builder asset not found at {source_file}", file=sys.stderr)
+            continue
+        if source_file.resolve() == target_file.resolve():
+            continue
+        target_file.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source_file, target_file)
+
+
 def sectionize(text: str) -> tuple[dict[str, list[LineRecord]], int]:
     section_map = {
         "EXPERIENCIALABORAL": "experience",
@@ -206,7 +222,7 @@ def sectionize(text: str) -> tuple[dict[str, list[LineRecord]], int]:
 def parse_header(lines: list[LineRecord]) -> dict[str, str]:
     raw_lines = [line for _, line in lines]
     nonempty = [compact_spaces(line) for line in raw_lines if line.strip()]
-    first = nonempty[0] if nonempty else "Nombre Apellidos, Perfil profesional"
+    first = nonempty[0] if nonempty else "Nombre Apellidos, Puesto laboral"
     second = nonempty[1] if len(nonempty) > 1 else ""
 
     if "," in first:
@@ -630,7 +646,7 @@ def render_pages(data: dict[str, Any], profile: str) -> str:
 
         pages.append(
             f"""
-        <article class="cv-page" aria-label="Página {page_number} del curriculum de {esc(data['name'])}">
+        <article class="cv-page" aria-label="Página {page_number} del currículum de {esc(data['name'])}">
           {header}
           {"".join(render_section(data, section, section_title, page_number) for section, section_title in SECTION_DEFINITIONS)}
         </article>
@@ -1011,14 +1027,14 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str | 
   <body>
     <header class="toolbar">
       <div class="toolbar-group">
-        <button class="icon-btn" type="button" aria-label="Menu">
+        <button class="icon-btn" type="button" aria-label="Menú">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v2H4V7zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"></path></svg>
         </button>
         <div class="title">{esc(data['title'] or data['name'])}</div>
       </div>
 
       <div class="toolbar-group center">
-        <div class="page-display" aria-label="Paginacion">
+        <div class="page-display" aria-label="Paginación">
           <span class="current-page" id="current-page">1</span>
           <span class="page-total">/</span>
           <span class="page-total">{page_count}</span>
@@ -1034,7 +1050,10 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str | 
       </div>
 
       <div class="toolbar-group right">
-        <button class="icon-btn" type="button" aria-label="Ajustar a pagina" id="fit-width">
+        <a class="icon-btn" href="./builder.html" aria-label="Abrir formulario" title="Abrir formulario">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.25V21h3.75L18.81 9.94l-3.75-3.75L4 17.25zm2 1.17 9.06-9.06 1.06 1.06L7.06 19.5H6v-1.08zM19.71 7.04a1 1 0 0 0 0-1.41l-1.34-1.34a1 1 0 0 0-1.41 0l-1.07 1.07 3.75 3.75 1.07-1.07z"></path></svg>
+        </a>
+        <button class="icon-btn" type="button" aria-label="Ajustar a página" id="fit-width">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h5V5H5v7h2V7zm10 0v5h2V5h-7v2h5zm0 10h-5v2h7v-7h-2v5zM7 12H5v7h7v-2H7v-5z"></path></svg>
         </button>
         <div class="divider" aria-hidden="true"></div>
@@ -1136,6 +1155,165 @@ def render_html(data: dict[str, Any], profile_path: str | None, pdf_path: str | 
 """
 
 
+def builder_starter_data() -> dict[str, Any]:
+    return {
+        "name": "",
+        "title": "",
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "postalCode": "",
+        "city": "",
+        "country": "",
+        "experience": [],
+        "education": [],
+        "awards": [],
+    }
+
+
+def render_builder_html() -> str:
+    json_data = json.dumps(builder_starter_data(), ensure_ascii=False, indent=2).replace("</", "<\\/")
+
+    return f"""<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario CV</title>
+    <meta name="description" content="Formulario para generar un CV web con diseño PDF." />
+    <link rel="stylesheet" href="./assets/cv-builder.css" />
+  </head>
+  <body>
+    <main class="builder-shell">
+      <header class="app-header">
+        <div class="brand-mark">
+          <span class="drag-dots" aria-hidden="true"></span>
+          <div>
+            <strong>CV ESPAÑOL</strong>
+            <span><i class="flag-es" aria-hidden="true"></i> Español</span>
+          </div>
+        </div>
+        <div class="app-tabs" aria-label="Modo de edición">
+          <button class="is-active" type="button" data-tab-action="editor">Editar</button>
+          <button type="button" disabled>Diseño</button>
+          <button type="button" disabled>Revisión de IA</button>
+        </div>
+        <div class="top-actions">
+          <button class="primary-btn" type="button" id="print-cv">Descargar ▾</button>
+          <button class="icon-only" type="button" aria-label="Ajustes" data-scroll-target="section-cloud">⚙</button>
+          <button class="account-avatar" type="button" id="account-menu-button" aria-label="Menú de cuenta">D</button>
+          <aside class="account-popover" id="account-popover" hidden>
+            <strong>Usuario del CV</strong>
+            <span>Inicia sesión para guardar tus CVs</span>
+            <hr />
+            <button type="button" data-scroll-target="section-cloud">Ajustes de la cuenta</button>
+            <button type="button" data-account-action="faq">Preguntas frecuentes</button>
+            <button type="button" data-account-action="logout">Cerrar sesión</button>
+          </aside>
+        </div>
+      </header>
+
+      <div class="builder-workspace">
+        <aside class="builder-sidebar" aria-label="Secciones del CV">
+          <button class="nav-item is-active" type="button" data-scroll-target="section-personal">
+            <span class="nav-icon">1</span>
+            <span><strong>Datos personales</strong><small>Nombre, contacto y foto</small></span>
+          </button>
+          <button class="nav-item" type="button" data-scroll-target="section-experience">
+            <span class="nav-icon">2</span>
+            <span><strong>Experiencia</strong><small id="nav-count-experience">0 entradas</small></span>
+          </button>
+          <button class="nav-item" type="button" data-scroll-target="section-education">
+            <span class="nav-icon">3</span>
+            <span><strong>Formación</strong><small id="nav-count-education">0 entradas</small></span>
+          </button>
+          <button class="nav-item" type="button" data-scroll-target="section-awards">
+            <span class="nav-icon">4</span>
+            <span><strong>Premios e hitos</strong><small id="nav-count-awards">0 entradas</small></span>
+          </button>
+          <button class="nav-item" type="button" data-scroll-target="section-cloud">
+            <span class="nav-icon">5</span>
+            <span><strong>Cuenta</strong><small id="nav-cloud-label">Modo local</small></span>
+          </button>
+        </aside>
+
+        <aside class="builder-editor" aria-label="Formulario de datos del CV">
+          <div class="editor-scroll">
+            <section class="score-card" aria-label="Integridad del currículum">
+              <button class="round-avatar" id="score-float" type="button" aria-label="Integridad" data-score-action="toggle">0%</button>
+              <div class="score-head">
+                <span class="score-badge" id="cv-score">0%</span>
+                <span>Integridad del currículum</span>
+                <button class="score-settings" type="button" aria-label="Ajustes de integridad" data-score-action="toggle">⚙</button>
+              </div>
+              <div class="score-bar"><span id="cv-score-bar"></span></div>
+              <ul class="score-list" id="score-list"></ul>
+            </section>
+            <div class="editor-header">
+              <p class="eyebrow">Contenido</p>
+              <h1>Rellena tu CV</h1>
+              <p>Completa las secciones y revisa el resultado en tiempo real.</p>
+            </div>
+
+            <form id="cv-form" autocomplete="on"></form>
+            <button class="assistant-fab" id="assistant-fab" type="button">Preguntar al escritor de IA</button>
+
+            <section class="form-card cloud-card" id="section-cloud" data-section-panel="cloud" aria-label="Cuenta y guardado en la nube">
+              <button class="section-head section-toggle" type="button" data-action="toggle-section" data-panel="cloud" aria-expanded="true">
+                <div>
+                  <p class="card-kicker">Cuenta</p>
+                  <h2>Google y CVs guardados</h2>
+                </div>
+                <span class="card-title-meta">
+                  <span class="cloud-badge" id="cloud-mode">Modo local</span>
+                  <span class="chevron">⌄</span>
+                </span>
+              </button>
+              <div class="section-content">
+                <p class="cloud-status" id="cloud-status">Configura Firebase para activar login y guardado por usuario.</p>
+                <div class="cloud-actions">
+                  <button class="secondary-btn" type="button" id="login-google" disabled>Entrar con Google</button>
+                  <button class="ghost-btn" type="button" id="logout-google" hidden>Salir</button>
+                  <button class="primary-btn" type="button" id="save-cloud" disabled>Guardar en mi cuenta</button>
+                </div>
+                <div class="saved-list" id="saved-list" aria-live="polite"></div>
+              </div>
+            </section>
+
+            <div class="utility-actions" aria-label="Herramientas de datos">
+              <button class="ghost-btn" type="button" id="import-json">Importar JSON</button>
+              <button class="secondary-btn" type="button" id="download-json">Descargar JSON</button>
+              <button class="secondary-btn" type="button" id="download-html">Descargar HTML</button>
+              <input class="visually-hidden" type="file" id="json-file" accept="application/json,.json" />
+            </div>
+
+            <button class="reset-link" type="button" id="reset-example">Nuevo / vaciar formulario</button>
+          </div>
+        </aside>
+
+        <section class="builder-preview" aria-label="Vista previa del CV">
+          <div class="preview-toolbar">
+            <div>
+              <span class="preview-label">Vista previa</span>
+              <strong id="page-count-label">1 página</strong>
+            </div>
+            <p>El PDF final se genera desde imprimir.</p>
+          </div>
+          <div class="preview-scroll">
+            <section class="cv-preview-pages" id="cv-preview-pages"></section>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script id="initial-cv-data" type="application/json">{json_data}</script>
+    <script src="./assets/firebase-config.js"></script>
+    <script src="./assets/cv-builder.js"></script>
+  </body>
+</html>
+"""
+
+
 def write_json(data: dict[str, Any], output: Path) -> None:
     output.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -1158,6 +1336,7 @@ def main() -> None:
     assets = out / "assets"
     assets.mkdir(parents=True, exist_ok=True)
     copy_font_assets(out)
+    copy_builder_assets(out)
     data_dir = args.data.resolve().parent if args.data else None
 
     try:
@@ -1211,8 +1390,10 @@ def main() -> None:
     render_data = paginate_manual(data) if args.manual_pages else paginate_auto(data)
     html_output = render_html(render_data, profile_rel, pdf_rel)
     (out / "index.html").write_text(html_output, encoding="utf-8")
+    (out / "builder.html").write_text(render_builder_html(), encoding="utf-8")
 
     print(f"Generated {out / 'index.html'}")
+    print(f"Generated {out / 'builder.html'}")
     if wrote_data:
         print(f"Generated {data_output}")
     else:

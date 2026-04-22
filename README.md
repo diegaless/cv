@@ -26,9 +26,80 @@ python3 scripts/generate_cv_site.py /ruta/al/cv.pdf --out . --photo /ruta/foto.j
 El comando crea o actualiza:
 
 - `index.html`: web estática final.
+- `builder.html`: formulario web para rellenar datos y generar el CV con el mismo diseño.
 - `cv-data.json`: datos estructurados extraídos del PDF.
 - `cv.pdf`: copia descargable del PDF original.
 - `assets/profile.jpg`: foto extraída del PDF o la indicada con `--photo`.
+
+## Formulario Web Para Alumnos
+
+Abre `builder.html` en el navegador para rellenar el CV sin editar JSON a mano:
+
+```bash
+python3 -m http.server 4000
+```
+
+Después abre `http://127.0.0.1:4000/builder.html`.
+
+También puede abrirse directamente con `file://`.
+
+Desde el formulario puedes:
+
+- Rellenar nombre, título, teléfono, email y foto.
+- Añadir, borrar, subir o bajar entradas en experiencia, formación y premios.
+- Escribir bullets, uno por línea.
+- Forzar que una entrada empiece en una página nueva.
+- Ver la preview en vivo con el estilo del CV original.
+- Usar `Imprimir / guardar PDF` para generar el PDF final desde el navegador.
+- Descargar `cv-data.json` para reutilizar esos datos más adelante.
+- Importar un JSON anterior y seguir editándolo.
+
+El formulario guarda un borrador local en el navegador. Si quieres empezar desde cero, usa `Nuevo / vaciar`.
+
+## Login Con Google Y CVs Guardados
+
+El formulario funciona sin backend en modo local. Para que cada alumno inicie sesión con Google y guarde sus CVs anteriores, usa Firebase Authentication + Cloud Firestore. El despliegue puede seguir en GitHub Pages.
+
+Pasos en Firebase:
+
+1. Abre [Firebase Console](https://console.firebase.google.com/) y crea un proyecto.
+2. En `Authentication` activa `Google` como proveedor de acceso.
+3. En `Authentication > Settings > Authorized domains` añade tu dominio de GitHub Pages, por ejemplo `diegaless.github.io`. Para pruebas locales añade también `localhost` si no está.
+4. En `Firestore Database` crea una base de datos en modo producción.
+5. En `Firestore Database > Rules` pega el contenido de `firestore.rules` y publícalo.
+6. En `Project settings > General > Your apps` crea una app Web y copia el objeto `firebaseConfig`.
+7. Edita `assets/firebase-config.js`, pega tu configuración y cambia `enabled` a `true`.
+
+Ejemplo:
+
+```js
+window.CV_FIREBASE_CONFIG = {
+  enabled: true,
+  firebaseConfig: {
+    apiKey: "TU_API_KEY",
+    authDomain: "tu-proyecto.firebaseapp.com",
+    projectId: "tu-proyecto",
+    appId: "TU_APP_ID",
+    messagingSenderId: "TU_SENDER_ID"
+  }
+};
+```
+
+Los datos se guardan en:
+
+```text
+users/{uid}/cvs/{cvId}
+```
+
+Cada usuario solo puede leer y escribir sus propios CVs si publicas las reglas incluidas. La configuración de Firebase del frontend no es secreta; la seguridad depende de las reglas.
+
+Para probar Google Login no uses `file://`. Levanta servidor local:
+
+```bash
+python3 -m http.server 4000
+```
+
+Después abre `http://127.0.0.1:4000/builder.html`.
 
 ## Añadir Datos Sin Modificar El PDF
 
