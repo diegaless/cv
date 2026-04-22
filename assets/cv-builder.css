@@ -2487,7 +2487,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   width: 544px;
   height: 311px;
   margin: 0 auto 45px;
-  background: url("https://cvapp.es/assets/media/banner13be332bed557953.png") center / contain no-repeat;
+  background: url("./media/ai-review-banner.png") center / contain no-repeat;
 }
 
 .ai-review-visual > * {
