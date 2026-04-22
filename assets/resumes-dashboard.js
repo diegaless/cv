@@ -335,7 +335,7 @@
           <span class="resume-card-details">
             <strong>${esc(title)}</strong>
             <small>${esc(formatUpdatedAt(document.updatedAt))}</small>
-            <span class="resume-score"><b>${score}</b> Puntuación de tu currículum</span>
+            <span class="resume-score"><b>${score}%</b> Puntuación de tu currículum</span>
           </span>
         </button>
         <div class="resume-card-actions">
