@@ -159,30 +159,68 @@
                 <button type="button" data-action="accent-choice" data-accent="#1e2532" style="--swatch: #1e2532">Negro</button>
               </div>
             </section>
-            <section class="form-card builder-mode-panel ai-review-mode-panel" data-builder-tab-panel="ai-review" hidden>
-              <div class="section-head">
-                <div>
-                  <p class="card-kicker">Revisión de IA</p>
-                  <h2>Análisis del currículum</h2>
+            <div class="builder-mode-panel ai-review-mode-panel" data-builder-tab-panel="ai-review" hidden>
+              <section class="form-card ai-review-editor-card ai-review-collapsed">
+                <button class="section-head section-toggle" type="button" data-action="noop" data-message="Datos personales revisados por IA.">
+                  <div>
+                    <h2>Datos personales</h2>
+                  </div>
+                  <span class="card-title-meta">
+                    <span class="edit-dot" aria-hidden="true"></span>
+                    <span class="chevron">›</span>
+                  </span>
+                </button>
+              </section>
+              <section class="form-card ai-review-editor-card">
+                <div class="section-head">
+                  <div>
+                    <h2>Propuesta de valor</h2>
+                  </div>
+                  <span class="card-title-meta">
+                    <span class="lock-dot" aria-hidden="true"></span>
+                    <span class="chevron">⌄</span>
+                  </span>
                 </div>
-                <span class="card-title-meta"><span class="cloud-badge">66%</span></span>
-              </div>
-              <div class="review-grid">
-                <article>
-                  <strong>Perfil profesional pendiente</strong>
-                  <p>Añade 2-3 frases con rol, experiencia y métricas para mejorar la integridad.</p>
-                </article>
-                <article>
-                  <strong>Competencias e idiomas</strong>
-                  <p>Incluye habilidades clave e idiomas para acercarte al flujo de cvapp.es.</p>
-                </article>
-                <article>
-                  <strong>Impacto medible</strong>
-                  <p>Refuerza experiencia con números, tecnologías y resultados alcanzados.</p>
-                </article>
-              </div>
-              <button class="ai-pill review-action" type="button" data-action="writer-help">Obtener ayuda con la escritura</button>
-            </section>
+                <div class="ai-review-rich-toolbar" aria-hidden="true">
+                  <span>B</span>
+                  <span><em>I</em></span>
+                  <span><u>U</u></span>
+                  <span>S</span>
+                  <i></i>
+                  <span>1.</span>
+                  <span>•</span>
+                  <i></i>
+                  <span>Link</span>
+                </div>
+                <div class="ai-review-empty-editor ai-review-empty-editor-large"></div>
+              </section>
+              <section class="form-card ai-review-editor-card">
+                <div class="section-head">
+                  <div>
+                    <h2>Perfil profesional</h2>
+                  </div>
+                  <span class="card-title-meta">
+                    <span class="edit-dot" aria-hidden="true"></span>
+                    <span class="score-chip">+15%</span>
+                    <span class="chevron">⌄</span>
+                  </span>
+                </div>
+                <p class="ai-review-help">Añade dos o tres frases sobre tu experiencia general.</p>
+                <div class="ai-review-rich-toolbar" aria-hidden="true">
+                  <span>B</span>
+                  <span><em>I</em></span>
+                  <span><u>U</u></span>
+                  <span>S</span>
+                  <i></i>
+                  <span>1.</span>
+                  <span>•</span>
+                  <i></i>
+                  <span>Link</span>
+                </div>
+                <div class="ai-review-empty-editor">p. e., profesor/a de ciencias apasionado/a por su profesión con más de 8 años de experiencia y una trayectoria...</div>
+                <button class="ai-pill review-action" type="button" data-action="writer-help">Obtener ayuda con la escritura</button>
+              </section>
+            </div>
             <div class="editor-header">
               <p class="eyebrow">Contenido</p>
               <h1>Rellena tu CV</h1>
@@ -236,6 +274,23 @@
           </div>
           <div class="preview-scroll">
             <section class="cv-preview-pages" id="cv-preview-pages"></section>
+            <section class="ai-review-hero" aria-label="Mejora con IA">
+              <div class="ai-review-visual" aria-hidden="true">
+                <div class="ai-review-doc">
+                  <strong>Your resume</strong>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="ai-review-avatar"></div>
+                <div class="ai-review-perfect"><strong>✓</strong><span>Perfect</span></div>
+                <div class="ai-review-line"></div>
+              </div>
+              <h2>Mejora con IA</h2>
+              <p>Entrenado por reclutadores. Esta IA sabe exactamente lo que los empleadores quieren (y lo que no). En 3 minutos tendrás un currículum mejor.</p>
+              <button type="button" data-action="writer-help">✦ Obtener reseña</button>
+            </section>
           </div>
           <button class="preview-design-button" type="button" data-tab-action="design" aria-label="Cambiar diseño" title="Cambiar diseño">
             <span aria-hidden="true"></span>

@@ -785,8 +785,138 @@ body[data-builder-tab="ai-review"] .reset-link {
   display: none;
 }
 
+body[data-builder-tab="ai-review"] .cv-preview-pages,
+body[data-builder-tab="ai-review"] .preview-design-button,
+body[data-builder-tab="ai-review"] .preview-page-pill {
+  display: none;
+}
+
 .builder-mode-panel::before {
   content: none;
+}
+
+.ai-review-mode-panel {
+  margin-bottom: 6px;
+}
+
+.ai-review-editor-card {
+  padding: 22px 34px;
+}
+
+.ai-review-editor-card::before {
+  content: none;
+}
+
+.ai-review-editor-card .section-head {
+  margin-bottom: 0;
+}
+
+.ai-review-editor-card h2 {
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+.ai-review-collapsed {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.edit-dot,
+.lock-dot {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: inline-grid;
+  place-items: center;
+  color: #a7b0c2;
+  background: #f4f7fb;
+}
+
+.edit-dot::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  clip-path: polygon(72% 0, 100% 28%, 34% 94%, 0 100%, 6% 66%);
+}
+
+.lock-dot::before {
+  content: "";
+  width: 14px;
+  height: 12px;
+  border-radius: 2px;
+  background: currentColor;
+  clip-path: polygon(18% 42%, 18% 100%, 82% 100%, 82% 42%, 72% 42%, 72% 28%, 64% 16%, 50% 10%, 36% 16%, 28% 28%, 28% 42%);
+}
+
+.score-chip {
+  border-radius: 6px;
+  padding: 3px 7px;
+  background: #e5f7ed;
+  color: #12864f;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.ai-review-help {
+  margin: 14px 0 14px;
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: #f6f8fb;
+  color: #758198;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.ai-review-rich-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  min-height: 40px;
+  border: 1px solid #e2e8f2;
+  border-bottom: 0;
+  border-radius: 7px 7px 0 0;
+  padding: 0 9px;
+  background: #ffffff;
+}
+
+.ai-review-rich-toolbar span {
+  min-width: 27px;
+  height: 27px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 6px;
+  color: #263247;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.ai-review-rich-toolbar i {
+  width: 1px;
+  height: 20px;
+  background: #e2e8f2;
+}
+
+.ai-review-empty-editor {
+  min-height: 138px;
+  border: 1px solid #e2e8f2;
+  border-radius: 0 0 7px 7px;
+  padding: 16px;
+  color: #a2acbd;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ai-review-empty-editor-large {
+  min-height: 210px;
+}
+
+.ai-review-mode-panel .review-action {
+  margin-top: 14px;
+  border-color: #edf0ff;
+  background: #ffffff;
 }
 
 .design-mode-panel {
@@ -2228,6 +2358,185 @@ body[data-builder-tab="ai-review"] .reset-link {
   line-height: 1;
 }
 
+.ai-review-hero {
+  display: none;
+  min-height: 100%;
+  place-items: center;
+  align-content: center;
+  padding: 66px 40px;
+  background: #ffffff;
+  text-align: center;
+}
+
+body[data-builder-tab="ai-review"] .ai-review-hero {
+  display: grid;
+}
+
+.ai-review-visual {
+  position: relative;
+  width: 462px;
+  height: 328px;
+  margin: 0 auto 28px;
+  background: radial-gradient(circle at 50% 54%, #f2f4ff 0 47%, transparent 48%);
+}
+
+.ai-review-doc {
+  position: absolute;
+  left: 80px;
+  top: 36px;
+  width: 220px;
+  height: 262px;
+  border-radius: 8px;
+  padding: 26px 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 46px rgba(38, 52, 81, 0.13);
+  text-align: left;
+}
+
+.ai-review-doc::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 8px;
+  border-radius: 8px 8px 0 0;
+  background: #7782f3;
+}
+
+.ai-review-doc strong {
+  display: block;
+  margin-bottom: 22px;
+  color: #232c3d;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.ai-review-doc span {
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: #e4e9f5;
+}
+
+.ai-review-doc span:nth-child(3) {
+  width: 74%;
+}
+
+.ai-review-doc span:nth-child(4) {
+  width: 88%;
+}
+
+.ai-review-doc span:nth-child(5) {
+  width: 62%;
+}
+
+.ai-review-avatar {
+  position: absolute;
+  right: 92px;
+  top: 78px;
+  width: 126px;
+  height: 126px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 41%, #ffd1bb 0 20px, transparent 21px),
+    radial-gradient(circle at 50% 103%, #7782f3 0 52px, transparent 53px),
+    #f7b892;
+  box-shadow: 0 15px 36px rgba(64, 78, 113, 0.16);
+}
+
+.ai-review-avatar::before,
+.ai-review-avatar::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+}
+
+.ai-review-avatar::before {
+  left: 35px;
+  top: 24px;
+  width: 56px;
+  height: 24px;
+  background: #273246;
+  transform: rotate(-8deg);
+}
+
+.ai-review-avatar::after {
+  left: 42px;
+  top: 56px;
+  width: 42px;
+  height: 18px;
+  border-bottom: 4px solid #ffffff;
+}
+
+.ai-review-perfect {
+  position: absolute;
+  right: 72px;
+  bottom: 74px;
+  min-width: 132px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 0 14px;
+  background: #ffffff;
+  color: #263247;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 12px 32px rgba(38, 52, 81, 0.12);
+}
+
+.ai-review-perfect strong {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #d9f5e5;
+  color: #2da463;
+  font-size: 15px;
+}
+
+.ai-review-line {
+  position: absolute;
+  left: 228px;
+  bottom: 68px;
+  width: 112px;
+  height: 14px;
+  border-radius: 999px;
+  background: #7782f3;
+  transform: rotate(-7deg);
+}
+
+.ai-review-hero h2 {
+  margin: 0 0 13px;
+  color: #152235;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+
+.ai-review-hero p {
+  max-width: 422px;
+  margin: 0 auto 26px;
+  color: #667286;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.ai-review-hero button {
+  min-width: 168px;
+  min-height: 48px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 22px;
+  background: #5b61e8;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 900;
+  box-shadow: 0 12px 28px rgba(91, 97, 232, 0.24);
+}
+
 .cv-preview-pages {
   width: max(100%, calc(var(--page-width) * var(--preview-zoom)));
   min-height: 100%;
@@ -3405,6 +3714,14 @@ li {
     padding: 0;
     width: auto;
     background: #ffffff;
+  }
+
+  body[data-builder-tab="ai-review"] .cv-preview-pages {
+    display: block;
+  }
+
+  .ai-review-hero {
+    display: none !important;
   }
 
   .cv-page {
