@@ -3205,8 +3205,8 @@ li {
   place-items: center;
   width: 48px;
   height: 40px;
-  border-radius: 8px;
-  background: #ffe089;
+  border-radius: 0;
+  background: url("./media/dashboard-banner-icon.png") center / contain no-repeat;
   color: transparent;
   font-size: 0;
   overflow: hidden;
@@ -3216,6 +3216,7 @@ li {
 .banner-illustration::after {
   content: "";
   position: absolute;
+  display: none;
 }
 
 .banner-illustration::before {
