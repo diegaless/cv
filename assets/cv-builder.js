@@ -1136,7 +1136,7 @@
   }
 
   function updateScoreCard() {
-    const score = 66;
+    const score = document.body.dataset.builderTab === "ai-review" ? 20 : 65;
     const suggestions = [
       { done: false, badge: "✦", label: "Escribe tu perfil profesional", highlight: true },
       { done: false, badge: "✦", label: "Crear una carta de presentación rápida", highlight: true },
@@ -1595,6 +1595,7 @@
     document.querySelectorAll("[data-builder-tab-panel]").forEach((panel) => {
       panel.hidden = panel.dataset.builderTabPanel !== tabName;
     });
+    updateScoreCard();
     if (options.silent) return;
     if (tabName === "editor") showToast("Ya estás editando el contenido del CV.");
     if (tabName === "design") showToast("Diseño activado: puedes cambiar plantilla y color de acento.");

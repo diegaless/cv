@@ -776,7 +776,6 @@ body[data-builder-tab="design"] .cloud-card,
 body[data-builder-tab="design"] .utility-actions,
 body[data-builder-tab="design"] .reset-link,
 body[data-builder-tab="ai-review"] .editor-header,
-body[data-builder-tab="ai-review"] #cv-form,
 body[data-builder-tab="ai-review"] .assistant-fab,
 body[data-builder-tab="ai-review"] .mobile-download-button,
 body[data-builder-tab="ai-review"] .cloud-card,
@@ -797,6 +796,10 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
 
 .ai-review-mode-panel {
   margin-bottom: 6px;
+}
+
+body[data-builder-tab="ai-review"] .ai-review-mode-panel {
+  display: none;
 }
 
 .ai-review-editor-card {
