@@ -88,23 +88,69 @@
               <ul class="score-list" id="score-list"></ul>
             </section>
             <section class="form-card builder-mode-panel design-mode-panel" data-builder-tab-panel="design" hidden>
-              <div class="section-head">
-                <div>
-                  <p class="card-kicker">Diseño</p>
-                  <h2>Personaliza tu plantilla</h2>
-                </div>
-                <span class="card-title-meta">Plantilla actual</span>
+              <div class="design-toolbar">
+                <button class="is-active" type="button" data-action="noop" data-message="Plantillas y colores activos.">Plantilla y Colores</button>
+                <button type="button" data-action="noop" data-message="Opciones de texto preparadas.">Texto</button>
+                <button type="button" data-action="noop" data-message="Opciones de diseño preparadas.">Diseño</button>
+                <button type="button" data-action="noop" data-message="Color principal preparado.">Color principal</button>
               </div>
-              <div class="design-options">
-                <button class="design-choice is-selected" type="button" data-action="design-choice" data-design="classic">
-                  <span class="design-thumb classic" aria-hidden="true"></span>
-                  <strong>Profesional</strong>
-                  <small>La plantilla limpia que replica cvapp.es.</small>
+              <div class="design-color-row" aria-label="Color principal">
+                <span>Color principal</span>
+                <button class="is-selected" type="button" data-action="accent-choice" data-accent="#1e2532" aria-label="Negro" style="--swatch: #1e2532"></button>
+                <button type="button" data-action="noop" data-message="Color bloqueado en la plantilla real." aria-label="Color bloqueado"></button>
+                <button type="button" data-action="noop" data-message="Color bloqueado en la plantilla real." aria-label="Color bloqueado"></button>
+                <button type="button" data-action="noop" data-message="Color bloqueado en la plantilla real." aria-label="Color bloqueado"></button>
+                <button type="button" data-action="noop" data-message="Color bloqueado en la plantilla real." aria-label="Color bloqueado"></button>
+              </div>
+              <div class="design-filter-row" aria-label="Filtros de plantilla">
+                <button class="is-active" type="button" data-action="noop" data-message="Mostrando todas las plantillas.">Todo</button>
+                <button type="button" data-action="noop" data-message="Plantillas con foto filtradas.">Con foto</button>
+                <button type="button" data-action="noop" data-message="Plantillas de dos columnas filtradas.">Dos columnas</button>
+                <button type="button" data-action="noop" data-message="Plantillas ATS filtradas.">ATS</button>
+                <button type="button" data-action="noop" data-message="Plantillas DOCX filtradas.">DOCX</button>
+                <button type="button" data-action="noop" data-message="Plantillas personalizadas filtradas.">Personalizado</button>
+                <button type="button" data-action="noop" data-message="Plantillas gratuitas filtradas.">Gratis</button>
+              </div>
+              <div class="template-gallery" aria-label="Plantillas disponibles">
+                <button class="template-card is-selected" type="button" data-action="design-choice" data-design="classic">
+                  <span class="template-preview template-classic" aria-hidden="true"></span>
+                  <span class="template-name">Clásico</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
                 </button>
-                <button class="design-choice" type="button" data-action="design-choice" data-design="compact">
-                  <span class="design-thumb compact" aria-hidden="true"></span>
-                  <strong>Compacta</strong>
-                  <small>Reduce espacios para candidaturas largas.</small>
+                <button class="template-card" type="button" data-action="design-choice" data-design="traditional">
+                  <span class="template-preview template-traditional" aria-hidden="true"></span>
+                  <span class="template-name">Tradicional</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
+                </button>
+                <button class="template-card" type="button" data-action="design-choice" data-design="professional">
+                  <span class="template-preview template-professional" aria-hidden="true"></span>
+                  <span class="template-name">Profesional</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
+                </button>
+                <button class="template-card" type="button" data-action="design-choice" data-design="compact">
+                  <span class="template-preview template-compact" aria-hidden="true"></span>
+                  <span class="template-name">Prime ATS</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
+                </button>
+                <button class="template-card" type="button" data-action="design-choice" data-design="santiago">
+                  <span class="template-preview template-santiago" aria-hidden="true"></span>
+                  <span class="template-name">ATS puro</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
+                </button>
+                <button class="template-card" type="button" data-action="design-choice" data-design="elegant">
+                  <span class="template-preview template-elegant" aria-hidden="true"></span>
+                  <span class="template-name">Especialista</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
+                </button>
+                <button class="template-card" type="button" data-action="design-choice" data-design="dublin">
+                  <span class="template-preview template-dublin" aria-hidden="true"></span>
+                  <span class="template-name">Limpio</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
+                </button>
+                <button class="template-card" type="button" data-action="design-choice" data-design="simple">
+                  <span class="template-preview template-simple" aria-hidden="true"></span>
+                  <span class="template-name">Simple para ATS</span>
+                  <span class="template-tags"><i>PDF</i><i>DOCX</i></span>
                 </button>
               </div>
               <div class="design-swatches" aria-label="Color de acento">

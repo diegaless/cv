@@ -1136,7 +1136,7 @@
   }
 
   function updateScoreCard() {
-    const score = 44;
+    const score = 66;
     const suggestions = [
       { done: false, badge: "✦", label: "Escribe tu perfil profesional", highlight: true },
       { done: false, badge: "✦", label: "Crear una carta de presentación rápida", highlight: true },
@@ -1148,7 +1148,7 @@
       { done: false, badge: "+2", label: "Añadir prácticas" },
     ];
 
-    cvScore.textContent = `${score}%`;
+    cvScore.textContent = String(score);
     scoreFloat.textContent = `${score}%`;
     if (mobileScoreFloat) mobileScoreFloat.textContent = "%";
     cvScoreBar.style.width = `${score}%`;
@@ -1668,7 +1668,7 @@
     }
     if (actionButton && !actionButton.closest("#cv-form") && actionButton.dataset.action === "design-choice") {
       event.preventDefault();
-      document.querySelectorAll(".design-choice").forEach((button) => {
+      document.querySelectorAll(".template-card, .design-choice").forEach((button) => {
         button.classList.toggle("is-selected", button === actionButton);
       });
       showToast(actionButton.dataset.design === "compact"
@@ -1711,7 +1711,12 @@
     handleSectionOption(sectionOption);
   });
 
-  setBuilderTab("editor", { silent: true });
+  const initialTab = window.location.hash === "#design"
+    ? "design"
+    : window.location.hash === "#ai-review"
+      ? "ai-review"
+      : "editor";
+  setBuilderTab(initialTab, { silent: true });
   renderForm();
   updatePreview();
   initCloud();
