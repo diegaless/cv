@@ -1007,17 +1007,17 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 24px 0 30px;
+  padding: 46px 0 32px;
 }
 
 .design-filter-row button {
-  min-height: 28px;
+  min-height: 40px;
   border: 0;
   border-radius: 999px;
-  padding: 0 13px;
+  padding: 0 16px;
   background: transparent;
   color: #6f798d;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1029,9 +1029,11 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
 
 .template-gallery {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 30px 12px;
+  grid-template-columns: repeat(4, 212px);
+  gap: 36px 16px;
   align-items: start;
+  justify-content: start;
+  padding: 0 4px;
 }
 
 .template-card {
@@ -1047,7 +1049,7 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
 
 .template-preview {
   position: relative;
-  height: 300px;
+  height: 298px;
   border: 1px solid #d7dfeb;
   border-radius: 2px;
   overflow: hidden;
@@ -1084,8 +1086,9 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
   display: block;
   order: -1;
   color: #263247;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
+  line-height: 24px;
 }
 
 .template-tags {
@@ -1165,6 +1168,51 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
     linear-gradient(#1d2531, #1d2531) 24px 28px / 86px 2px no-repeat,
     repeating-linear-gradient(to bottom, transparent 0 14px, #d7deea 14px 15px) 24px 68px / 130px 164px no-repeat,
     #ffffff;
+}
+
+.template-classic,
+.template-traditional,
+.template-professional,
+.template-compact,
+.template-santiago,
+.template-elegant,
+.template-dublin,
+.template-simple {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.template-classic {
+  background-image: url("https://cvapp.es/assets/templates/london-bd8262b0.jpg");
+}
+
+.template-traditional {
+  background-image: url("https://cvapp.es/assets/templates/santiago-e9da5710.jpg");
+}
+
+.template-professional {
+  background-image: url("https://s3.resume.io/cdn-cgi/image/format=auto,fit=scale-down,dpr=1,width=154/uploads/local_template_image/image/549/persistent-resource/dublin-plantillas-de-curriculum.jpg?v=1700667741");
+}
+
+.template-compact {
+  background-image: url("https://cvapp.es/assets/templates/helsinki-ca1d2b7f.jpg");
+}
+
+.template-santiago {
+  background-image: url("https://cvapp.es/assets/templates/seoul-d6e0ed56.jpg");
+}
+
+.template-elegant {
+  background-image: url("https://cvapp.es/assets/templates/specialist_traditional1-b43cbc80.jpg");
+}
+
+.template-dublin {
+  background-image: url("https://cvapp.es/assets/templates/berlin-37dd67af.jpg");
+}
+
+.template-simple {
+  background-image: url("https://s3.resume.io/cdn-cgi/image/format=auto,fit=scale-down,dpr=1,width=154/uploads/local_template_image/image/7605/persistent-resource/athens-plantillas-de-curriculum.jpg?v=1676382908");
 }
 
 .design-swatches {
