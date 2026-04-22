@@ -1488,14 +1488,39 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 }
 
 .photo-placeholder {
+  position: relative;
   width: 60px;
   height: 60px;
   display: grid;
   place-items: center;
   border-radius: 2px;
   background: #edf1f7;
-  color: #9aa7ba;
-  font-size: 22px;
+  color: transparent;
+  font-size: 0;
+}
+
+.photo-placeholder::before,
+.photo-placeholder::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  border: 2px solid #aeb8c8;
+  transform: translateX(-50%);
+}
+
+.photo-placeholder::before {
+  top: 29px;
+  width: 18px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.photo-placeholder::after {
+  top: 18px;
+  width: 14px;
+  height: 15px;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
 }
 
 .photo-controls {
