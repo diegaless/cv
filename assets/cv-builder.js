@@ -20,6 +20,8 @@
   const form = document.getElementById("cv-form");
   const preview = document.getElementById("cv-preview-pages");
   const pageCountLabel = document.getElementById("page-count-label");
+  const previewCurrentPage = document.getElementById("preview-current-page");
+  const previewTotalPages = document.getElementById("preview-total-pages");
   const cloudMode = document.getElementById("cloud-mode");
   const cloudStatus = document.getElementById("cloud-status");
   const loginGoogle = document.getElementById("login-google");
@@ -689,7 +691,7 @@
             ${renderField("LinkedIn URL", "linkedin", state.data.linkedin, "text", "linkedin.com/in/yourprofile")}
             ${renderField("Código postal", "postalCode", state.data.postalCode)}
             ${renderField("Ciudad", "city", state.data.city)}
-            ${renderField("País", "country", state.data.country)}
+            ${renderField("País", "country", state.data.country, "text", "", "", "For users outside the US")}
           </div>
           <button class="details-link" type="button" data-action="toggle-personal-extra" aria-expanded="${expandedSections.has("personal-extra")}">
             ${expandedSections.has("personal-extra") ? "Ocultar detalles adicionales" : "Mostrar detalles adicionales"} ⌄
@@ -708,11 +710,12 @@
     updateSectionNav();
   }
 
-  function renderField(label, field, value, type = "text", placeholder = "", className = "") {
+  function renderField(label, field, value, type = "text", placeholder = "", className = "", hint = "") {
     return `
       <div class="field ${esc(className)}">
         <label for="field-${field}">${esc(label)}</label>
         <input id="field-${field}" type="${type}" value="${esc(value)}" placeholder="${esc(placeholder)}" data-field="${esc(field)}" />
+        ${hint ? `<span class="field-hint">${esc(hint)}</span>` : ""}
       </div>
     `;
   }
@@ -1112,7 +1115,15 @@
     preview.innerHTML = renderPages(state.data);
     updateSectionNav();
     updateScoreCard();
+    updatePreviewPageControls();
     persist();
+  }
+
+  function updatePreviewPageControls() {
+    const pageCount = preview.querySelectorAll(".cv-page").length || 1;
+    if (pageCountLabel) pageCountLabel.textContent = `${pageCount} ${pageCount === 1 ? "página" : "páginas"}`;
+    if (previewCurrentPage) previewCurrentPage.textContent = "1";
+    if (previewTotalPages) previewTotalPages.textContent = String(pageCount);
   }
 
   function updateSectionNav() {
