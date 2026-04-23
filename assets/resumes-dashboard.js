@@ -357,10 +357,12 @@
 
   function render() {
     const resumes = getDocuments();
+    const documentsGrid = document.querySelector(".documents-grid");
     list.hidden = activeTab !== "resumes";
     coverPanel.hidden = activeTab !== "letters";
+    documentsGrid.hidden = activeTab !== "resumes";
     document.querySelector(".new-document-card").hidden = activeTab !== "resumes";
-    createButton.textContent = activeTab === "resumes" ? "+ Crear nuevo" : "+ Crear carta";
+    createButton.textContent = "+ Crear nuevo";
     list.innerHTML = resumes.length
       ? resumes.map(renderResumeCard).join("")
       : '<p class="dashboard-empty">No hay currículums todavía.</p>';
