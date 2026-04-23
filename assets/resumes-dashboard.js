@@ -269,7 +269,14 @@
   }
 
   function formatUpdatedAt(value) {
-    return "Actualizado";
+    const date = value ? new Date(value) : null;
+    if (!date || Number.isNaN(date.getTime())) return "Actualizado";
+    const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `Actualizado ${day} ${month}, ${hours}:${minutes}`;
   }
 
   function resumeText(document) {

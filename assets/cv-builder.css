@@ -3713,7 +3713,7 @@ li {
   background: #ffffff url("./media/dashboard-resume-thumb.png") center / 100% 100% no-repeat;
   color: #1f1f1f;
   font-family: "EB Garamond CV", Georgia, serif;
-  box-shadow: 0 0 1px rgba(15, 56, 113, 0.18), 0 8px 20px -4px rgba(15, 56, 113, 0.12);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -4001,17 +4001,30 @@ li {
 }
 
 .new-document-plus::before {
-  content: "+";
+  content: "";
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: #f1f4fa;
-  color: #9fa8bc;
-  font-size: 34px;
+  background: #eff2f9;
+  color: #bec4d5;
+  font-size: 0;
   line-height: 1;
-  font-weight: 500;
+  font-weight: 400;
+}
+
+.new-document-plus::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  background:
+    linear-gradient(#bec4d5 0 0) center / 1.5px 24px no-repeat,
+    linear-gradient(#bec4d5 0 0) center / 24px 1.5px no-repeat;
 }
 
 .new-document-card strong,
