@@ -1071,7 +1071,26 @@
     `;
   }
 
+  function sectionOptionType(label) {
+    const normalized = label.toLowerCase();
+    if (normalized.includes("personalizada")) return "custom";
+    if (normalized.includes("encabezado")) return "document";
+    if (normalized.includes("formación")) return "certificate";
+    if (normalized.includes("extracurricular")) return "plant";
+    if (normalized.includes("experiencia")) return "briefcase";
+    if (normalized.includes("conferences") || normalized.includes("referencias")) return "megaphone";
+    if (normalized.includes("volunteering")) return "volunteer";
+    if (normalized.includes("hobbies")) return "rook";
+    if (normalized.includes("idiomas")) return "language";
+    if (normalized.includes("valor")) return "value";
+    if (normalized.includes("premios")) return "diamond";
+    if (normalized.includes("afiliaciones")) return "building";
+    if (normalized.includes("licencias")) return "license";
+    return "document";
+  }
+
   function renderSectionOption(label, locked = false) {
+    const type = sectionOptionType(label);
     return `
       <div
         class="section-option"
@@ -1081,10 +1100,7 @@
         data-section-option="${esc(label)}"
         data-locked="${locked ? "true" : "false"}"
       >
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="1.8"></rect>
-          <path d="M8 9h8M8 13h5" stroke-width="1.8" stroke-linecap="round"></path>
-        </svg>
+        <span class="section-option-icon section-option-icon--${esc(type)}" aria-hidden="true"></span>
         <span>${esc(label)}${locked ? ' <span class="lock-icon" aria-label="bloqueado"></span>' : ""}</span>
       </div>
     `;
