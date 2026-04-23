@@ -660,6 +660,21 @@ button {
   color: var(--indigo);
 }
 
+.score-list li.is-ai .score-ai-icon {
+  width: 32px;
+  min-width: 32px;
+  height: 20px;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.score-ai-icon svg {
+  display: block;
+  width: 32px;
+  height: 20px;
+}
+
 .score-list li.is-done {
   color: #667286;
 }

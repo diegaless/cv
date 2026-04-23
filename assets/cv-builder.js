@@ -16,6 +16,7 @@
   const FIRST_PAGE_HEADER_COST = 92;
   const SECTION_HEADING_COST = 29;
   const SECTION_BOUNDARY_COST = 19;
+  const AI_SCORE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="20" viewBox="0 0 32 20" fill="none" aria-hidden="true"><rect width="32" height="20" rx="4" fill="#F1F2FF"></rect><path opacity="0.4" d="M11.2611 3.29444C11.3175 3.15621 11.5132 3.15621 11.5697 3.29444L11.887 4.07168C11.9717 4.27902 12.1362 4.44355 12.3435 4.5282L13.1208 4.84554C13.259 4.90197 13.259 5.0977 13.1208 5.15414L12.3435 5.47147C12.1362 5.55612 11.9717 5.72066 11.887 5.92799L11.5697 6.70524C11.5132 6.84346 11.3175 6.84346 11.2611 6.70524L10.9437 5.92799C10.8591 5.72066 10.6945 5.55612 10.4872 5.47147L9.70996 5.15414C9.57174 5.0977 9.57174 4.90197 9.70996 4.84554L10.4872 4.5282C10.6945 4.44355 10.8591 4.27902 10.9437 4.07168L11.2611 3.29444Z" fill="#7A82F5"></path><path d="M10.4303 12.4614C10.4868 12.3232 10.6825 12.3232 10.7389 12.4614L11.2979 13.8304C11.3825 14.0377 11.5471 14.2023 11.7544 14.2869L13.1234 14.8459C13.2616 14.9023 13.2616 15.098 13.1234 15.1545L11.7544 15.7134C11.5471 15.798 11.3825 15.9626 11.2979 16.1699L10.7389 17.5389C10.6825 17.6771 10.4868 17.6771 10.4303 17.5389L9.8714 16.1699C9.78675 15.9626 9.62222 15.798 9.41489 15.7134L8.0459 15.1545C7.90768 15.098 7.90768 14.9023 8.0459 14.8459L9.41489 14.2869C9.62222 14.2023 9.78675 14.0377 9.8714 13.8304L10.4303 12.4614Z" fill="#7A82F5"></path><path d="M17.3272 3.93897C17.2989 3.86985 17.2011 3.86985 17.1728 3.93897L15.9674 6.89137C15.6288 7.7207 14.9707 8.37884 14.1414 8.71744L11.189 9.92285C11.1199 9.95107 11.1199 10.0489 11.189 10.0772L14.1414 11.2826C14.9707 11.6212 15.6288 12.2793 15.9674 13.1086L17.1728 16.061C17.2011 16.1301 17.2989 16.1301 17.3272 16.061L18.5326 13.1086C18.8712 12.2793 19.5293 11.6212 20.3586 11.2826L23.311 10.0772C23.3801 10.0489 23.3801 9.95107 23.311 9.92285L20.3586 8.71744C19.5293 8.37884 18.8712 7.7207 18.5326 6.89137L17.3272 3.93897Z" fill="#7A82F5" stroke="#7A82F5" stroke-width="0.833333" stroke-miterlimit="3.99933"></path></svg>`;
 
   const form = document.getElementById("cv-form");
   const preview = document.getElementById("cv-preview-pages");
@@ -1194,10 +1195,17 @@
     cvScoreBar.style.width = `${score}%`;
     scoreList.innerHTML = suggestions.map((suggestion) => `
       <li class="${suggestion.done ? "is-done" : ""}${suggestion.highlight ? " is-ai" : ""}">
-        <span>${esc(suggestion.done ? "✓" : suggestion.badge)}</span>
+        ${renderScoreBadge(suggestion)}
         ${esc(suggestion.label)}
       </li>
     `).join("");
+  }
+
+  function renderScoreBadge(suggestion) {
+    if (suggestion.highlight && !suggestion.done) {
+      return `<span class="score-ai-icon">${AI_SCORE_ICON}</span>`;
+    }
+    return `<span>${esc(suggestion.done ? "✓" : suggestion.badge)}</span>`;
   }
 
   function handleSectionOption(option) {
