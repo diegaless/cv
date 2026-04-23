@@ -3989,6 +3989,7 @@ li {
   position: relative;
   display: grid;
   place-items: center;
+  place-content: center;
   width: 192px;
   height: 270px;
   border: 1px solid #edf1f8;
