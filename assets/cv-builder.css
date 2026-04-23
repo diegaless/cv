@@ -228,7 +228,7 @@ button {
 
 .app-tabs button.is-active {
   background: #ffffff;
-  color: #152235;
+  color: #1e2532;
   box-shadow: 0 4px 12px rgba(24, 34, 53, 0.07);
 }
 
@@ -768,9 +768,24 @@ button {
 
 .download-chevron {
   display: inline-block;
-  font-size: 15px;
-  line-height: 1;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  font-size: 0;
+  line-height: 0;
   transition: transform 0.16s ease;
+}
+
+.download-chevron::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: rotate(45deg);
 }
 
 .download-trigger.is-open .download-chevron {
