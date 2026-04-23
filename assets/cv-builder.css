@@ -3203,7 +3203,7 @@ li {
 
 .documents-app {
   display: grid;
-  grid-template-columns: 232px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   min-height: 100vh;
   color: #1e2532;
   font-family: var(--ui-font);
@@ -3211,7 +3211,7 @@ li {
 
 .documents-sidebar {
   padding: 16px 8px;
-  border-right: 1px solid #eff2f9;
+  border-right: 0;
   background: #ffffff;
 }
 
@@ -3480,7 +3480,7 @@ li {
   max-width: 1120px;
   margin: 32px auto 80px;
   padding: 0;
-  transform: translateX(4px);
+  transform: translateX(0);
 }
 
 .documents-heading-row {
