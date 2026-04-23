@@ -646,10 +646,10 @@ button {
   justify-self: start;
   min-width: 32px;
   height: 20px;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 0;
-  background: #e5f7ed;
-  color: #12864f;
+  background: #e7f4ed;
+  color: #217d47;
   font-size: 14px;
   line-height: 16px;
   font-weight: 600;
