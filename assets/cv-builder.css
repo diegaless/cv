@@ -2393,7 +2393,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(90deg, #ee5e1b 0%, #87b6f7 50%, #7971b0 100%) border-box;
   color: #273044;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   box-shadow: 0 18px 38px rgba(35, 42, 64, 0.14);
 }
@@ -2402,6 +2402,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   content: "✦";
   margin-right: 9px;
   color: #7d6df2;
+  font-size: 12px;
 }
 
 .cover-card {
