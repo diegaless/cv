@@ -1724,11 +1724,12 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   display: inline-flex;
   gap: 7px;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 25px;
   border: 0;
   background: transparent;
   color: var(--accent);
-  font-weight: 800;
+  font-weight: 600;
+  line-height: 20px;
   padding: 0;
 }
 
