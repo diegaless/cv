@@ -3771,8 +3771,10 @@ li {
 }
 
 .resume-card-details small {
+  width: 240px;
   color: #828ba2;
   font-size: 14px;
+  letter-spacing: 0.3px;
   line-height: 16px;
   margin: 4px 0 16px;
 }
@@ -3798,6 +3800,7 @@ li {
   background: #339d5d;
   color: #ffffff;
   font-size: 14px;
+  letter-spacing: 0.3px;
   line-height: 16px;
   font-weight: 600;
   text-align: center;
