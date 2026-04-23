@@ -17,6 +17,7 @@
     duplicate: "M5 9h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zm1 2v8h8v-8H6zm12-4H9V5h10a1 1 0 0 1 1 1v10h-2V7z",
     more: "M6.5,14 C5.67157288,14 5,13.3284271 5,12.5 C5,11.6715729 5.67157288,11 6.5,11 C7.32842712,11 8,11.6715729 8,12.5 C8,13.3284271 7.32842712,14 6.5,14 Z M12.5,14 C11.6715729,14 11,13.3284271 11,12.5 C11,11.6715729 11.6715729,11 12.5,11 C13.3284271,11 14,11.6715729 14,12.5 C14,13.3284271 13.3284271,14 12.5,14 Z M18.5,14 C17.6715729,14 17,13.3284271 17,12.5 C17,11.6715729 17.6715729,11 18.5,11 C19.3284271,11 20,11.6715729 20,12.5 C20,13.3284271 19.3284271,14 18.5,14 Z",
   };
+  const CREATE_ICON = '<svg width="20" height="20" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 5H9v4H5v2h4v4h2v-4h4V9h-4V5z"></path></svg>';
 
   function actionIcon(type) {
     const path = ACTION_ICON_PATHS[type];
@@ -377,7 +378,7 @@
     coverPanel.hidden = activeTab !== "letters";
     documentsGrid.hidden = activeTab !== "resumes";
     document.querySelector(".new-document-card").hidden = activeTab !== "resumes";
-    createButton.textContent = "+ Crear nuevo";
+    createButton.innerHTML = `<span>${CREATE_ICON}Crear nuevo</span>`;
     list.innerHTML = resumes.length
       ? resumes.map(renderResumeCard).join("")
       : '<p class="dashboard-empty">No hay currículums todavía.</p>';

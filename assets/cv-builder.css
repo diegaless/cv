@@ -3549,25 +3549,38 @@ li {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 0;
   align-self: center;
   width: 117px;
   min-height: 36px;
   border: 0;
   border-radius: 4px;
-  padding: 0 8px;
+  padding: 8px 12px 8px 4px;
   background: #1a91f0;
   color: #ffffff;
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
   white-space: nowrap;
   transform: translateY(9px);
 }
 
 .create-new-button::before {
-  content: "+";
-  font-size: 16px;
-  line-height: 1;
+  content: none;
+  display: none;
+}
+
+.create-new-button span {
+  display: flex;
+  align-items: center;
+}
+
+.create-new-button svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 2px;
+  color: currentColor;
+  fill: currentColor;
 }
 
 .visibility-banner {
