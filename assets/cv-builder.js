@@ -1712,11 +1712,17 @@
 
   accountMenuButton?.addEventListener("click", (event) => {
     event.stopPropagation();
+    setDownloadMenu(false);
     accountPopover.hidden = !accountPopover.hidden;
   });
 
   accountPopover?.addEventListener("click", (event) => {
     const action = event.target.closest("[data-account-action]")?.dataset.accountAction;
+    if (action === "settings") {
+      showToast("Ajustes de cuenta abiertos en la copia local.");
+      accountPopover.hidden = true;
+      return;
+    }
     if (action === "faq") {
       showToast("FAQ: puedes importar/exportar JSON, imprimir el CV y activar Firebase si configuras credenciales.");
       accountPopover.hidden = true;
