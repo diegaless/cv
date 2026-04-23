@@ -3258,6 +3258,11 @@ li {
   border: 0;
   border-radius: 50%;
   background: linear-gradient(to top, #ee571d, #fbb092);
+  transform: translateY(-1px);
+}
+
+.dashboard-user-card > span:last-child {
+  transform: translateY(1px);
 }
 
 .dashboard-avatar::before {
