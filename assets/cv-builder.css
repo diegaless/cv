@@ -3647,6 +3647,7 @@ li {
   background: transparent;
   color: #1e2532;
   font-weight: 500;
+  transform: translateX(1px);
 }
 
 .documents-grid {
