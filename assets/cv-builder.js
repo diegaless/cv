@@ -790,8 +790,8 @@
   function sectionFieldCopy(section) {
     if (section === "experience") {
       return {
-        entityLabel: "Empresa",
-        titleLabel: "Puesto",
+        entityLabel: "Empleador",
+        titleLabel: "Puesto laboral",
         metaLabel: "Ciudad",
         descriptionPlaceholder: "p. e. logros, responsabilidades y resultados medibles",
       };
@@ -916,6 +916,27 @@
     const parts = splitTitleParts(item.title);
     const dates = splitDateRange(item.date);
     const fieldCopy = sectionFieldCopy(section);
+    const titleAndEntityFields = section === "experience"
+      ? `
+              <div class="field">
+                <label for="${prefix}-prefix">${esc(fieldCopy.titleLabel)}</label>
+                <input id="${prefix}-prefix" value="${esc(parts.prefix)}" data-section="${esc(section)}" data-index="${index}" data-item-field="title_prefix" />
+              </div>
+              <div class="field">
+                <label for="${prefix}-suffix">${esc(fieldCopy.entityLabel)}</label>
+                <input id="${prefix}-suffix" value="${esc(parts.suffix)}" data-section="${esc(section)}" data-index="${index}" data-item-field="title_suffix" />
+              </div>
+            `
+      : `
+              <div class="field">
+                <label for="${prefix}-suffix">${esc(fieldCopy.entityLabel)}</label>
+                <input id="${prefix}-suffix" value="${esc(parts.suffix)}" data-section="${esc(section)}" data-index="${index}" data-item-field="title_suffix" />
+              </div>
+              <div class="field">
+                <label for="${prefix}-prefix">${esc(fieldCopy.titleLabel)}</label>
+                <input id="${prefix}-prefix" value="${esc(parts.prefix)}" data-section="${esc(section)}" data-index="${index}" data-item-field="title_prefix" />
+              </div>
+            `;
     return `
       <article class="entry-card is-expanded" data-draggable-item data-section="${esc(section)}" data-index="${index}">
         ${renderDragHandle(section, index)}
@@ -940,14 +961,7 @@
                 <input id="${prefix}-meta" value="${esc(item.meta || "")}" data-section="${esc(section)}" data-index="${index}" data-item-field="meta" />
               </div>
             ` : `
-              <div class="field">
-                <label for="${prefix}-suffix">${esc(fieldCopy.entityLabel)}</label>
-                <input id="${prefix}-suffix" value="${esc(parts.suffix)}" data-section="${esc(section)}" data-index="${index}" data-item-field="title_suffix" />
-              </div>
-              <div class="field">
-                <label for="${prefix}-prefix">${esc(fieldCopy.titleLabel)}</label>
-                <input id="${prefix}-prefix" value="${esc(parts.prefix)}" data-section="${esc(section)}" data-index="${index}" data-item-field="title_prefix" />
-              </div>
+              ${titleAndEntityFields}
             `}
             ${renderDateInputs(prefix, section, index, dates)}
             ${section === "awards" ? "" : `
