@@ -1616,6 +1616,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   gap: 16px;
   align-items: center;
   min-height: 72px;
+  transform: translateY(3px);
 }
 
 .photo-preview {
