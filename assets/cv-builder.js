@@ -663,7 +663,6 @@
             <h2>Datos personales</h2>
           </div>
           <span class="card-title-meta">
-            <span class="edit-mark" aria-hidden="true">✎</span>
             <span class="chevron">⌄</span>
           </span>
         </button>
@@ -1186,7 +1185,7 @@
       { done: false, badge: "+2", label: "Añadir prácticas" },
     ];
 
-    cvScore.textContent = String(score);
+    cvScore.textContent = `${score}%`;
     scoreFloat.textContent = `${score}%`;
     if (mobileScoreFloat) mobileScoreFloat.textContent = "%";
     cvScoreBar.style.width = `${score}%`;
@@ -1637,7 +1636,6 @@
     if (options.silent) return;
     if (tabName === "editor") showToast("Ya estás editando el contenido del CV.");
     if (tabName === "design") showToast("Diseño activado: puedes cambiar plantilla y color de acento.");
-    if (tabName === "ai-review") showToast("Revisión de IA preparada: usa las sugerencias de integridad y escritura.");
   }
 
   document.querySelectorAll("[data-tab-action]").forEach((button) => {

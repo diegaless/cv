@@ -743,7 +743,7 @@ button {
 }
 
 .form-card::before {
-  content: "";
+  content: none;
   position: absolute;
   left: 14px;
   top: 26px;
