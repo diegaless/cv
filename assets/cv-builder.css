@@ -3138,10 +3138,19 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   min-height: 84px;
   display: grid;
   place-items: center;
-  border-bottom: 1pt solid var(--rule);
+  border-bottom: 0;
   padding-bottom: 0;
   margin-bottom: 7px;
   font-family: "Times New Roman", Times, serif;
+}
+
+.cv-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.5px;
+  border-bottom: 1pt solid var(--rule);
 }
 
 .cv-header > div {
@@ -3183,6 +3192,11 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   border-top: 1pt solid var(--rule);
   margin-top: 11px;
   padding-top: 9px;
+}
+
+.cv-section + .cv-section {
+  position: relative;
+  top: 4px;
 }
 
 .cv-page + .cv-page {

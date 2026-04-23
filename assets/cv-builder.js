@@ -62,7 +62,7 @@
     unsubscribe: null,
     savedDocs: new Map(),
   };
-  const expandedSections = new Set(["personal", "profile", "experience", "education", "awards", "areas", "websites", "cover", "add-sections"]);
+  const expandedSections = new Set(["personal", "profile", "experience", "education", "awards", "areas", "websites", "cover", "add-sections", "cloud"]);
   const expandedItems = new Set();
   let draggedItem = null;
   let pointerDrag = null;
