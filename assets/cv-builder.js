@@ -1188,7 +1188,7 @@
       { done: false, badge: "+2", label: "Añadir prácticas" },
     ];
 
-    cvScore.textContent = `${score}%`;
+    cvScore.textContent = String(score);
     scoreFloat.textContent = `${score}%`;
     if (mobileScoreFloat) mobileScoreFloat.textContent = "%";
     cvScoreBar.style.width = `${score}%`;

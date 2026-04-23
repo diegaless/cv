@@ -559,7 +559,10 @@ button {
 .score-card {
   position: relative;
   margin: 4px 3px 6px;
-  padding: 24px 40px 22px;
+  height: 214px;
+  box-sizing: border-box;
+  overflow: visible;
+  padding: 24px 40px 22px 31px;
   border-radius: 8px;
   background: #ffffff;
   box-shadow: none;
@@ -572,9 +575,10 @@ button {
 .score-head {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
   color: #7a8496;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .score-settings {
@@ -586,12 +590,14 @@ button {
   padding: 3px 7px;
   background: var(--success);
   color: #ffffff;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
 }
 
 .score-bar {
   height: 3px;
-  margin: 12px 0 14px;
+  margin: 12px 0 18px;
   overflow: hidden;
   border-radius: 999px;
   background: #e5ebf3;
@@ -607,8 +613,8 @@ button {
 
 .score-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 13px 5px;
+  grid-template-columns: 418px 1fr;
+  gap: 16px 36px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -616,11 +622,12 @@ button {
 
 .score-list li {
   display: grid;
-  grid-template-columns: 31px 1fr;
-  gap: 9px;
+  grid-template-columns: 32px 1fr;
+  gap: 10px;
   align-items: center;
   color: #152235;
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .score-list li:nth-child(odd):last-child {
@@ -628,13 +635,19 @@ button {
 }
 
 .score-list li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   justify-self: start;
+  min-width: 32px;
+  height: 20px;
   border-radius: 5px;
-  padding: 2px 5px;
+  padding: 0;
   background: #e5f7ed;
   color: #12864f;
-  font-size: 12px;
-  font-weight: 900;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 600;
 }
 
 .score-list li.is-ai span {
@@ -4376,6 +4389,10 @@ li {
     padding-right: 22px;
   }
 
+  .score-card {
+    height: auto;
+  }
+
   .cover-section-card {
     padding-left: 0;
     padding-right: 0;
@@ -4384,6 +4401,10 @@ li {
   .score-list,
   .add-section-grid {
     grid-template-columns: 1fr;
+  }
+
+  .score-list {
+    gap: 13px;
   }
 
   .assistant-fab {
