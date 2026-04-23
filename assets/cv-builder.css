@@ -3314,11 +3314,11 @@ li {
 
 .dashboard-menu a {
   display: grid;
-  grid-template-columns: 28px 1fr auto;
+  grid-template-columns: 20px 1fr auto;
   gap: 10px;
   align-items: center;
   min-height: 40px;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 8px 12px;
   color: #6a7488;
   text-decoration: none;
