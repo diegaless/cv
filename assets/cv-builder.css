@@ -3978,6 +3978,10 @@ li {
   text-align: left;
 }
 
+.new-document-card button > span:last-child {
+  transform: translateY(-1px);
+}
+
 .new-document-plus {
   position: relative;
   display: grid;
@@ -4029,6 +4033,7 @@ li {
   max-width: 240px;
   margin: 4px 0;
   font-size: 14px;
+  letter-spacing: 0.3px;
   line-height: 16px;
 }
 
