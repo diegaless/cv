@@ -269,13 +269,7 @@
   }
 
   function formatUpdatedAt(value) {
-    const date = value ? new Date(value) : new Date();
-    if (Number.isNaN(date.getTime())) return "Actualizado recientemente";
-    const day = date.toLocaleString("es-ES", { day: "numeric" });
-    const month = date.toLocaleString("es-ES", { month: "long" });
-    const hour = String(date.getHours()).padStart(2, "0");
-    const minute = String(date.getMinutes()).padStart(2, "0");
-    return `Actualizado ${day} ${month.charAt(0).toUpperCase()}${month.slice(1)}, ${hour}:${minute}`;
+    return "Actualizado";
   }
 
   function resumeText(document) {

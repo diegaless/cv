@@ -3747,8 +3747,9 @@ li {
   grid-row: 1;
   align-self: start;
   display: grid;
-  gap: 8px;
+  gap: 0;
   padding-top: 0;
+  transform: translateY(-1px);
 }
 
 .resume-card-details strong {
@@ -3760,8 +3761,9 @@ li {
 
 .resume-card-details small {
   color: #828ba2;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 4px 0 16px;
 }
 
 .resume-score {
