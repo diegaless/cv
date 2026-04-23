@@ -3621,19 +3621,19 @@ li {
 
 .visibility-banner p {
   margin: 2px 0 0;
-  color: #656e83;
+  color: #303848;
   line-height: 20px;
 }
 
 .visibility-banner button {
   width: 128px;
   min-height: 36px;
-  border: 1px solid #d9deeb;
+  border: 1px solid transparent;
   border-radius: 4px;
   padding: 0;
-  background: #ffffff;
-  color: #303848;
-  font-weight: 700;
+  background: transparent;
+  color: #1e2532;
+  font-weight: 500;
 }
 
 .documents-grid {
