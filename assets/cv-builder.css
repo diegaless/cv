@@ -3105,7 +3105,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   height: var(--page-height);
   zoom: var(--preview-zoom);
   margin: 0;
-  transform: translateX(-1px);
+  transform: translateX(-1.6px);
   padding: 20px 60px 50px;
   background: var(--paper);
   color: var(--ink);
