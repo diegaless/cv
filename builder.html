@@ -23,7 +23,14 @@
           <button type="button" data-tab-action="ai-review">Revisión de IA</button>
         </div>
         <div class="top-actions">
-          <button class="primary-btn" type="button" id="print-cv">Descargar ▾</button>
+          <button class="primary-btn download-trigger" type="button" id="print-cv" aria-expanded="false" aria-controls="download-menu">
+            Descargar <span class="download-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="download-menu" id="download-menu" hidden>
+            <button type="button" data-download-action="pdf"><span class="download-menu-icon pdf">PDF</span><span>PDF</span></button>
+            <button type="button" data-download-action="docx"><span class="download-menu-icon docx">W</span><span>DOCX</span></button>
+            <button type="button" data-download-action="txt"><span class="download-menu-icon txt">T</span><span>TXT</span></button>
+          </div>
           <button class="icon-only" type="button" aria-label="Ajustes" data-scroll-target="section-cloud">⚙</button>
           <button class="account-avatar" type="button" id="account-menu-button" aria-label="Menú de cuenta">D</button>
           <aside class="account-popover" id="account-popover" hidden>

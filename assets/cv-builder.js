@@ -36,6 +36,9 @@
   const mobileScoreFloat = document.getElementById("mobile-score-float");
   const accountMenuButton = document.getElementById("account-menu-button");
   const accountPopover = document.getElementById("account-popover");
+  const downloadButton = document.getElementById("print-cv");
+  const downloadMenu = document.getElementById("download-menu");
+  const mobileDownloadButton = document.getElementById("mobile-download-button");
   const photoFallback = "";
   let activeResumeId = new URLSearchParams(window.location.search).get("resumeId")
     || localStorage.getItem(ACTIVE_RESUME_KEY)
@@ -1288,6 +1291,29 @@
     URL.revokeObjectURL(url);
   }
 
+  function resumeText() {
+    const data = cleanDataForDownload(state.data);
+    const lines = [
+      data.name,
+      data.title,
+      [data.email, data.phone].filter(Boolean).join(" · "),
+      "",
+      "Experiencia",
+      ...(data.experience || []).flatMap((item) => [compactSpaces(`${item.date || ""} ${item.title || ""}`), ...(item.bullets || []).map((bullet) => `- ${bullet}`), ""]),
+      "Formación",
+      ...(data.education || []).flatMap((item) => [compactSpaces(`${item.date || ""} ${item.title || ""}`), ...(item.bullets || []).map((bullet) => `- ${bullet}`), ""]),
+      "Reconocimientos",
+      ...(data.awards || []).flatMap((item) => [compactSpaces(`${item.date || ""} ${item.title || ""}`), ...(item.bullets || []).map((bullet) => `- ${bullet}`), ""]),
+    ];
+    return lines.filter((line, index, arr) => line || arr[index - 1]).join("\n");
+  }
+
+  function downloadFileBaseName() {
+    return (cvLabel(state.data) || "CV ESPAÑOL")
+      .replace(/[\\/:*?"<>|]+/g, "-")
+      .slice(0, 80);
+  }
+
   function collectCssText() {
     const chunks = [];
     Array.from(document.styleSheets).forEach((sheet) => {
@@ -1552,8 +1578,52 @@
     window.setTimeout(() => window.print(), 80);
   }
 
-  document.getElementById("print-cv").addEventListener("click", requestPrint);
-  document.getElementById("mobile-download-button")?.addEventListener("click", requestPrint);
+  function setDownloadMenu(open) {
+    if (!downloadButton || !downloadMenu) return;
+    downloadMenu.hidden = !open;
+    downloadButton.classList.toggle("is-open", open);
+    downloadButton.setAttribute("aria-expanded", String(open));
+  }
+
+  function toggleDownloadMenu(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    setDownloadMenu(Boolean(downloadMenu?.hidden));
+  }
+
+  function downloadDocx() {
+    const body = resumeText().split("\n").map((line) => `<p>${esc(line) || "&nbsp;"}</p>`).join("");
+    downloadFile(`${downloadFileBaseName()}.doc`, `<!doctype html><html><meta charset="utf-8"><body>${body}</body></html>`, "application/msword;charset=utf-8");
+    showToast("Descargando el CV en DOCX.");
+  }
+
+  function downloadTxt() {
+    downloadFile(`${downloadFileBaseName()}.txt`, resumeText(), "text/plain;charset=utf-8");
+    showToast("Descargando el CV en TXT.");
+  }
+
+  function handleDownloadMenuClick(event) {
+    const button = event.target.closest("[data-download-action]");
+    if (!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setDownloadMenu(false);
+    if (button.dataset.downloadAction === "pdf") requestPrint();
+    if (button.dataset.downloadAction === "docx") downloadDocx();
+    if (button.dataset.downloadAction === "txt") downloadTxt();
+  }
+
+  downloadButton?.addEventListener("click", toggleDownloadMenu);
+  downloadMenu?.addEventListener("click", handleDownloadMenuClick);
+  mobileDownloadButton?.addEventListener("click", requestPrint);
+  document.addEventListener("click", (event) => {
+    if (downloadMenu?.hidden) return;
+    if (event.target.closest("#download-menu, #print-cv")) return;
+    setDownloadMenu(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setDownloadMenu(false);
+  });
   document.getElementById("download-json").addEventListener("click", () => {
     downloadFile("cv-data.json", `${JSON.stringify(cleanDataForDownload(state.data), null, 2)}\n`, "application/json");
   });
