@@ -4565,9 +4565,22 @@ li {
   }
 
   .builder-editor {
+    position: relative;
     height: auto;
     min-height: 100vh;
     padding-bottom: 62px;
+  }
+
+  .builder-editor::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    width: 4px;
+    height: 190px;
+    background: #c0c0c0;
+    pointer-events: none;
   }
 
   .editor-scroll {
