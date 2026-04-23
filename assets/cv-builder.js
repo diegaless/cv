@@ -1136,7 +1136,7 @@
   }
 
   function updateScoreCard() {
-    const score = document.body.dataset.builderTab === "ai-review" ? 20 : 65;
+    const score = document.body.dataset.builderTab === "ai-review" ? 18 : 17;
     const suggestions = [
       { done: false, badge: "✦", label: "Escribe tu perfil profesional", highlight: true },
       { done: false, badge: "✦", label: "Crear una carta de presentación rápida", highlight: true },
