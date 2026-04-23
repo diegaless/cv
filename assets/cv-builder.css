@@ -3514,6 +3514,7 @@ li {
   font-size: 30px;
   line-height: 36px;
   font-weight: 700;
+  transform: translateY(7px);
 }
 
 .documents-tabs {
