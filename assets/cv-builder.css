@@ -3575,7 +3575,7 @@ li {
   grid-template-columns: 52px 1fr auto;
   gap: 16px;
   align-items: center;
-  margin-bottom: 52px;
+  margin-bottom: 51px;
   padding: 18px 16px;
   background: #f7f9fc;
 }
@@ -3628,6 +3628,7 @@ li {
 .visibility-banner p {
   margin: 2px 0 0;
   color: #656e83;
+  line-height: 20px;
 }
 
 .visibility-banner button {
