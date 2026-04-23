@@ -200,23 +200,24 @@ button {
   display: inline-flex;
   gap: 0;
   justify-self: center;
-  padding: 0;
-  background: #f2f5fa;
-  border-radius: 9px;
-  transform: translateX(8px);
+  padding: 4px;
+  background: #f7f9fc;
+  border-radius: 12px;
+  transform: none;
 }
 
 .app-tabs button {
   width: 103px;
   min-width: 0;
   border: 0;
-  border-radius: 7px;
+  border-radius: 8px;
   min-height: 36px;
-  padding: 0;
+  padding: 8px 12px;
   background: transparent;
   color: var(--panel-muted);
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .app-tabs button:nth-child(3) {
@@ -226,7 +227,7 @@ button {
 .app-tabs button.is-active {
   background: #ffffff;
   color: #152235;
-  box-shadow: 0 1px 4px rgba(16, 47, 82, 0.16);
+  box-shadow: 0 4px 12px rgba(24, 34, 53, 0.07);
 }
 
 .app-tabs button:disabled {
