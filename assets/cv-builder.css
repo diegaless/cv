@@ -2398,7 +2398,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   padding: 13px 24px 13px 20px;
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(90deg, #ee5e1b 0%, #87b6f7 50%, #7971b0 100%) border-box;
+    linear-gradient(#ee5e1b 0%, #87b6f7 50%, #7971b0 100%) border-box;
   color: #1e2532;
   font-size: 16px;
   font-weight: 500;
