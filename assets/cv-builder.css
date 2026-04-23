@@ -3618,6 +3618,8 @@ li {
 .visibility-banner strong {
   color: #303848;
   font-size: 17px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .visibility-banner p {
