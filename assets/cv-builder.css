@@ -3323,7 +3323,7 @@ li {
   color: #6a7488;
   text-decoration: none;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .dashboard-menu a.is-active {
@@ -3331,57 +3331,38 @@ li {
   color: #1a91f0;
 }
 
-.dashboard-menu a.is-active::after {
-  content: "›";
-  justify-self: end;
-  color: #8b95ac;
-  font-size: 24px;
-  line-height: 1;
-}
-
 .dashboard-menu-icon {
-  width: 18px;
-  height: 18px;
-  color: currentColor;
-  opacity: 0.74;
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: #bec4d5;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0;
 }
 
-.dashboard-menu-icon.dots {
-  background-image: radial-gradient(currentColor 2px, transparent 2.3px);
-  background-size: 8px 8px;
+.dashboard-menu a.is-active .dashboard-menu-icon,
+.dashboard-menu a.is-active .dashboard-chevron {
+  color: #1a91f0;
 }
 
-.dashboard-menu-icon.document {
-  border-radius: 3px;
-  background: currentColor;
-  clip-path: polygon(12% 0, 70% 0, 100% 30%, 100% 100%, 12% 100%);
-}
-
-.dashboard-menu-icon.briefcase {
-  border: 2px solid currentColor;
-  border-radius: 3px;
-}
-
-.dashboard-menu-icon.nodes {
-  background-image: radial-gradient(currentColor 2px, transparent 2.3px);
-  background-size: 9px 9px;
-}
-
-.dashboard-menu-icon.chat {
-  border-radius: 4px;
-  background: currentColor;
-  clip-path: polygon(0 0, 100% 0, 100% 76%, 65% 76%, 48% 100%, 48% 76%, 0 76%);
-}
-
-.dashboard-menu-icon.share {
-  border-left: 3px solid currentColor;
-  border-bottom: 3px solid currentColor;
-  transform: rotate(-20deg);
+.dashboard-chevron {
+  display: block;
+  width: 20px;
+  height: 20px;
+  justify-self: end;
+  fill: currentColor;
+  transform: rotate(-90deg);
 }
 
 .premium-lock {
+  display: block;
+  width: 24px;
+  height: 24px;
   color: #343ecc;
-  font-size: 14px;
+  fill: currentColor;
 }
 
 .documents-main {
