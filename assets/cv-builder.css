@@ -735,21 +735,26 @@ button {
 .top-actions .secondary-btn,
 .top-actions .ghost-btn {
   grid-column: auto;
-  min-height: 36px;
   white-space: nowrap;
 }
 
 .top-actions .primary-btn {
-  min-width: 112px;
+  min-width: 113px;
+  min-height: 40px;
+  height: 40px;
   border-radius: 4px;
+  padding: 8px;
   background: #1a91f0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .download-trigger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .download-trigger.is-open {
