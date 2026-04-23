@@ -3309,7 +3309,7 @@ li {
 .dashboard-menu {
   display: grid;
   gap: 0;
-  transform: translateY(1px);
+  transform: translateY(2px);
 }
 
 .dashboard-menu a {
@@ -3346,6 +3346,7 @@ li {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 0;
+  transform: translateY(-1px);
 }
 
 .dashboard-menu a.is-active .dashboard-menu-icon {
@@ -3362,7 +3363,7 @@ li {
   height: 20px;
   justify-self: end;
   fill: currentColor;
-  transform: rotate(-90deg);
+  transform: translateY(-1px) rotate(-90deg);
 }
 
 .premium-lock {
@@ -3371,6 +3372,7 @@ li {
   height: 24px;
   color: #343ecc;
   fill: currentColor;
+  transform: translateY(-1px);
 }
 
 .documents-main {
