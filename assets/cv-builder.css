@@ -176,14 +176,15 @@ button {
 .brand-mark > div {
   display: inline-flex;
   align-items: center;
-  gap: 26px;
+  gap: 28px;
   min-width: 0;
 }
 
 .brand-mark strong {
-  color: #152235;
-  font-size: 16px;
-  font-weight: 500;
+  color: #1e2532;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 24px;
   letter-spacing: 0;
   white-space: nowrap;
 }
@@ -192,7 +193,8 @@ button {
   display: inline-flex;
   align-items: center;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 20px;
   white-space: nowrap;
 }
 
@@ -494,12 +496,12 @@ button {
 
 .flag-es {
   display: inline-block;
-  width: 16px;
-  height: 10px;
-  margin-right: 5px;
-  border-radius: 1px;
+  width: 19px;
+  height: 12px;
+  margin-right: 8px;
+  border-radius: 0;
   background: linear-gradient(#c60b1e 0 25%, #ffc400 25% 75%, #c60b1e 75%);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
 .round-avatar {
