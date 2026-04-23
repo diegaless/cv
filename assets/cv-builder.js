@@ -50,6 +50,7 @@
     data: normalizeData(initialData),
     photoSrc: photoFallback,
   };
+  clearLegacyForcedPageBreaks(state.data);
   const cloud = {
     enabled: false,
     ready: false,
@@ -101,6 +102,15 @@
       console.error("No se pudo leer el JSON inicial", error);
       return {};
     }
+  }
+
+  function clearLegacyForcedPageBreaks(data) {
+    const awards = Array.isArray(data?.awards) ? data.awards : [];
+    awards.forEach((item) => {
+      if (item.title === "Entrepreneurship World Cup (EWC) - Preseleccionado") {
+        item.page_break_before = false;
+      }
+    });
   }
 
   function readSavedState() {

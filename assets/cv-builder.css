@@ -2824,7 +2824,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   height: calc(100vh - var(--toolbar-height));
   display: grid;
   grid-template-rows: 1fr;
-  background: #ffffff;
+  background: #eef3fb;
 }
 
 .preview-toolbar {
@@ -2854,6 +2854,9 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
+  background:
+    linear-gradient(90deg, rgba(205, 215, 230, 0.7), rgba(205, 215, 230, 0)) 0 0 / 12px 100% no-repeat,
+    #eef3fb;
 }
 
 .preview-design-button {
@@ -3128,9 +3131,9 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
 .cv-preview-pages {
   width: max(100%, calc(var(--page-width) * var(--preview-zoom)));
   min-height: 100%;
-  padding: 6px 0 60px;
+  padding: 10px 0 74px;
   display: grid;
-  gap: 18px;
+  gap: 24px;
   justify-items: center;
 }
 
@@ -3144,7 +3147,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   padding: 20px 60px 50px;
   background: var(--paper);
   color: var(--ink);
-  box-shadow: none;
+  box-shadow: 0 10px 28px rgba(17, 28, 45, 0.1);
   font-family: "EB Garamond CV", "Times New Roman", Times, serif;
   font-size: 12px;
   line-height: 1.24;
