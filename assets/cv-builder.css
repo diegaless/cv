@@ -3101,6 +3101,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   border-bottom: 1pt solid var(--rule);
   padding-bottom: 0;
   margin-bottom: 7px;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .cv-header > div {
@@ -3110,8 +3111,9 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
 .cv-header h1 {
   margin: 0 58px 14px;
   text-align: center;
-  font-size: 17px;
-  line-height: 1.1;
+  font-size: 16.53px;
+  line-height: 1.2;
+  font-weight: 700;
   white-space: nowrap;
 }
 
