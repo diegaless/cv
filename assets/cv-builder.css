@@ -1800,20 +1800,9 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   gap: 12px;
   padding: 15px 18px 15px 20px;
   background: #ffffff;
-  border: 1px solid #dce4ef;
+  border: 1px solid #e7eaf4;
   border-radius: 4px;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
-}
-
-.entry-drag-overlay {
-  position: fixed;
-  z-index: 3000;
-  margin: 0;
-  pointer-events: none;
-  opacity: 0.98;
-  transform: rotate(-0.35deg) scale(1.01);
-  transform-origin: center;
-  box-shadow: 0 18px 34px rgba(22, 34, 51, 0.18);
 }
 
 .entry-header {
@@ -1834,20 +1823,20 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 }
 
 .entry-card + .entry-card {
-  margin-top: 13px;
+  margin-top: 12px;
 }
 
 .entry-drag-handle {
   position: absolute;
   display: block;
-  left: 0;
-  top: 18px;
+  left: -27px;
+  top: 27px;
   z-index: 4;
-  width: 24px;
+  width: 20px;
   height: 20px;
   border: 0;
   padding: 0;
-  opacity: 0.55;
+  opacity: 1;
   cursor: grab;
   background-color: transparent;
 }
@@ -1855,7 +1844,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 .entry-drag-handle::before {
   content: "";
   position: absolute;
-  left: -25px;
+  left: 3px;
   top: 0;
   width: 14px;
   height: 20px;
@@ -1871,8 +1860,8 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 .entry-drag-handle:focus-visible::after {
   content: "Haz clic y arrastra para mover";
   position: absolute;
-  left: -10px;
-  top: -33px;
+  left: -4px;
+  top: -32px;
   z-index: 40;
   width: max-content;
   max-width: 210px;
@@ -1886,43 +1875,32 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   pointer-events: none;
 }
 
-.entry-card.is-dragging .entry-drag-handle::after,
-.entry-drag-overlay .entry-drag-handle::after {
+.entry-card.is-dragging .entry-drag-handle::after {
   content: none;
 }
 
 .entry-card.is-dragging {
-  opacity: 0.22;
-  transform: scale(0.99);
+  opacity: 0.6;
+  pointer-events: none;
+  box-shadow: 0 3px 12px rgba(112, 131, 151, 0.2);
+  transition: opacity 0.16s ease, box-shadow 0.16s ease;
+}
+
+.entry-card.is-drag-shifted {
+  transition: transform 0.16s ease;
 }
 
 .entry-card.is-drop-target {
-  border-color: #dce4ef;
+  border-color: #e7eaf4;
   box-shadow: none;
 }
 
 .entry-card.is-drop-target::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 8;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(26, 145, 240, 0.11);
-}
-
-.entry-card.is-drop-target[data-drop-position="before"]::before {
-  top: -9px;
-}
-
-.entry-card.is-drop-target[data-drop-position="after"]::before {
-  bottom: -9px;
+  content: none;
 }
 
 .entry-card.is-compact {
-  min-height: 70px;
+  min-height: 72px;
   align-content: center;
   padding-right: 92px;
 }

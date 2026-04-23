@@ -67,7 +67,6 @@
   const expandedItems = new Set();
   let draggedItem = null;
   let pointerDrag = null;
-  let dragOverlay = null;
   let suppressNextClick = false;
   let toastTimer = null;
   const SECTION_UI = {
@@ -1483,6 +1482,7 @@
       offsetX: event.clientX - rect.left,
       offsetY: event.clientY - rect.top,
       sourceRect: rect,
+      slotSize: itemSlotSize(section, index, rect),
       targetIndex: index,
       insertionIndex: index,
       active: false,
@@ -1512,27 +1512,65 @@
     });
   }
 
-  function createDragOverlay(source, event) {
-    removeDragOverlay();
-    dragOverlay = source.cloneNode(true);
-    dragOverlay.classList.add("entry-drag-overlay");
-    dragOverlay.setAttribute("aria-hidden", "true");
-    dragOverlay.style.width = `${pointerDrag.sourceRect.width}px`;
-    dragOverlay.style.height = `${pointerDrag.sourceRect.height}px`;
-    document.body.append(dragOverlay);
-    updateDragOverlay(event);
+  function draggableItemsForSection(section) {
+    return Array.from(document.querySelectorAll(`[data-draggable-item][data-section="${section}"]`));
   }
 
-  function updateDragOverlay(event) {
-    if (!dragOverlay || !pointerDrag) return;
-    dragOverlay.style.left = `${event.clientX - pointerDrag.offsetX}px`;
-    dragOverlay.style.top = `${event.clientY - pointerDrag.offsetY}px`;
+  function itemSlotSize(section, index, sourceRect) {
+    const items = draggableItemsForSection(section);
+    const next = items[index + 1];
+    if (next) return Math.max(sourceRect.height, next.getBoundingClientRect().top - sourceRect.top);
+    return sourceRect.height + 12;
   }
 
-  function removeDragOverlay() {
-    if (!dragOverlay) return;
-    dragOverlay.remove();
-    dragOverlay = null;
+  function resetPointerDragStyles(section) {
+    const items = section ? draggableItemsForSection(section) : Array.from(document.querySelectorAll("[data-draggable-item]"));
+    items.forEach((entry) => {
+      entry.classList.remove("is-dragging", "is-drag-shifted", "is-drop-target");
+      entry.removeAttribute("data-drop-position");
+      entry.style.transform = "";
+      entry.style.zIndex = "";
+    });
+  }
+
+  function applyPointerDragTransforms(event, source) {
+    if (!pointerDrag || !source) return;
+    const items = draggableItemsForSection(pointerDrag.section);
+    const dx = event.clientX - pointerDrag.startX;
+    const dy = event.clientY - pointerDrag.startY;
+    const insertionIndex = pointerDrag.insertionIndex;
+
+    items.forEach((entry) => {
+      if (entry === source) return;
+      const itemIndex = Number(entry.dataset.index);
+      let shift = 0;
+      if (insertionIndex > pointerDrag.index && itemIndex > pointerDrag.index && itemIndex < insertionIndex) {
+        shift = -pointerDrag.slotSize;
+      } else if (insertionIndex < pointerDrag.index && itemIndex >= insertionIndex && itemIndex < pointerDrag.index) {
+        shift = pointerDrag.slotSize;
+      }
+      entry.classList.toggle("is-drag-shifted", shift !== 0);
+      entry.style.transform = shift ? `translate3d(0, ${shift}px, 0)` : "";
+      entry.style.zIndex = "";
+    });
+
+    source.classList.add("is-dragging");
+    source.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    source.style.zIndex = "1";
+  }
+
+  function cancelPointerDrag() {
+    if (!pointerDrag) return;
+    const { section, active } = pointerDrag;
+    pointerDrag = null;
+    clearDropTargets();
+    resetPointerDragStyles(section);
+    if (active) {
+      suppressNextClick = true;
+      window.setTimeout(() => {
+        suppressNextClick = false;
+      }, 0);
+    }
   }
 
   document.addEventListener("pointermove", (event) => {
@@ -1542,18 +1580,19 @@
     event.preventDefault();
 
     const source = document.querySelector(`[data-draggable-item][data-section="${pointerDrag.section}"][data-index="${pointerDrag.index}"]`);
-    if (!pointerDrag.active && source) createDragOverlay(source, event);
     pointerDrag.active = true;
-    updateDragOverlay(event);
-
-    source?.classList.add("is-dragging");
 
     clearDropTargets();
     const dropTarget = dropTargetFromPoint(event, pointerDrag.section);
-    if (!dropTarget) return;
-    pointerDrag.targetIndex = dropTarget.targetIndex;
-    pointerDrag.insertionIndex = dropTarget.insertionIndex;
-    if (dropTarget.insertionIndex !== pointerDrag.index && dropTarget.insertionIndex !== pointerDrag.index + 1) {
+    if (dropTarget) {
+      pointerDrag.targetIndex = dropTarget.targetIndex;
+      pointerDrag.insertionIndex = dropTarget.insertionIndex;
+    } else {
+      pointerDrag.targetIndex = pointerDrag.index;
+      pointerDrag.insertionIndex = pointerDrag.index;
+    }
+    applyPointerDragTransforms(event, source);
+    if (dropTarget && dropTarget.insertionIndex !== pointerDrag.index && dropTarget.insertionIndex !== pointerDrag.index + 1) {
       dropTarget.target.classList.add("is-drop-target");
       dropTarget.target.dataset.dropPosition = dropTarget.position;
     }
@@ -1565,11 +1604,8 @@
     const finalDropTarget = active && event ? dropTargetFromPoint(event, section) : null;
     const finalInsertionIndex = finalDropTarget?.insertionIndex ?? insertionIndex;
     pointerDrag = null;
-    removeDragOverlay();
     clearDropTargets();
-    document.querySelectorAll(".entry-card.is-dragging").forEach((entry) => {
-      entry.classList.remove("is-drop-target", "is-dragging");
-    });
+    resetPointerDragStyles(section);
     if (!active) return;
     suppressNextClick = true;
     window.setTimeout(() => {
@@ -1583,6 +1619,11 @@
 
   document.addEventListener("pointerup", finishPointerDrag);
   document.addEventListener("pointercancel", finishPointerDrag);
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !pointerDrag) return;
+    event.preventDefault();
+    cancelPointerDrag();
+  });
 
   form.addEventListener("dragstart", (event) => {
     const handle = event.target.closest("[data-drag-handle]");
