@@ -3120,6 +3120,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   text-align: center;
   font-size: 12px;
   font-weight: 400;
+  transform: translateY(-1px);
 }
 
 .contact a {
