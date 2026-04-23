@@ -67,6 +67,7 @@
   const expandedItems = new Set();
   let draggedItem = null;
   let pointerDrag = null;
+  let dragOverlay = null;
   let suppressNextClick = false;
   let toastTimer = null;
   const SECTION_UI = {
@@ -1278,6 +1279,18 @@
     return true;
   }
 
+  function moveItemToInsertion(section, fromIndex, insertionIndex) {
+    const items = state.data[section];
+    if (!items || fromIndex < 0 || fromIndex >= items.length) return false;
+    const maxInsertion = items.length;
+    let nextIndex = Math.max(0, Math.min(maxInsertion, insertionIndex));
+    if (nextIndex === fromIndex || nextIndex === fromIndex + 1) return false;
+    const [item] = items.splice(fromIndex, 1);
+    if (nextIndex > fromIndex) nextIndex -= 1;
+    items.splice(nextIndex, 0, item);
+    return true;
+  }
+
   function toggleAllItems(section) {
     const items = state.data[section] || [];
     const keys = items.map((_, index) => `${section}:${index}`);
@@ -1455,7 +1468,10 @@
     if (!handle) return;
     const section = handle.dataset.section;
     const index = Number(handle.dataset.index);
+    const source = handle.closest("[data-draggable-item]");
     if (!section || Number.isNaN(index)) return;
+    if (!source) return;
+    const rect = source.getBoundingClientRect();
 
     event.preventDefault();
     event.stopPropagation();
@@ -1464,42 +1480,94 @@
       index,
       startX: event.clientX,
       startY: event.clientY,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+      sourceRect: rect,
       targetIndex: index,
+      insertionIndex: index,
       active: false,
     };
     handle.setPointerCapture?.(event.pointerId);
   });
 
-  function dropTargetIndexFromPoint(event, section) {
+  function dropTargetFromPoint(event, section) {
     const target = document.elementFromPoint(event.clientX, event.clientY)?.closest("[data-draggable-item]");
     if (!target || target.dataset.section !== section) return null;
     const targetIndex = Number(target.dataset.index);
-    return Number.isNaN(targetIndex) ? null : targetIndex;
+    if (Number.isNaN(targetIndex)) return null;
+    const rect = target.getBoundingClientRect();
+    const position = event.clientY > rect.top + rect.height / 2 ? "after" : "before";
+    return {
+      target,
+      targetIndex,
+      position,
+      insertionIndex: targetIndex + (position === "after" ? 1 : 0),
+    };
+  }
+
+  function clearDropTargets() {
+    document.querySelectorAll(".entry-card.is-drop-target").forEach((entry) => {
+      entry.classList.remove("is-drop-target");
+      entry.removeAttribute("data-drop-position");
+    });
+  }
+
+  function createDragOverlay(source, event) {
+    removeDragOverlay();
+    dragOverlay = source.cloneNode(true);
+    dragOverlay.classList.add("entry-drag-overlay");
+    dragOverlay.setAttribute("aria-hidden", "true");
+    dragOverlay.style.width = `${pointerDrag.sourceRect.width}px`;
+    dragOverlay.style.height = `${pointerDrag.sourceRect.height}px`;
+    document.body.append(dragOverlay);
+    updateDragOverlay(event);
+  }
+
+  function updateDragOverlay(event) {
+    if (!dragOverlay || !pointerDrag) return;
+    dragOverlay.style.left = `${event.clientX - pointerDrag.offsetX}px`;
+    dragOverlay.style.top = `${event.clientY - pointerDrag.offsetY}px`;
+  }
+
+  function removeDragOverlay() {
+    if (!dragOverlay) return;
+    dragOverlay.remove();
+    dragOverlay = null;
   }
 
   document.addEventListener("pointermove", (event) => {
     if (!pointerDrag) return;
     const distance = Math.abs(event.clientX - pointerDrag.startX) + Math.abs(event.clientY - pointerDrag.startY);
     if (!pointerDrag.active && distance < 8) return;
-    pointerDrag.active = true;
+    event.preventDefault();
 
     const source = document.querySelector(`[data-draggable-item][data-section="${pointerDrag.section}"][data-index="${pointerDrag.index}"]`);
+    if (!pointerDrag.active && source) createDragOverlay(source, event);
+    pointerDrag.active = true;
+    updateDragOverlay(event);
+
     source?.classList.add("is-dragging");
 
-    document.querySelectorAll(".entry-card.is-drop-target").forEach((entry) => entry.classList.remove("is-drop-target"));
-    const targetIndex = dropTargetIndexFromPoint(event, pointerDrag.section);
-    if (targetIndex === null) return;
-    pointerDrag.targetIndex = targetIndex;
-    const target = document.querySelector(`[data-draggable-item][data-section="${pointerDrag.section}"][data-index="${targetIndex}"]`);
-    if (targetIndex !== pointerDrag.index) target?.classList.add("is-drop-target");
+    clearDropTargets();
+    const dropTarget = dropTargetFromPoint(event, pointerDrag.section);
+    if (!dropTarget) return;
+    pointerDrag.targetIndex = dropTarget.targetIndex;
+    pointerDrag.insertionIndex = dropTarget.insertionIndex;
+    if (dropTarget.insertionIndex !== pointerDrag.index && dropTarget.insertionIndex !== pointerDrag.index + 1) {
+      dropTarget.target.classList.add("is-drop-target");
+      dropTarget.target.dataset.dropPosition = dropTarget.position;
+    }
   });
 
   function finishPointerDrag(event) {
     if (!pointerDrag) return;
-    const { section, index, targetIndex, active } = pointerDrag;
-    const finalTargetIndex = active && event ? dropTargetIndexFromPoint(event, section) ?? targetIndex : targetIndex;
+    const { section, index, insertionIndex, active } = pointerDrag;
+    const finalDropTarget = active && event ? dropTargetFromPoint(event, section) : null;
+    const finalInsertionIndex = finalDropTarget?.insertionIndex ?? insertionIndex;
     pointerDrag = null;
-    document.querySelectorAll(".entry-card.is-drop-target, .entry-card.is-dragging").forEach((entry) => {
+    removeDragOverlay();
+    clearDropTargets();
+    document.querySelectorAll(".entry-card.is-dragging").forEach((entry) => {
       entry.classList.remove("is-drop-target", "is-dragging");
     });
     if (!active) return;
@@ -1507,7 +1575,7 @@
     window.setTimeout(() => {
       suppressNextClick = false;
     }, 0);
-    if (!moveItemTo(section, index, finalTargetIndex)) return;
+    if (!moveItemToInsertion(section, index, finalInsertionIndex)) return;
     expandedItems.clear();
     renderForm();
     updatePreview();

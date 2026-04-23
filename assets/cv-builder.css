@@ -1805,6 +1805,17 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
 
+.entry-drag-overlay {
+  position: fixed;
+  z-index: 3000;
+  margin: 0;
+  pointer-events: none;
+  opacity: 0.98;
+  transform: rotate(-0.35deg) scale(1.01);
+  transform-origin: center;
+  box-shadow: 0 18px 34px rgba(22, 34, 51, 0.18);
+}
+
 .entry-header {
   display: flex;
   justify-content: space-between;
@@ -1875,14 +1886,39 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   pointer-events: none;
 }
 
+.entry-card.is-dragging .entry-drag-handle::after,
+.entry-drag-overlay .entry-drag-handle::after {
+  content: none;
+}
+
 .entry-card.is-dragging {
-  opacity: 0.55;
-  transform: scale(0.995);
+  opacity: 0.22;
+  transform: scale(0.99);
 }
 
 .entry-card.is-drop-target {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(26, 145, 240, 0.1);
+  border-color: #dce4ef;
+  box-shadow: none;
+}
+
+.entry-card.is-drop-target::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 8;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26, 145, 240, 0.11);
+}
+
+.entry-card.is-drop-target[data-drop-position="before"]::before {
+  top: -9px;
+}
+
+.entry-card.is-drop-target[data-drop-position="after"]::before {
+  bottom: -9px;
 }
 
 .entry-card.is-compact {
