@@ -2431,6 +2431,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   width: 194.484px;
   height: 24px;
 }
