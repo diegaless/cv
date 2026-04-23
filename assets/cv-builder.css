@@ -492,7 +492,8 @@ button {
 
 .resume-language-card span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .flag-es {
@@ -581,7 +582,7 @@ button {
 .score-head {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
   color: #7a8496;
   font-size: 16px;
   line-height: 20px;
@@ -592,6 +593,8 @@ button {
 }
 
 .score-badge {
+  display: inline-flex;
+  align-items: center;
   border-radius: 4px;
   padding: 2px 5px;
   background: var(--success);
@@ -599,16 +602,20 @@ button {
   font-size: 14px;
   font-weight: 600;
   line-height: 16px;
-  transform: translateX(2px);
+  transform: none;
+}
+
+.score-badge::after {
+  content: "%";
 }
 
 .score-bar {
-  width: calc(100% - 5px);
+  width: 100%;
   height: 3px;
-  margin: 12px 0 18px 5px;
+  margin: 8px 0 24px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e5ebf3;
+  background: #eff2f9;
 }
 
 .score-bar span {
@@ -631,7 +638,7 @@ button {
 .score-list li {
   display: grid;
   grid-template-columns: 32px 1fr;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   color: #1e2532;
   font-size: 16px;
@@ -1701,23 +1708,22 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   content: "";
   position: absolute;
   left: 50%;
-  border: 2px solid #aeb8c8;
   transform: translateX(-50%);
 }
 
 .photo-placeholder::before {
-  top: 29px;
-  width: 18px;
-  height: 14px;
-  border-radius: 3px;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #b4bece;
+  border-radius: 50%;
 }
 
 .photo-placeholder::after {
   top: 18px;
-  width: 14px;
-  height: 15px;
-  border-bottom: 0;
-  border-radius: 10px 10px 0 0;
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23aeb8c8' d='M8,11 C8,7.83333333 9.375,6 12,6 C14.625,6 16,7.83333333 16,11 C16.5522847,11 17,11.4477153 17,12 L17,17 C17,17.5522847 16.5522847,18 16,18 L8,18 C7.44771525,18 7,17.5522847 7,17 L7,12 C7,11.4477153 7.44771525,11 8,11 Z M10,11 L14,11 C14,8.83333333 13.375,8 12,8 C10.625,8 10,8.83333333 10,11 Z'/%3E%3C/svg%3E") center / 24px 24px no-repeat;
 }
 
 .photo-controls {
@@ -2466,7 +2472,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   padding: 13px 24px 13px 20px;
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(270deg, #ee5e1b 0%, #87b6f7 50%, #7971b0 100%) border-box;
+    linear-gradient(360deg, #ee5e1b 0%, #87b6f7 50%, #7971b0 100%) border-box;
   color: #1e2532;
   font-size: 16px;
   font-weight: 500;
@@ -4426,14 +4432,14 @@ li {
     align-items: center;
     justify-content: space-between;
     min-height: 52px;
-    padding: 8px 66px 0 64px;
+    padding: 8px 66px 0 68px;
     background: #ffffff;
   }
 
   .mobile-top-row::before {
     content: "";
     position: absolute;
-    left: 18px;
+    left: 26px;
     top: 11px;
     width: 20px;
     height: 20px;
@@ -4444,21 +4450,23 @@ li {
 
   .mobile-top-row .dashboard-pill {
     margin: 0;
-    min-height: 36px;
-    padding: 0 18px;
-    border: 1px solid #e7edf6;
-    border-radius: 999px;
-    background: #edf3fb;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
-    color: #182235;
-    font-size: 15px;
-    font-weight: 800;
+    min-height: 38px;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 32px;
+    background: #eff2f9;
+    box-shadow: none;
+    color: #303848;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    transform: translateY(-3px);
   }
 
   .mobile-top-row .round-avatar {
     position: absolute;
     top: 6px;
-    right: 14px;
+    right: 17px;
     display: inline-grid;
     place-items: center;
     width: 42px;
@@ -4491,13 +4499,15 @@ li {
     bottom: -4px;
     display: grid;
     place-items: center;
-    min-width: 24px;
-    height: 18px;
-    border-radius: 999px;
+    min-width: 30px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 30px;
     background: #ee571d;
     color: #ffffff;
-    font-size: 12px;
-    font-weight: 900;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
   }
 
   .resume-language-card {
@@ -4523,16 +4533,16 @@ li {
   .builder-tabs::before {
     content: "";
     position: absolute;
-    inset: 8px 26px 8px 12px;
+    inset: 8px 12px 8px 12px;
     border-radius: 12px;
-    background: #eef2f8;
+    background: #f7f9fc;
   }
 
   .mobile-download-button {
     position: fixed;
     display: block;
     left: 12px;
-    right: 27px;
+    right: 12px;
     bottom: 12px;
     z-index: 20;
     border: 0;
@@ -4596,7 +4606,7 @@ li {
 
   .assistant-fab {
     bottom: 76px;
-    left: calc(50% - 7.5px);
+    left: 50%;
     transform: translateX(-50%);
   }
 
