@@ -3492,10 +3492,10 @@ li {
 .documents-heading-row h1 {
   margin: 0 0 18px;
   color: #1e2532;
-  font-size: 30px;
+  font-size: 33px;
   line-height: 36px;
-  font-weight: 700;
-  transform: translateY(7px);
+  font-weight: 600;
+  transform: translateY(8px);
 }
 
 .documents-tabs {
