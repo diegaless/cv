@@ -3697,9 +3697,28 @@ li {
   background-repeat: repeat-x;
 }
 
-.resume-card-actions [data-dashboard-action="rename"]::before,
-.resume-card-actions [data-dashboard-action="delete"]::before {
+.resume-card-actions [data-dashboard-action="rename"]::before {
   display: none;
+}
+
+.resume-card-actions [data-dashboard-action="combine"]::before {
+  width: 12px;
+  height: 12px;
+  flex-basis: 12px;
+  box-shadow: 4px 4px 0 -2px #ffffff, 4px 4px 0 0 currentColor;
+}
+
+.resume-card-actions [data-dashboard-action="delete"]::before {
+  border: 0;
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+  background:
+    linear-gradient(currentColor 0 0) center 4px / 13px 2px no-repeat,
+    linear-gradient(currentColor 0 0) center 14px / 11px 2px no-repeat,
+    linear-gradient(currentColor 0 0) 4px 7px / 2px 8px no-repeat,
+    linear-gradient(currentColor 0 0) 10px 7px / 2px 8px no-repeat,
+    linear-gradient(currentColor 0 0) 13px 7px / 2px 8px no-repeat;
 }
 
 .resume-card-actions button:hover {
@@ -3715,7 +3734,7 @@ li {
   top: 28px;
   left: 0;
   z-index: 5;
-  min-width: 140px;
+  width: 221px;
   border-radius: 6px;
   padding: 8px 0;
   background: #ffffff;

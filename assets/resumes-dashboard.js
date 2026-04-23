@@ -346,8 +346,8 @@
           <div class="resume-more-wrap">
             <button type="button" data-dashboard-action="more" data-resume-id="${esc(document.id)}">Más</button>
             <div class="resume-more-menu" hidden>
-              <button type="button" data-dashboard-action="rename" data-resume-id="${esc(document.id)}">Renombrar</button>
-              <button type="button" data-dashboard-action="delete" data-resume-id="${esc(document.id)}">Eliminar</button>
+              <button type="button" data-dashboard-action="combine" data-resume-id="${esc(document.id)}">Combinar con...</button>
+              <button type="button" data-dashboard-action="delete" data-resume-id="${esc(document.id)}">Borrar</button>
             </div>
           </div>
         </div>
@@ -429,6 +429,7 @@
     if (action === "docx") downloadDoc(resume);
     if (action === "txt") downloadTxt(resume);
     if (action === "duplicate") duplicateResume(id);
+    if (action === "combine") showToast("Combinar con otro documento está disponible en cvapp.es.");
     if (action === "rename") renameResume(id);
     if (action === "delete") deleteResume(id);
     if (action === "more") {
