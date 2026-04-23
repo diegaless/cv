@@ -3544,7 +3544,7 @@ li {
   content: "";
   position: absolute;
   right: 0;
-  bottom: -1px;
+  bottom: -6px;
   left: 0;
   height: 2px;
   background: #1a91f0;
