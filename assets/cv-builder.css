@@ -1826,11 +1826,10 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   margin-top: 12px;
 }
 
+.section-drag-handle,
 .entry-drag-handle {
   position: absolute;
   display: block;
-  left: -27px;
-  top: 27px;
   z-index: 4;
   width: 20px;
   height: 20px;
@@ -1841,6 +1840,18 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   background-color: transparent;
 }
 
+.section-drag-handle {
+  left: 8px;
+  top: 22px;
+  z-index: 12;
+}
+
+.entry-drag-handle {
+  left: -27px;
+  top: 27px;
+}
+
+.section-drag-handle::before,
 .entry-drag-handle::before {
   content: "";
   position: absolute;
@@ -1852,10 +1863,13 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   background-size: 6px 6px;
 }
 
+.section-drag-handle:active,
 .entry-drag-handle:active {
   cursor: grabbing;
 }
 
+.section-drag-handle:hover::after,
+.section-drag-handle:focus-visible::after,
 .entry-drag-handle:hover::after,
 .entry-drag-handle:focus-visible::after {
   content: "Haz clic y arrastra para mover";
@@ -1883,6 +1897,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   }
 }
 
+.form-card.is-section-dragging .section-drag-handle::after,
 .entry-card.is-dragging .entry-drag-handle::after {
   content: none;
 }
@@ -1893,6 +1908,23 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   transition: opacity 0.16s ease, box-shadow 0.16s ease;
 }
 
+.form-card.is-section-dragging {
+  height: 68px;
+  overflow: hidden;
+  opacity: 0.6;
+  box-shadow: none;
+  transition: opacity 0.16s ease;
+}
+
+.form-card.is-section-dragging .section-content {
+  display: none;
+}
+
+.form-card.is-section-dragging .section-drag-handle {
+  cursor: grabbing;
+}
+
+.form-card.is-section-drag-shifted,
 .entry-card.is-drag-shifted {
   transition: transform 0.16s ease;
 }

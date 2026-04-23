@@ -6,6 +6,7 @@
   ];
 
   const SECTION_KEYS = SECTION_DEFINITIONS.map(([key]) => key);
+  const DEFAULT_FORM_SECTION_ORDER = ["powerStatement", "profile", "achievements", "experience", "education", "awards", "areas", "websites"];
   const RESUME_COLLECTION_KEY = "cv-builder-documents-v1";
   const ACTIVE_RESUME_KEY = "cv-builder-active-resume-id";
   const DEFAULT_RESUME_ID = "44230391";
@@ -50,6 +51,7 @@
     data: normalizeData(initialData),
     photoSrc: photoFallback,
   };
+  state.formSectionOrder = normalizeFormSectionOrder(state.formSectionOrder);
   clearLegacyForcedPageBreaks(state.data);
   const cloud = {
     enabled: false,
@@ -67,6 +69,7 @@
   const expandedItems = new Set();
   let draggedItem = null;
   let pointerDrag = null;
+  let sectionDrag = null;
   let suppressNextClick = false;
   let toastTimer = null;
   const SECTION_UI = {
@@ -121,6 +124,7 @@
       return {
         data: normalizeData(parsed.data || {}),
         photoSrc: parsed.photoSrc || photoFallback,
+        formSectionOrder: normalizeFormSectionOrder(parsed.formSectionOrder),
       };
     } catch (error) {
       console.warn("No se pudo restaurar el borrador guardado", error);
@@ -151,6 +155,7 @@
     return {
       data: normalizeData(saved.data),
       photoSrc: saved.photoSrc || photoFallback,
+      formSectionOrder: normalizeFormSectionOrder(saved.formSectionOrder),
     };
   }
 
@@ -164,6 +169,17 @@
       data.education?.length ||
       data.awards?.length
     ));
+  }
+
+  function normalizeFormSectionOrder(order) {
+    const known = new Set(DEFAULT_FORM_SECTION_ORDER);
+    const normalized = Array.isArray(order)
+      ? order.filter((panel, index, list) => known.has(panel) && list.indexOf(panel) === index)
+      : [];
+    return [
+      ...normalized,
+      ...DEFAULT_FORM_SECTION_ORDER.filter((panel) => !normalized.includes(panel)),
+    ];
   }
 
   function persist() {
@@ -481,6 +497,13 @@
     return clean;
   }
 
+  function orderedCvSections() {
+    const definitions = new Map(SECTION_DEFINITIONS.map((definition) => [definition[0], definition]));
+    return state.formSectionOrder
+      .filter((panel) => definitions.has(panel))
+      .map((panel) => definitions.get(panel));
+  }
+
   function esc(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
@@ -553,7 +576,7 @@
     let currentPage = 1;
     let used = pageBaseCost(currentPage);
 
-    SECTION_DEFINITIONS.forEach(([section]) => {
+    orderedCvSections().forEach(([section]) => {
       const paginatedItems = [];
       let sectionStarted = false;
 
@@ -659,7 +682,7 @@
       html += `
         <article class="cv-page" aria-label="Página ${pageNumber} del currículum de ${esc(displayName)}">
           ${header}
-          ${SECTION_DEFINITIONS.map(([section, sectionTitle]) => renderSection(paginated, section, sectionTitle, pageNumber)).join("")}
+          ${orderedCvSections().map(([section, sectionTitle]) => renderSection(paginated, section, sectionTitle, pageNumber)).join("")}
         </article>
       `;
     }
@@ -715,13 +738,21 @@
           </div>
         </div>
       </section>
-      ${renderRichSection("Propuesta de valor", "", true, "", "powerStatement")}
-      ${renderRichSection("Perfil profesional", "Añade dos o tres frases sobre tu experiencia general.", false, "+15%", "profile")}
-      ${renderRichSection("Logros", "", true, "", "achievements")}
-      ${SECTION_DEFINITIONS.map(([section, , label]) => renderSectionForm(section, label)).join("")}
-      ${renderExtraPanels()}
+      ${state.formSectionOrder.map(renderSortableSectionPanel).join("")}
+      ${renderStaticExtraPanels()}
     `;
     updateSectionNav();
+  }
+
+  function renderSortableSectionPanel(panel) {
+    if (panel === "powerStatement") return renderRichSection("Propuesta de valor", "", true, "", "powerStatement");
+    if (panel === "profile") return renderRichSection("Perfil profesional", "Añade dos o tres frases sobre tu experiencia general.", false, "+15%", "profile");
+    if (panel === "achievements") return renderRichSection("Logros", "", true, "", "achievements");
+    if (panel === "areas") return renderAreasPanel();
+    if (panel === "websites") return renderWebsitesPanel();
+    const definition = SECTION_DEFINITIONS.find(([section]) => section === panel);
+    if (definition) return renderSectionForm(definition[0], definition[2]);
+    return "";
   }
 
   function renderField(label, field, value, type = "text", placeholder = "", className = "", hint = "") {
@@ -737,7 +768,8 @@
   function renderRichSection(title, description = "", locked = false, badge = "", panel = title.toLowerCase().replace(/\s+/g, "-")) {
     const isExpanded = expandedSections.has(panel);
     return `
-      <section class="form-card rich-card" data-section-panel="${esc(panel)}">
+      <section class="form-card rich-card" data-section-panel="${esc(panel)}" data-sortable-section data-panel="${esc(panel)}">
+        ${renderSectionDragHandle(panel)}
         <button class="section-head section-toggle" type="button" data-action="toggle-section" data-panel="${esc(panel)}" aria-expanded="${isExpanded}">
           <div>
             <h2>${esc(title)}${locked ? ' <span class="lock-icon" aria-label="bloqueado"></span>' : ""}${badge ? ` <span class="completion-pill">${esc(badge)}</span>` : ""}</h2>
@@ -837,6 +869,10 @@
     return `<button class="entry-drag-handle" type="button" data-drag-handle data-section="${esc(section)}" data-index="${index}" title="Haz clic y arrastra para mover" aria-label="Haz clic y arrastra para mover"></button>`;
   }
 
+  function renderSectionDragHandle(panel) {
+    return `<button class="section-drag-handle" type="button" data-section-drag-handle data-panel="${esc(panel)}" title="Haz clic y arrastra para mover" aria-label="Haz clic y arrastra para mover"></button>`;
+  }
+
   function renderDateInputs(prefix, section, index, dates) {
     return `
       <div class="field date-range-field">
@@ -875,7 +911,8 @@
       emptyText: "Completa esta sección cuando tenga sentido para tu CV.",
     };
     return `
-      <section class="form-card editor-section-card" id="section-${esc(section)}" data-section-card="${esc(section)}">
+      <section class="form-card editor-section-card" id="section-${esc(section)}" data-section-card="${esc(section)}" data-sortable-section data-panel="${esc(section)}">
+        ${renderSectionDragHandle(section)}
         <button class="section-head section-toggle" type="button" data-action="toggle-section" data-panel="${esc(section)}" aria-expanded="${isExpanded}">
           <div>
             <h2>${esc(copy.title)}${section === "awards" ? "" : ' <span class="edit-mark" aria-hidden="true">✎</span>'}</h2>
@@ -1008,12 +1045,11 @@
     `;
   }
 
-  function renderExtraPanels() {
+  function renderAreasPanel() {
     const areasOpen = expandedSections.has("areas");
-    const websitesOpen = expandedSections.has("websites");
-    const addSectionsOpen = expandedSections.has("add-sections");
     return `
-      <section class="form-card editor-section-card" data-section-panel="areas">
+      <section class="form-card editor-section-card" data-section-panel="areas" data-sortable-section data-panel="areas">
+        ${renderSectionDragHandle("areas")}
         <button class="section-head section-toggle" type="button" data-action="toggle-section" data-panel="areas" aria-expanded="${areasOpen}">
           <div>
             <h2>Áreas de Especialización <span class="completion-pill">+4%</span></h2>
@@ -1025,8 +1061,14 @@
           <button class="add-wide-btn" type="button" data-action="noop" data-message="La edición de competencias se añadirá como sección propia.">+ Añadir competencia</button>
         </div>
       </section>
+    `;
+  }
 
-      <section class="form-card editor-section-card" data-section-panel="websites">
+  function renderWebsitesPanel() {
+    const websitesOpen = expandedSections.has("websites");
+    return `
+      <section class="form-card editor-section-card" data-section-panel="websites" data-sortable-section data-panel="websites">
+        ${renderSectionDragHandle("websites")}
         <button class="section-head section-toggle" type="button" data-action="toggle-section" data-panel="websites" aria-expanded="${websitesOpen}">
           <div>
             <h2>Websites & Social Links <span class="edit-mark" aria-hidden="true">✎</span></h2>
@@ -1044,7 +1086,12 @@
           <button class="add-wide-btn" type="button" data-action="noop" data-message="La edición de enlaces estará disponible cuando se active esta sección.">+ Añade un enlace</button>
         </div>
       </section>
+    `;
+  }
 
+  function renderStaticExtraPanels() {
+    const addSectionsOpen = expandedSections.has("add-sections");
+    return `
       <section class="form-card cover-section-card" data-section-panel="cover" aria-label="Carta de presentación">
         <div class="cover-card">
           <div>
@@ -1463,6 +1510,34 @@
   });
 
   form.addEventListener("pointerdown", (event) => {
+    const sectionHandle = event.target.closest("[data-section-drag-handle]");
+    if (sectionHandle) {
+      const panel = sectionHandle.dataset.panel;
+      const source = sectionHandle.closest("[data-sortable-section]");
+      const fromIndex = state.formSectionOrder.indexOf(panel);
+      if (!panel || !source || fromIndex === -1) return;
+      const rect = source.getBoundingClientRect();
+      event.preventDefault();
+      event.stopPropagation();
+      sectionDrag = {
+        panel,
+        fromIndex,
+        startX: event.clientX,
+        startY: event.clientY,
+        sourceRect: rect,
+        cards: draggableSectionCards().map((card) => ({
+          panel: card.dataset.panel,
+          index: state.formSectionOrder.indexOf(card.dataset.panel),
+          rect: card.getBoundingClientRect(),
+        })),
+        slotSize: sectionSlotSize(panel, rect),
+        insertionIndex: fromIndex,
+        active: false,
+      };
+      sectionHandle.setPointerCapture?.(event.pointerId);
+      return;
+    }
+
     const handle = event.target.closest("[data-drag-handle]");
     if (!handle) return;
     const section = handle.dataset.section;
@@ -1489,6 +1564,105 @@
     };
     handle.setPointerCapture?.(event.pointerId);
   });
+
+  function draggableSectionCards() {
+    return Array.from(document.querySelectorAll("[data-sortable-section]"));
+  }
+
+  function sectionSlotSize(panel, sourceRect) {
+    const cards = draggableSectionCards();
+    const sourceIndex = cards.findIndex((card) => card.dataset.panel === panel);
+    const next = cards[sourceIndex + 1];
+    if (next) return Math.max(sourceRect.height, next.getBoundingClientRect().top - sourceRect.top);
+    return sourceRect.height + 6;
+  }
+
+  function sectionDropTargetFromPoint(event) {
+    const cards = sectionDrag?.cards || [];
+    if (!cards.length || !sectionDrag) return null;
+
+    let insertionIndex = cards.length;
+    let targetPanel = cards[cards.length - 1]?.panel;
+
+    for (const card of cards) {
+      const panel = card.panel;
+      const panelIndex = card.index;
+      if (panelIndex === sectionDrag.fromIndex) continue;
+      const midpoint = card.rect.top + card.rect.height / 2;
+      if (event.clientY < midpoint) {
+        insertionIndex = panelIndex;
+        targetPanel = panel;
+        break;
+      }
+    }
+
+    if (insertionIndex > sectionDrag.fromIndex) {
+      const previous = cards[insertionIndex - 1];
+      if (previous && previous.panel !== sectionDrag.panel) targetPanel = previous.panel;
+    }
+
+    return {
+      target: document.querySelector(`[data-sortable-section][data-panel="${targetPanel}"]`),
+      insertionIndex,
+    };
+  }
+
+  function resetSectionDragStyles() {
+    draggableSectionCards().forEach((card) => {
+      card.classList.remove("is-section-dragging", "is-section-drag-shifted");
+      card.style.transform = "";
+      card.style.zIndex = "";
+    });
+  }
+
+  function applySectionDragTransforms(event, source) {
+    if (!sectionDrag || !source) return;
+    const dx = event.clientX - sectionDrag.startX;
+    const dy = event.clientY - sectionDrag.startY;
+    const insertionIndex = sectionDrag.insertionIndex;
+
+    draggableSectionCards().forEach((card) => {
+      if (card === source) return;
+      const panelIndex = state.formSectionOrder.indexOf(card.dataset.panel);
+      let shift = 0;
+      if (insertionIndex > sectionDrag.fromIndex && panelIndex > sectionDrag.fromIndex && panelIndex < insertionIndex) {
+        shift = -sectionDrag.slotSize;
+      } else if (insertionIndex < sectionDrag.fromIndex && panelIndex >= insertionIndex && panelIndex < sectionDrag.fromIndex) {
+        shift = sectionDrag.slotSize;
+      }
+      card.classList.toggle("is-section-drag-shifted", shift !== 0);
+      card.style.transform = shift ? `translate3d(0, ${shift}px, 0)` : "";
+      card.style.zIndex = "";
+    });
+
+    source.classList.add("is-section-dragging");
+    source.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    source.style.zIndex = "1";
+  }
+
+  function cancelSectionDrag() {
+    if (!sectionDrag) return;
+    const { active } = sectionDrag;
+    sectionDrag = null;
+    resetSectionDragStyles();
+    if (active) {
+      suppressNextClick = true;
+      window.setTimeout(() => {
+        suppressNextClick = false;
+      }, 0);
+    }
+  }
+
+  function moveSectionToInsertion(fromIndex, insertionIndex) {
+    const order = state.formSectionOrder;
+    if (fromIndex < 0 || fromIndex >= order.length) return false;
+    let nextIndex = Math.max(0, Math.min(order.length, insertionIndex));
+    if (nextIndex === fromIndex || nextIndex === fromIndex + 1) return false;
+    const [panel] = order.splice(fromIndex, 1);
+    if (nextIndex > fromIndex) nextIndex -= 1;
+    order.splice(nextIndex, 0, panel);
+    return true;
+  }
 
   function dropTargetFromPoint(event, section) {
     const items = draggableItemsForSection(section);
@@ -1598,6 +1772,19 @@
   }
 
   document.addEventListener("pointermove", (event) => {
+    if (sectionDrag) {
+      const distance = Math.abs(event.clientX - sectionDrag.startX) + Math.abs(event.clientY - sectionDrag.startY);
+      if (!sectionDrag.active && distance < 3) return;
+      event.preventDefault();
+
+      const source = document.querySelector(`[data-sortable-section][data-panel="${sectionDrag.panel}"]`);
+      sectionDrag.active = true;
+      const dropTarget = sectionDropTargetFromPoint(event);
+      sectionDrag.insertionIndex = dropTarget?.insertionIndex ?? sectionDrag.fromIndex;
+      applySectionDragTransforms(event, source);
+      return;
+    }
+
     if (!pointerDrag) return;
     const distance = Math.abs(event.clientX - pointerDrag.startX) + Math.abs(event.clientY - pointerDrag.startY);
     if (!pointerDrag.active && distance < 3) return;
@@ -1623,6 +1810,23 @@
   });
 
   function finishPointerDrag(event) {
+    if (sectionDrag) {
+      const { fromIndex, insertionIndex, active } = sectionDrag;
+      const finalDropTarget = active && event ? sectionDropTargetFromPoint(event) : null;
+      const finalInsertionIndex = finalDropTarget?.insertionIndex ?? insertionIndex;
+      sectionDrag = null;
+      resetSectionDragStyles();
+      if (!active) return;
+      suppressNextClick = true;
+      window.setTimeout(() => {
+        suppressNextClick = false;
+      }, 0);
+      if (!moveSectionToInsertion(fromIndex, finalInsertionIndex)) return;
+      renderForm();
+      updatePreview();
+      return;
+    }
+
     if (!pointerDrag) return;
     const { section, index, insertionIndex, active } = pointerDrag;
     const finalDropTarget = active && event ? dropTargetFromPoint(event, section) : null;
@@ -1644,8 +1848,12 @@
   document.addEventListener("pointerup", finishPointerDrag);
   document.addEventListener("pointercancel", finishPointerDrag);
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || !pointerDrag) return;
+    if (event.key !== "Escape" || (!pointerDrag && !sectionDrag)) return;
     event.preventDefault();
+    if (sectionDrag) {
+      cancelSectionDrag();
+      return;
+    }
     cancelPointerDrag();
   });
 
