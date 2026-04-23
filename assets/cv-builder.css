@@ -3308,16 +3308,17 @@ li {
 
 .dashboard-menu a {
   display: grid;
-  grid-template-columns: 20px 1fr auto;
-  gap: 9px;
+  grid-template-columns: 24px 1fr auto;
+  gap: 6px;
   align-items: center;
   min-height: 40px;
   border-radius: 12px;
-  padding: 8px 12px;
-  color: #6a7488;
+  padding: 8px 10px;
+  color: #656e83;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
+  line-height: 20px;
 }
 
 .dashboard-menu a.is-active {
@@ -3327,8 +3328,8 @@ li {
 
 .dashboard-menu-icon {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   color: #bec4d5;
   fill: currentColor;
   stroke: currentColor;
