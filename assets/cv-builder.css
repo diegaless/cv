@@ -3515,6 +3515,7 @@ li {
 }
 
 .documents-tabs button {
+  position: relative;
   padding: 0;
   min-height: 32px;
   border: 0;
@@ -3535,8 +3536,18 @@ li {
 }
 
 .documents-tabs button.is-active {
-  border-bottom-color: #1a91f0;
+  border-bottom-color: transparent;
   color: #1e2532;
+}
+
+.documents-tabs button.is-active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: #1a91f0;
 }
 
 .create-new-button {
@@ -3633,7 +3644,7 @@ li {
   font-size: 17px;
   font-weight: 500;
   line-height: 20px;
-  transform: translateY(-2px) scale(1.118, 1.15);
+  transform: translateY(-2px) scale(1.118, 1.12);
   transform-origin: left top;
 }
 
