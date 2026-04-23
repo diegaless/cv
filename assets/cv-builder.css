@@ -1872,7 +1872,15 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
+  opacity: 0;
+  animation: drag-tooltip-in 0.12s ease 0.55s forwards;
   pointer-events: none;
+}
+
+@keyframes drag-tooltip-in {
+  to {
+    opacity: 1;
+  }
 }
 
 .entry-card.is-dragging .entry-drag-handle::after {
@@ -1881,7 +1889,6 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .entry-card.is-dragging {
   opacity: 0.6;
-  pointer-events: none;
   box-shadow: 0 3px 12px rgba(112, 131, 151, 0.2);
   transition: opacity 0.16s ease, box-shadow 0.16s ease;
 }
@@ -1952,6 +1959,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .entry-menu-button {
   right: 48px;
+  display: none;
 }
 
 .entry-menu-button::before {
@@ -1967,7 +1975,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 }
 
 .entry-delete-button {
-  right: 12px;
+  right: -27px;
   opacity: 0;
   pointer-events: none;
 }

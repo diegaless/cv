@@ -1491,17 +1491,41 @@
   });
 
   function dropTargetFromPoint(event, section) {
-    const target = document.elementFromPoint(event.clientX, event.clientY)?.closest("[data-draggable-item]");
-    if (!target || target.dataset.section !== section) return null;
-    const targetIndex = Number(target.dataset.index);
-    if (Number.isNaN(targetIndex)) return null;
-    const rect = target.getBoundingClientRect();
-    const position = event.clientY > rect.top + rect.height / 2 ? "after" : "before";
+    const items = draggableItemsForSection(section);
+    if (!items.length) return null;
+
+    let insertionIndex = items.length;
+    let target = items[items.length - 1];
+    let position = "after";
+
+    for (const item of items) {
+      const itemIndex = Number(item.dataset.index);
+      if (pointerDrag && itemIndex === pointerDrag.index) continue;
+      const rect = item.getBoundingClientRect();
+      const midpoint = rect.top + rect.height / 2;
+      if (event.clientY < midpoint) {
+        insertionIndex = itemIndex;
+        target = item;
+        position = "before";
+        break;
+      }
+    }
+
+    if (pointerDrag && insertionIndex > pointerDrag.index) {
+      const previous = items[insertionIndex - 1];
+      if (previous && Number(previous.dataset.index) !== pointerDrag.index) {
+        target = previous;
+        position = "after";
+      }
+    }
+
+    const targetIndex = Number(target?.dataset.index);
+    if (!target || Number.isNaN(targetIndex)) return null;
     return {
       target,
       targetIndex,
       position,
-      insertionIndex: targetIndex + (position === "after" ? 1 : 0),
+      insertionIndex,
     };
   }
 
@@ -1576,7 +1600,7 @@
   document.addEventListener("pointermove", (event) => {
     if (!pointerDrag) return;
     const distance = Math.abs(event.clientX - pointerDrag.startX) + Math.abs(event.clientY - pointerDrag.startY);
-    if (!pointerDrag.active && distance < 8) return;
+    if (!pointerDrag.active && distance < 3) return;
     event.preventDefault();
 
     const source = document.querySelector(`[data-draggable-item][data-section="${pointerDrag.section}"][data-index="${pointerDrag.index}"]`);
