@@ -589,8 +589,8 @@ button {
 }
 
 .score-badge {
-  border-radius: 6px;
-  padding: 3px 7px;
+  border-radius: 4px;
+  padding: 2px 5px;
   background: var(--success);
   color: #ffffff;
   font-size: 14px;
@@ -4392,12 +4392,33 @@ li {
     align-items: center;
     justify-content: space-between;
     min-height: 52px;
-    padding: 6px 66px 4px 14px;
+    padding: 8px 66px 0 64px;
+    background: #ffffff;
+  }
+
+  .mobile-top-row::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 11px;
+    width: 20px;
+    height: 20px;
+    background-image: radial-gradient(circle, #8f9bb1 1.6px, transparent 1.8px);
+    background-size: 8px 8px;
+    background-position: 0 0;
   }
 
   .mobile-top-row .dashboard-pill {
     margin: 0;
-    border: 0;
+    min-height: 36px;
+    padding: 0 18px;
+    border: 1px solid #e7edf6;
+    border-radius: 999px;
+    background: #edf3fb;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
+    color: #182235;
+    font-size: 15px;
+    font-weight: 800;
   }
 
   .mobile-top-row .round-avatar {
@@ -4447,13 +4468,30 @@ li {
 
   .resume-language-card {
     display: grid;
-    min-height: 136px;
-    margin: 0 3px 6px;
+    min-height: 86px;
+    margin: 0 0 4px;
+    padding: 18px 18px 14px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: none;
   }
 
   .builder-tabs {
     display: grid;
-    margin: 0 3px 6px;
+    position: relative;
+    min-height: 60px;
+    margin: 0 0 4px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #ffffff;
+    align-items: center;
+  }
+
+  .builder-tabs::before {
+    content: "";
+    position: absolute;
+    inset: 8px 12px;
+    border-radius: 12px;
+    background: #eef2f8;
   }
 
   .mobile-download-button {
@@ -4498,7 +4536,7 @@ li {
   }
 
   .score-card {
-    height: auto;
+    height: 231px;
   }
 
   .cover-section-card {
@@ -4506,22 +4544,90 @@ li {
     padding-right: 0;
   }
 
-  .score-list,
   .add-section-grid {
     grid-template-columns: 1fr;
   }
 
   .score-list {
-    gap: 13px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px 24px;
+  }
+
+  .score-list li:nth-child(odd):last-child {
+    grid-column: auto;
   }
 
   .assistant-fab {
     bottom: 68px;
     transform: translateX(-50%);
   }
+
+  .builder-tabs button {
+    position: relative;
+    z-index: 1;
+    min-height: 36px;
+    border-radius: 10px;
+  }
+
+  .form-card,
+  .score-card,
+  .utility-actions {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 4px;
+    border-radius: 12px;
+  }
+
+  .form-card {
+    padding: 0 36px 20px;
+  }
+
+  .score-card,
+  .utility-actions {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .form-card h2 {
+    font-size: 19px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+
+  .field input {
+    height: 48px;
+    min-height: 48px;
+    border-radius: 3px;
+    font-size: 19px;
+    line-height: 24px;
+  }
+
+  .field textarea {
+    border-radius: 3px;
+    font-size: 19px;
+    line-height: 24px;
+  }
+
+  #section-personal .card-title-row {
+    transform: none;
+    margin-bottom: 0;
+    padding: 20px 0;
+  }
+
+  #section-personal .section-content {
+    margin-top: 0;
+  }
+
+  .field-grid {
+    gap: 20px 40px;
+  }
 }
 
 @media (max-width: 560px) {
+  .score-list {
+    grid-template-columns: 1fr;
+  }
+
   .field-grid,
   .editor-actions,
   .top-actions,
