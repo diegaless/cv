@@ -3626,10 +3626,13 @@ li {
 }
 
 .visibility-banner strong {
+  display: block;
   color: #303848;
   font-size: 17px;
   font-weight: 500;
   line-height: 20px;
+  transform: translateY(-2px) scale(1.118, 1.15);
+  transform-origin: left top;
 }
 
 .visibility-banner p {
