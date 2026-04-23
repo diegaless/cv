@@ -2277,6 +2277,22 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   gap: 10px;
 }
 
+.rich-card[data-section-panel="powerStatement"] {
+  margin-top: 8px;
+}
+
+.rich-card[data-section-panel="powerStatement"] .section-head {
+  height: 28px;
+}
+
+.rich-card[data-section-panel="powerStatement"] h2 {
+  color: #1e2532;
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0;
+}
+
 .rich-toolbar {
   display: flex;
   gap: 12px;
