@@ -597,8 +597,9 @@ button {
 }
 
 .score-bar {
+  width: calc(100% - 5px);
   height: 3px;
-  margin: 12px 0 18px;
+  margin: 12px 0 18px 5px;
   overflow: hidden;
   border-radius: 999px;
   background: #e5ebf3;
