@@ -3244,46 +3244,48 @@ li {
   grid-template-columns: 48px 1fr;
   gap: 10px;
   align-items: center;
+  min-height: 46px;
   margin-bottom: 28px;
   color: inherit;
   text-decoration: none;
-  transform: translateY(3px);
+  transform: translate(-1px, 3px);
 }
 
 .dashboard-avatar {
   position: relative;
-  width: 46px;
-  height: 46px;
-  border: 2px solid #ff8b67;
+  width: 44px;
+  height: 44px;
+  border: 0;
   border-radius: 50%;
-  background: #eef2f8;
+  background: linear-gradient(to top, #ee571d, #fbb092);
 }
 
 .dashboard-avatar::before {
   content: "";
   position: absolute;
-  top: 10px;
-  left: 14px;
-  width: 14px;
-  height: 14px;
+  top: 2px;
+  left: 2px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #c9d1df;
-  box-shadow: 0 15px 0 5px #c9d1df;
+  background: url("./media/avatar-placeholder.svg") center / cover no-repeat;
 }
 
 .dashboard-avatar span {
   position: absolute;
-  right: -4px;
-  bottom: -4px;
-  display: grid;
-  place-items: center;
-  min-width: 24px;
-  height: 18px;
-  border-radius: 999px;
+  top: 32px;
+  left: 7.5px;
+  display: block;
+  width: 30px;
+  min-width: 30px;
+  height: 16px;
+  border-radius: 30px;
   background: #ee571d;
   color: #ffffff;
-  font-size: 12px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
 }
 
 .dashboard-user-card strong {
