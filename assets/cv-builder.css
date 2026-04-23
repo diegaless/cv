@@ -3315,7 +3315,7 @@ li {
 .dashboard-menu a {
   display: grid;
   grid-template-columns: 20px 1fr auto;
-  gap: 10px;
+  gap: 9px;
   align-items: center;
   min-height: 40px;
   border-radius: 12px;
