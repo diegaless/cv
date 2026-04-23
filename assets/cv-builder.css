@@ -3258,6 +3258,7 @@ li {
   margin-bottom: 28px;
   color: inherit;
   text-decoration: none;
+  transform: translateY(3px);
 }
 
 .dashboard-avatar {
@@ -3297,14 +3298,16 @@ li {
 }
 
 .dashboard-user-card strong {
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 24px;
   white-space: nowrap;
 }
 
 .dashboard-user-card small {
   color: #828ba2;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .dashboard-menu {
