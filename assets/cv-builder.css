@@ -4023,8 +4023,8 @@ li {
   height: 24px;
   transform: translate(-50%, -50%);
   background:
-    linear-gradient(#bec4d5 0 0) center / 1.5px 24px no-repeat,
-    linear-gradient(#bec4d5 0 0) center / 24px 1.5px no-repeat;
+    linear-gradient(#bec4d5 0 0) center / 2px 24px no-repeat,
+    linear-gradient(#bec4d5 0 0) center / 24px 2px no-repeat;
 }
 
 .new-document-card strong,
