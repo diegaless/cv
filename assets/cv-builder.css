@@ -3169,7 +3169,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
   display: grid;
   grid-template-columns: 150px 1fr;
   column-gap: 18px;
-  margin-bottom: 24px;
+  margin-bottom: 24.5px;
 }
 
 .cv-item time {
@@ -3204,7 +3204,7 @@ body[data-builder-tab="ai-review"] .ai-review-hero {
 }
 
 .cv-item--education {
-  margin-bottom: 22.75px;
+  margin-bottom: 24.5px;
 }
 
 .meta {
