@@ -10,6 +10,21 @@
   let activeTab = "resumes";
   let toastTimer = null;
 
+  const ACTION_ICON_PATHS = {
+    pdf: "M9,6 L9,13 L7.20376823,13 L12,18.4814077 L16.7962318,13 L15,13 L15,6 L9,6 Z M7,11 L7,5 C7,4.44771525 7.44771525,4 8,4 L16,4 C16.5522847,4 17,4.44771525 17,5 L17,11 L19,11 C19.8591588,11 20.3183367,12.0119217 19.7525767,12.6585046 L12.7525767,20.6585046 C12.3541654,21.1138318 11.6458346,21.1138318 11.2474233,20.6585046 L4.24742331,12.6585046 C3.68166327,12.0119217 4.14084119,11 5,11 L7,11 Z",
+    docx: "M17 19V7.82843L14.1716 5H7v14h10zm1 2H6c-.55228 0-1-.4477-1-1V4c0-.55228.44772-1 1-1h8.5858c.2652 0 .5196.10536.7071.29289l3.4142 3.41422c.1875.18753.2929.44189.2929.7071V20c0 .5523-.4477 1-1 1z M10.5169 12.8175L9.66292 10H8l1.75281 5h1.30339L12 12.2222 12.9438 15h1.3034L16 10h-1.6629l-.854 2.8175L12.5393 10h-1.0786l-.9438 2.8175z",
+    txt: "M17 19V7.87116L14.1643 5H7v14h10zm1 2H6c-.55228 0-1-.4477-1-1V4c0-.55228.44772-1 1-1h8.5821c.2674 0 .5236.10707.7115.2973l3.4179 3.46058c.1848.18717.2885.43963.2885.7027V20c0 .5523-.4477 1-1 1z M15 10H9v2h2v4h2v-4h2v-2z",
+    duplicate: "M5 9h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zm1 2v8h8v-8H6zm12-4H9V5h10a1 1 0 0 1 1 1v10h-2V7z",
+    more: "M6.5,14 C5.67157288,14 5,13.3284271 5,12.5 C5,11.6715729 5.67157288,11 6.5,11 C7.32842712,11 8,11.6715729 8,12.5 C8,13.3284271 7.32842712,14 6.5,14 Z M12.5,14 C11.6715729,14 11,13.3284271 11,12.5 C11,11.6715729 11.6715729,11 12.5,11 C13.3284271,11 14,11.6715729 14,12.5 C14,13.3284271 13.3284271,14 12.5,14 Z M18.5,14 C17.6715729,14 17,13.3284271 17,12.5 C17,11.6715729 17.6715729,11 18.5,11 C19.3284271,11 20,11.6715729 20,12.5 C20,13.3284271 19.3284271,14 18.5,14 Z",
+  };
+
+  function actionIcon(type) {
+    const path = ACTION_ICON_PATHS[type];
+    return path
+      ? `<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="${path}"></path></svg>`
+      : "";
+  }
+
   function esc(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
@@ -335,16 +350,16 @@
           <span class="resume-card-details">
             <strong>${esc(title)}</strong>
             <small>${esc(formatUpdatedAt(document.updatedAt))}</small>
-            <span class="resume-score"><b>${score}%</b> Puntuación de tu currículum</span>
+            <span class="resume-score"><b>${score}%</b><span>Puntuación de tu currículum</span></span>
           </span>
         </button>
         <div class="resume-card-actions">
-          <button type="button" data-dashboard-action="pdf" data-resume-id="${esc(document.id)}">Descargar PDF</button>
-          <button type="button" data-dashboard-action="docx" data-resume-id="${esc(document.id)}">Descargar en DOCX</button>
-          <button type="button" data-dashboard-action="txt" data-resume-id="${esc(document.id)}">Exportar a TXT</button>
-          <button type="button" data-dashboard-action="duplicate" data-resume-id="${esc(document.id)}">Duplicar</button>
+          <button type="button" data-dashboard-action="pdf" data-resume-id="${esc(document.id)}">${actionIcon("pdf")}Descargar PDF</button>
+          <button type="button" data-dashboard-action="docx" data-resume-id="${esc(document.id)}">${actionIcon("docx")}Descargar en DOCX</button>
+          <button type="button" data-dashboard-action="txt" data-resume-id="${esc(document.id)}">${actionIcon("txt")}Exportar a TXT</button>
+          <button type="button" data-dashboard-action="duplicate" data-resume-id="${esc(document.id)}">${actionIcon("duplicate")}Duplicar</button>
           <div class="resume-more-wrap">
-            <button type="button" data-dashboard-action="more" data-resume-id="${esc(document.id)}">Más</button>
+            <button type="button" data-dashboard-action="more" data-resume-id="${esc(document.id)}">${actionIcon("more")}Más</button>
             <div class="resume-more-menu" hidden>
               <button type="button" data-dashboard-action="combine" data-resume-id="${esc(document.id)}">Combinar con...</button>
               <button type="button" data-dashboard-action="delete" data-resume-id="${esc(document.id)}">Borrar</button>

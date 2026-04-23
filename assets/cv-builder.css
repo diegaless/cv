@@ -3733,34 +3733,58 @@ li {
   grid-row: 1;
   align-self: start;
   display: grid;
-  gap: 18px;
-  padding-top: 8px;
+  gap: 8px;
+  padding-top: 0;
 }
 
 .resume-card-details strong {
   color: #1e2532;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 28px;
 }
 
 .resume-card-details small {
   color: #828ba2;
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .resume-score {
   display: inline-flex;
-  gap: 8px;
   align-items: center;
+  width: 236.109375px;
+  height: 36px;
+  border-radius: 6px;
+  background: #f7f9fc;
   color: #303848;
 }
 
 .resume-score b {
+  display: block;
   border-radius: 4px;
-  padding: 3px 8px;
-  background: #e7f4ed;
-  color: #339d5d;
-  font-size: 13px;
+  margin: 8px 0 8px 8px;
+  padding: 2px 4.5px;
+  width: 33.796875px;
+  min-width: 0;
+  height: 20px;
+  background: #339d5d;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.resume-score span {
+  display: block;
+  flex: 0 0 194.3125px;
+  width: 194.3125px;
+  padding: 8px;
+  color: #1e2532;
+  font-size: 16px;
+  line-height: 20px;
+  white-space: nowrap;
 }
 
 .resume-card-actions {
@@ -3768,19 +3792,32 @@ li {
   grid-row: 2;
   display: grid;
   align-content: start;
-  gap: 16px;
-  padding-top: 30px;
+  gap: 12px;
+  padding-top: 19px;
 }
 
 .resume-card-actions button {
   display: inline-flex;
-  gap: 12px;
+  gap: 0;
   align-items: center;
+  justify-self: start;
   border: 0;
+  padding: 0;
   background: transparent;
-  color: #303848;
+  color: #1e2532;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 24px;
   text-align: left;
-  font-weight: 500;
+}
+
+.resume-card-actions svg {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  margin-right: 8px;
+  color: #1a91f0;
+  fill: currentColor;
 }
 
 .resume-card-actions button::before {
@@ -3788,6 +3825,7 @@ li {
   width: 14px;
   height: 14px;
   flex: 0 0 14px;
+  margin-right: 8px;
   display: inline-grid;
   place-items: center;
   box-sizing: border-box;
@@ -3834,6 +3872,15 @@ li {
   background-image: radial-gradient(circle, currentColor 1.4px, transparent 1.6px);
   background-size: 6px 4px;
   background-repeat: repeat-x;
+}
+
+.resume-card-actions [data-dashboard-action="pdf"]::before,
+.resume-card-actions [data-dashboard-action="docx"]::before,
+.resume-card-actions [data-dashboard-action="txt"]::before,
+.resume-card-actions [data-dashboard-action="duplicate"]::before,
+.resume-card-actions [data-dashboard-action="more"]::before {
+  content: none;
+  display: none;
 }
 
 .resume-card-actions [data-dashboard-action="rename"]::before {
@@ -3938,10 +3985,11 @@ li {
 }
 
 .new-document-card strong {
-  margin-top: 8px;
+  margin-top: 0;
   color: #828ba2;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 28px;
 }
 
 .new-document-card small,
