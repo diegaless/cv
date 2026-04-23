@@ -2386,10 +2386,10 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   padding: 16px 15px;
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(110deg, #ff6b35, #766df4, #1a91f0) border-box;
+    linear-gradient(90deg, #ee5e1b 0%, #87b6f7 50%, #7971b0 100%) border-box;
   color: #273044;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 500;
   box-shadow: 0 18px 38px rgba(35, 42, 64, 0.14);
 }
 
