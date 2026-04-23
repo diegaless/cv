@@ -4012,8 +4012,10 @@ li {
 }
 
 .new-document-card small {
-  max-width: 248px;
-  line-height: 1.22;
+  max-width: 240px;
+  margin: 4px 0;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .cover-letter-empty {
