@@ -3217,37 +3217,26 @@ li {
 
 .dashboard-logo {
   display: flex;
-  gap: 10px;
-  align-items: flex-start;
+  gap: 0;
+  align-items: center;
+  width: 223px;
+  height: 40px;
   color: #1e2532;
   text-decoration: none;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  transform: translateY(-4px);
 }
 
-.dashboard-logo-mark {
-  width: 26px;
-  height: 26px;
-  background:
-    linear-gradient(90deg, #93d2ff 0 50%, transparent 50%),
-    linear-gradient(#1a91f0 0 50%, #eff2f9 50%);
+.dashboard-logo-image {
+  display: block;
+  width: 133px;
+  height: 40px;
+  background: url("./media/cvapp-logo-black.svg") 0 50% / contain no-repeat;
 }
 
-.dashboard-logo strong,
-.dashboard-logo small,
 .dashboard-user-card strong,
 .dashboard-user-card small {
   display: block;
-}
-
-.dashboard-logo strong {
-  font-size: 24px;
-  line-height: 20px;
-}
-
-.dashboard-logo small {
-  margin-left: 28px;
-  color: #828ba2;
-  font-size: 12px;
 }
 
 .dashboard-user-card {
