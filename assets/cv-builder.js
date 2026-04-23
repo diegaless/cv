@@ -768,6 +768,14 @@
     };
   }
 
+  function formatDateInputValue(value) {
+    return compactSpaces(value).replace(/^([A-Za-zÁÉÍÓÚáéíóúÑñüÜ]+)\s+(\d{4})$/u, "$1, $2");
+  }
+
+  function normalizeDateInputValue(value) {
+    return compactSpaces(value).replace(/^([A-Za-zÁÉÍÓÚáéíóúÑñüÜ]+),\s*(\d{4})$/u, "$1 $2");
+  }
+
   function joinTitleParts(prefix, suffix) {
     const cleanPrefix = compactSpaces(prefix);
     const cleanSuffix = compactSpaces(suffix);
@@ -820,8 +828,8 @@
       <div class="field date-range-field">
         <label for="${prefix}-date-start">Fecha de inicio y de fin <span class="help-dot" aria-hidden="true">?</span></label>
         <div class="date-range-inputs">
-          <input id="${prefix}-date-start" value="${esc(dates.start)}" placeholder="MM / AAAA" data-section="${esc(section)}" data-index="${index}" data-item-field="date_start" />
-          <input id="${prefix}-date-end" value="${esc(dates.end)}" placeholder="MM / AAAA" data-section="${esc(section)}" data-index="${index}" data-item-field="date_end" />
+          <input id="${prefix}-date-start" value="${esc(formatDateInputValue(dates.start))}" placeholder="MM / AAAA" data-section="${esc(section)}" data-index="${index}" data-item-field="date_start" />
+          <input id="${prefix}-date-end" value="${esc(formatDateInputValue(dates.end))}" placeholder="MM / AAAA" data-section="${esc(section)}" data-index="${index}" data-item-field="date_end" />
         </div>
       </div>
     `;
@@ -1115,8 +1123,8 @@
       item.title = joinTitleParts(parts.prefix, parts.suffix);
     } else if (itemField === "date_start" || itemField === "date_end") {
       const range = splitDateRange(item.date);
-      if (itemField === "date_start") range.start = control.value;
-      if (itemField === "date_end") range.end = control.value;
+      if (itemField === "date_start") range.start = normalizeDateInputValue(control.value);
+      if (itemField === "date_end") range.end = normalizeDateInputValue(control.value);
       item.date = joinDateRange(range.start, range.end);
     } else if (itemField === "meta") {
       item.meta = compactSpaces(control.value) || null;
