@@ -3499,7 +3499,7 @@ li {
 .documents-tabs {
   display: flex;
   gap: 24px;
-  transform: translateY(7px);
+  transform: translateY(3px);
 }
 
 .documents-tabs button {
