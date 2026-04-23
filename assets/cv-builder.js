@@ -1634,8 +1634,6 @@
     });
     updateScoreCard();
     if (options.silent) return;
-    if (tabName === "editor") showToast("Ya estás editando el contenido del CV.");
-    if (tabName === "design") showToast("Diseño activado: puedes cambiar plantilla y color de acento.");
   }
 
   document.querySelectorAll("[data-tab-action]").forEach((button) => {
