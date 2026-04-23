@@ -543,17 +543,19 @@ button {
 .builder-tabs button {
   min-height: 36px;
   border: 0;
-  border-radius: 9px;
+  border-radius: 8px;
   background: transparent;
   color: #758198;
-  font-size: 13px;
-  font-weight: 800;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .builder-tabs button.is-active {
   background: #ffffff;
   color: #152235;
-  box-shadow: 0 4px 12px rgba(24, 34, 53, 0.07);
+  box-shadow: 0 1px 2px rgba(15, 56, 113, 0.12), 0 2px 4px rgba(15, 56, 113, 0.08);
 }
 
 .builder-tabs button:disabled {
@@ -980,7 +982,7 @@ body[data-builder-tab="ai-review"] .preview-page-pill {
 }
 
 body[data-builder-tab="ai-review"] .ai-review-mode-panel {
-  display: none;
+  display: block;
 }
 
 .ai-review-editor-card {
@@ -1524,6 +1526,11 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   transform: translateY(15px);
 }
 
+#section-personal .card-title-row > div:first-child {
+  display: flex;
+  align-items: center;
+}
+
 .section-toggle.section-head {
   margin-bottom: 0;
 }
@@ -1535,9 +1542,13 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 }
 
 .edit-mark {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 8px;
   color: #a3afbf;
-  font-size: 16px;
-  font-weight: 700;
+  background: currentColor;
+  clip-path: polygon(72% 0, 100% 28%, 34% 94%, 0 100%, 6% 66%);
 }
 
 .chevron {
@@ -2460,6 +2471,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;
+  white-space: nowrap;
   box-shadow: 0 2px 4px -1px rgba(15, 56, 113, 0.08), 0 8px 20px -4px rgba(15, 56, 113, 0.12);
 }
 
@@ -2475,6 +2487,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   gap: 4px;
   width: 194.484px;
   height: 24px;
+  white-space: nowrap;
 }
 
 .assistant-fab-content svg {
@@ -4591,7 +4604,7 @@ li {
     position: relative;
     z-index: 1;
     min-height: 36px;
-    border-radius: 10px;
+    border-radius: 8px;
   }
 
   .form-card,
@@ -4614,8 +4627,8 @@ li {
   }
 
   .form-card h2 {
-    font-size: 19px;
-    line-height: 24px;
+    font-size: 23px;
+    line-height: 28px;
     font-weight: 600;
   }
 
@@ -4643,8 +4656,22 @@ li {
     margin-top: 0;
   }
 
+  #section-personal .field-grid > .field:first-child {
+    padding-top: 4px;
+  }
+
+  #section-personal .photo-row {
+    margin-top: -12px;
+    transform: translateY(-2px);
+  }
+
   .field-grid {
     gap: 20px 40px;
+  }
+
+  #section-personal .field-grid > .field:nth-child(5),
+  #section-personal .field-grid > .field:nth-child(6) {
+    margin-top: 8px;
   }
 
   #section-personal .field-grid > .field:nth-child(7),

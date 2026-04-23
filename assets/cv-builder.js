@@ -665,6 +665,7 @@
         <button class="card-title-row section-toggle" type="button" data-action="toggle-section" data-panel="personal" aria-expanded="${expandedSections.has("personal")}">
           <div>
             <h2>Datos personales</h2>
+            <span class="edit-mark" aria-hidden="true"></span>
           </div>
           <span class="card-title-meta">
             <span class="chevron">⌄</span>
