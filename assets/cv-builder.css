@@ -3308,7 +3308,8 @@ li {
 
 .dashboard-menu {
   display: grid;
-  gap: 2px;
+  gap: 0;
+  transform: translateY(1px);
 }
 
 .dashboard-menu a {
@@ -3329,6 +3330,10 @@ li {
 .dashboard-menu a.is-active {
   background: #eaf6ff;
   color: #1a91f0;
+}
+
+.dashboard-menu a:has(.premium-lock) {
+  min-height: 58px;
 }
 
 .dashboard-menu-icon {
