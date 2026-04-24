@@ -922,11 +922,11 @@ button {
 
 .form-card {
   position: relative;
-  margin: 0 3px 6px;
-  padding: 20px 33px;
+  margin: 0 0 4px;
+  padding: 20px 36px;
   background: #ffffff;
   border: 0;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: none;
 }
 
@@ -1587,6 +1587,27 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   margin-top: 18px;
 }
 
+.editor-section-card[data-section-card] > .section-content {
+  position: relative;
+  margin-top: -40px;
+}
+
+.editor-section-card[data-section-card="awards"] > .section-content {
+  margin-top: -23px;
+}
+
+.editor-section-card[data-section-panel="areas"] > .section-content {
+  margin-top: 0;
+}
+
+.editor-section-card[data-section-panel="areas"] .add-wide-btn {
+  margin-top: 4px;
+}
+
+.editor-section-card[data-section-panel="websites"] > .section-content {
+  margin-top: 2px;
+}
+
 .section-content[hidden] {
   display: none;
 }
@@ -2201,12 +2222,13 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .open-all-pill {
   position: sticky;
-  top: 8px;
+  top: 16px;
   left: 50%;
-  z-index: 2;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   height: 36px;
   min-height: 36px;
   width: max-content;
@@ -2216,7 +2238,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   border-radius: 100px;
   background: #ffffff;
   color: #1e2532;
-  padding: 0 7px;
+  padding: 0 8px 0 12px;
   font-size: 16px;
   font-weight: 500;
   opacity: 0;
@@ -2228,8 +2250,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .open-all-chevron {
   flex: 0 0 auto;
-  margin-left: 8px;
-  color: #8794a8;
+  color: currentColor;
   fill: currentColor;
 }
 
@@ -2412,7 +2433,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 }
 
 .rich-card[data-section-panel="powerStatement"] {
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .rich-card[data-section-panel="powerStatement"] .section-head {
@@ -2444,6 +2465,19 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   width: 1px;
   height: 22px;
   background: #c9d3e2;
+}
+
+.rich-card[data-section-panel="powerStatement"] .section-content,
+.rich-card[data-section-panel="achievements"] .section-content {
+  margin-top: 6px;
+}
+
+.locked-rich-placeholder {
+  height: 211px;
+}
+
+.rich-card[data-section-panel="powerStatement"] .locked-rich-placeholder {
+  height: 246px;
 }
 
 .rich-area {

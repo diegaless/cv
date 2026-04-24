@@ -66,7 +66,7 @@
     unsubscribe: null,
     savedDocs: new Map(),
   };
-  const expandedSections = new Set(["personal", "profile", "experience", "education", "awards", "areas", "websites", "cover", "add-sections", "cloud"]);
+  const expandedSections = new Set(["personal", "powerStatement", "profile", "achievements", "experience", "education", "awards", "areas", "websites", "cover", "add-sections", "cloud"]);
   const expandedItems = new Set();
   let draggedItem = null;
   let pointerDrag = null;
@@ -779,12 +779,14 @@
           <span class="chevron">⌄</span>
         </button>
         <div class="section-content" ${isExpanded ? "" : "hidden"}>
-          <div class="rich-area ${title === "Logros" ? "" : "small"}">
-            <div class="rich-toolbar" aria-hidden="true">
-              <span>B</span><span>I</span><span>U</span><span>S</span><span class="divider"></span><span>1.</span><span>•</span><span class="divider"></span><span>↗</span>
+          ${locked ? `<div class="locked-rich-placeholder" aria-hidden="true"></div>` : `
+            <div class="rich-area ${title === "Logros" ? "" : "small"}">
+              <div class="rich-toolbar" aria-hidden="true">
+                <span>B</span><span>I</span><span>U</span><span>S</span><span class="divider"></span><span>1.</span><span>•</span><span class="divider"></span><span>↗</span>
+              </div>
+              <p>p. e. profesor/a de ciencias apasionado/a por su profesión con más de 8 años de experiencia y una trayectoria...</p>
             </div>
-            ${locked ? "" : '<p>p. e. profesor/a de ciencias apasionado/a por su profesión con más de 8 años de experiencia y una trayectoria...</p>'}
-          </div>
+          `}
           ${locked ? "" : `
             <div class="rich-footer">
               <span>Consejo de los seleccionadores: escribe más de 400-600 caracteres para incrementar las posibilidades de una entrevista</span>
