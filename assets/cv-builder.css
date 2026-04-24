@@ -2200,26 +2200,45 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 }
 
 .open-all-pill {
-  position: static;
-  display: inline-flex;
+  position: sticky;
+  top: 8px;
+  left: 50%;
+  z-index: 2;
+  display: flex;
   align-items: center;
-  min-height: 34px;
+  justify-content: center;
+  height: 36px;
+  min-height: 36px;
   width: max-content;
-  margin: -4px 0 12px auto;
-  border: 1px solid #dce4ef;
-  border-radius: 999px;
+  max-width: calc(100% - 40px);
+  margin: 0 auto 8px;
+  border: 0;
+  border-radius: 100px;
   background: #ffffff;
-  color: #152235;
-  padding: 0 14px;
-  font-size: 13px;
-  font-weight: 800;
+  color: #1e2532;
+  padding: 0 7px;
+  font-size: 16px;
+  font-weight: 500;
   opacity: 0;
   pointer-events: none;
-  box-shadow: 0 8px 18px rgba(28, 42, 66, 0.08);
+  transform: translateX(-50%);
+  box-shadow: 0 0 1px rgba(15, 56, 113, 0.32), 0 1px 2px rgba(15, 56, 113, 0.12), 0 2px 4px rgba(15, 56, 113, 0.08);
+  transition: opacity 0.14s ease;
 }
 
-.editor-section-card:hover .open-all-pill,
-.editor-section-card:focus-within .open-all-pill {
+.open-all-chevron {
+  flex: 0 0 auto;
+  margin-left: 8px;
+  color: #8794a8;
+  fill: currentColor;
+}
+
+.open-all-chevron.is-up {
+  transform: rotate(180deg);
+}
+
+.section-content:hover .open-all-pill,
+.section-content:focus-within .open-all-pill {
   opacity: 1;
   pointer-events: auto;
 }
