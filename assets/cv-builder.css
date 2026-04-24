@@ -118,6 +118,15 @@ button {
   cursor: pointer;
 }
 
+body.is-dragging-ui {
+  cursor: grabbing;
+  user-select: none;
+}
+
+body.is-dragging-ui * {
+  cursor: grabbing !important;
+}
+
 .builder-shell {
   display: grid;
   grid-template-rows: var(--toolbar-height) minmax(0, 1fr);
@@ -1520,6 +1529,17 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   text-align: left;
 }
 
+.section-toggle:focus-visible,
+.entry-summary:focus-visible,
+.add-wide-btn:focus-visible,
+.item-btn:focus-visible,
+.primary-btn:focus-visible,
+.secondary-btn:focus-visible,
+.ghost-btn:focus-visible {
+  outline: 2px solid rgba(26, 145, 240, 0.45);
+  outline-offset: 4px;
+}
+
 .section-toggle.card-title-row,
 .section-toggle.section-head {
   cursor: pointer;
@@ -1567,6 +1587,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   background: transparent;
   color: var(--muted);
   font-size: 0;
+  transition: background 0.12s ease, color 0.12s ease;
 }
 
 .chevron::before {
@@ -1581,6 +1602,12 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .section-toggle[aria-expanded="true"] .chevron::before {
   transform: translateY(2px) rotate(225deg);
+}
+
+.section-toggle:hover .chevron,
+.section-toggle:focus-visible .chevron {
+  background: #f0f4fa;
+  color: #6f7b91;
 }
 
 .section-content {
@@ -1826,6 +1853,13 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
 
+.entry-card:hover,
+.entry-card:focus-within,
+.entry-card.is-menu-open {
+  border-color: #d5deeb;
+  box-shadow: 0 2px 8px rgba(15, 56, 113, 0.08);
+}
+
 .entry-header {
   display: flex;
   justify-content: space-between;
@@ -1895,20 +1929,21 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 .entry-drag-handle:focus-visible::after {
   content: "Haz clic y arrastra para mover";
   position: absolute;
-  left: -4px;
-  top: -32px;
+  left: -6px;
+  top: -38px;
   z-index: 40;
   width: max-content;
   max-width: 210px;
-  border-radius: 2px;
-  padding: 6px 8px;
-  background: #263247;
+  border-radius: 4px;
+  padding: 7px 9px;
+  background: #1e2532;
   color: #ffffff;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   opacity: 0;
   animation: drag-tooltip-in 0.12s ease 0.55s forwards;
+  box-shadow: 0 8px 18px rgba(20, 31, 51, 0.18);
   pointer-events: none;
 }
 
@@ -1925,7 +1960,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .entry-card.is-dragging {
   opacity: 0.6;
-  box-shadow: 0 3px 12px rgba(112, 131, 151, 0.2);
+  box-shadow: 0 8px 22px rgba(112, 131, 151, 0.22);
   transition: opacity 0.16s ease, box-shadow 0.16s ease;
 }
 
@@ -2012,7 +2047,9 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 
 .entry-menu-button {
   right: 48px;
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease;
 }
 
 .entry-menu-button::before {
@@ -2064,10 +2101,90 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   pointer-events: auto;
 }
 
+.entry-card:hover .entry-menu-button,
+.entry-card:focus-within .entry-menu-button,
+.entry-card.is-menu-open .entry-menu-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .entry-menu-button:hover,
+.entry-menu-button:focus-visible,
 .entry-delete-button:hover {
   background: #eef2f8;
   color: #1a91f0;
+}
+
+.entry-more-menu {
+  position: absolute;
+  top: 46px;
+  right: 40px;
+  z-index: 30;
+  width: 184px;
+  padding: 6px 0;
+  border: 1px solid #e4ebf4;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 2px 2px rgba(15, 35, 65, 0.1), 0 12px 28px rgba(15, 35, 65, 0.14);
+  animation: entry-menu-in 0.12s ease-out;
+}
+
+.entry-more-menu::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 10px;
+  height: 10px;
+  border-left: 1px solid #e4ebf4;
+  border-top: 1px solid #e4ebf4;
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.entry-more-menu button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 34px;
+  border: 0;
+  padding: 0 14px;
+  background: transparent;
+  color: #293241;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+}
+
+.entry-more-menu button:hover,
+.entry-more-menu button:focus-visible {
+  background: #f4f7fb;
+  color: #1a91f0;
+  outline: none;
+}
+
+.entry-more-menu button:disabled {
+  cursor: default;
+  color: #b5bdcc;
+  background: transparent;
+}
+
+.entry-more-menu button.danger {
+  color: #c94436;
+}
+
+@keyframes entry-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .entry-title,
@@ -2097,6 +2214,8 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   font-size: 0;
   line-height: 1;
   letter-spacing: 0;
+  border-radius: 50%;
+  transition: background 0.12s ease, color 0.12s ease;
 }
 
 .entry-chevron::before {
@@ -2106,6 +2225,13 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.16s ease;
+}
+
+.entry-summary:hover .entry-chevron,
+.entry-summary:focus-visible .entry-chevron {
+  background: #f0f4fa;
+  color: #6f7b91;
 }
 
 .entry-card.is-expanded .entry-chevron::before {
@@ -2115,6 +2241,7 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 .entry-card.is-expanded {
   background: #ffffff;
   padding: 14px 20px 24px;
+  animation: entry-expand-in 0.16s ease-out;
 }
 
 .entry-card.is-expanded .entry-title {
@@ -2196,6 +2323,20 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   min-height: 32px;
   padding: 7px 11px;
   font-size: 12px;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, transform 0.08s ease;
+}
+
+.item-btn:hover {
+  border-color: #cbd8e8;
+  background: #f6f9fd;
+}
+
+.item-btn:active,
+.add-wide-btn:active,
+.primary-btn:active,
+.secondary-btn:active,
+.ghost-btn:active {
+  transform: translateY(1px);
 }
 
 .add-section-btn {
@@ -2218,6 +2359,12 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
   color: var(--accent);
   padding: 0;
   font-weight: 900;
+  transition: color 0.12s ease, opacity 0.12s ease, transform 0.08s ease;
+}
+
+.add-wide-btn:hover,
+.add-wide-btn:focus-visible {
+  color: #0f74d1;
 }
 
 .open-all-pill {
@@ -2262,6 +2409,34 @@ body[data-builder-tab="ai-review"] .ai-review-mode-panel {
 .section-content:focus-within .open-all-pill {
   opacity: 1;
   pointer-events: auto;
+}
+
+.section-content:not([hidden]) {
+  animation: section-content-in 0.14s ease-out;
+}
+
+@keyframes entry-expand-in {
+  from {
+    opacity: 0.96;
+    transform: translateY(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes section-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .empty-section {
@@ -4850,6 +5025,17 @@ li {
 
   .rich-footer {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

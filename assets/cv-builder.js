@@ -71,6 +71,7 @@
   let draggedItem = null;
   let pointerDrag = null;
   let sectionDrag = null;
+  let activeEntryMenu = null;
   let suppressNextClick = false;
   let toastTimer = null;
   const SECTION_UI = {
@@ -957,13 +958,14 @@
     const prefix = `${section}-${index}`;
     const itemKey = `${section}:${index}`;
     const isExpanded = expandedItems.has(itemKey);
+    const isMenuOpen = activeEntryMenu === itemKey;
     const title = itemTitleForForm(section, item.title) || "Nueva entrada";
     const date = item.date || "Sin fecha";
     if (!isExpanded) {
       return `
-        <article class="entry-card is-compact" data-draggable-item data-section="${esc(section)}" data-index="${index}">
+        <article class="entry-card is-compact${isMenuOpen ? " is-menu-open" : ""}" data-draggable-item data-section="${esc(section)}" data-index="${index}">
           ${renderDragHandle(section, index)}
-          <button class="entry-menu-button" type="button" data-action="noop" data-message="Opciones del elemento." aria-label="Más opciones"></button>
+          <button class="entry-menu-button" type="button" data-action="toggle-entry-menu" data-section="${esc(section)}" data-index="${index}" aria-haspopup="menu" aria-expanded="${isMenuOpen}" aria-label="Más opciones"></button>
           <button class="entry-summary" type="button" data-action="toggle-item" data-section="${esc(section)}" data-index="${index}">
             <span>
               <span class="entry-title">${esc(title)}</span>
@@ -974,6 +976,7 @@
               <span class="entry-chevron" aria-hidden="true">⌄</span>
             </span>
           </button>
+          ${isMenuOpen ? renderEntryMenu(section, index) : ""}
           <button class="entry-delete-button" type="button" data-action="remove-item" data-section="${esc(section)}" data-index="${index}" aria-label="Eliminar"></button>
         </article>
       `;
@@ -1049,6 +1052,18 @@
           <button class="item-btn danger" type="button" data-action="remove-item" data-section="${esc(section)}" data-index="${index}">Eliminar</button>
         </div>
       </article>
+    `;
+  }
+
+  function renderEntryMenu(section, index) {
+    const items = state.data[section] || [];
+    return `
+      <div class="entry-more-menu" role="menu" data-entry-menu>
+        <button type="button" role="menuitem" data-action="duplicate-item" data-section="${esc(section)}" data-index="${index}">Duplicar</button>
+        <button type="button" role="menuitem" data-action="move-item" data-direction="up" data-section="${esc(section)}" data-index="${index}" ${index <= 0 ? "disabled" : ""}>Mover arriba</button>
+        <button type="button" role="menuitem" data-action="move-item" data-direction="down" data-section="${esc(section)}" data-index="${index}" ${index >= items.length - 1 ? "disabled" : ""}>Mover abajo</button>
+        <button class="danger" type="button" role="menuitem" data-action="remove-item" data-section="${esc(section)}" data-index="${index}">Eliminar</button>
+      </div>
     `;
   }
 
@@ -1317,6 +1332,15 @@
     expandedItems.add(`${section}:${nextIndex}`);
   }
 
+  function duplicateItem(section, index) {
+    const items = state.data[section];
+    if (!items || index < 0 || index >= items.length) return false;
+    const source = items[index] || {};
+    const duplicate = JSON.parse(JSON.stringify(source));
+    items.splice(index + 1, 0, duplicate);
+    return true;
+  }
+
   function moveItem(section, index, direction) {
     const items = state.data[section];
     const nextIndex = direction === "up" ? index - 1 : index + 1;
@@ -1475,28 +1499,51 @@
     const index = Number(button.dataset.index);
 
     if (action === "add-item" && section) {
+      activeEntryMenu = null;
       addItem(section);
       expandedSections.add(section);
     } else if (action === "remove-item" && section && !Number.isNaN(index)) {
+      activeEntryMenu = null;
       state.data[section].splice(index, 1);
       expandedItems.clear();
+    } else if (action === "duplicate-item" && section && !Number.isNaN(index)) {
+      if (!duplicateItem(section, index)) return;
+      activeEntryMenu = null;
+      expandedItems.clear();
     } else if (action === "move-item" && section && !Number.isNaN(index)) {
+      activeEntryMenu = null;
       moveItem(section, index, button.dataset.direction);
       expandedItems.clear();
+    } else if (action === "toggle-entry-menu" && section && !Number.isNaN(index)) {
+      const key = `${section}:${index}`;
+      const willOpen = activeEntryMenu !== key;
+      activeEntryMenu = willOpen ? key : null;
+      renderForm();
+      if (willOpen) {
+        window.requestAnimationFrame(() => {
+          document.querySelector(`[data-draggable-item][data-section="${section}"][data-index="${index}"] [data-entry-menu] button:not(:disabled)`)?.focus();
+        });
+      }
+      return;
     } else if (action === "toggle-all-items" && section) {
+      activeEntryMenu = null;
       toggleAllItems(section);
     } else if (action === "clear-photo") {
+      activeEntryMenu = null;
       state.photoSrc = "";
     } else if (action === "toggle-section") {
+      activeEntryMenu = null;
       const panel = button.dataset.panel;
       if (!panel) return;
       if (expandedSections.has(panel)) expandedSections.delete(panel);
       else expandedSections.add(panel);
     } else if (action === "toggle-item" && section && !Number.isNaN(index)) {
+      activeEntryMenu = null;
       const key = `${section}:${index}`;
       if (expandedItems.has(key)) expandedItems.delete(key);
       else expandedItems.add(key);
     } else if (action === "toggle-personal-extra") {
+      activeEntryMenu = null;
       if (expandedSections.has("personal-extra")) expandedSections.delete("personal-extra");
       else expandedSections.add("personal-extra");
     } else if (action === "writer-help") {
@@ -1526,6 +1573,8 @@
       const rect = source.getBoundingClientRect();
       event.preventDefault();
       event.stopPropagation();
+      activeEntryMenu = null;
+      document.body.classList.add("is-dragging-ui");
       sectionDrag = {
         panel,
         fromIndex,
@@ -1556,6 +1605,8 @@
 
     event.preventDefault();
     event.stopPropagation();
+    activeEntryMenu = null;
+    document.body.classList.add("is-dragging-ui");
     pointerDrag = {
       section,
       index,
@@ -1652,6 +1703,7 @@
     const { active } = sectionDrag;
     sectionDrag = null;
     resetSectionDragStyles();
+    document.body.classList.remove("is-dragging-ui");
     if (active) {
       suppressNextClick = true;
       window.setTimeout(() => {
@@ -1770,6 +1822,7 @@
     pointerDrag = null;
     clearDropTargets();
     resetPointerDragStyles(section);
+    document.body.classList.remove("is-dragging-ui");
     if (active) {
       suppressNextClick = true;
       window.setTimeout(() => {
@@ -1823,6 +1876,7 @@
       const finalInsertionIndex = finalDropTarget?.insertionIndex ?? insertionIndex;
       sectionDrag = null;
       resetSectionDragStyles();
+      document.body.classList.remove("is-dragging-ui");
       if (!active) return;
       suppressNextClick = true;
       window.setTimeout(() => {
@@ -1841,6 +1895,7 @@
     pointerDrag = null;
     clearDropTargets();
     resetPointerDragStyles(section);
+    document.body.classList.remove("is-dragging-ui");
     if (!active) return;
     suppressNextClick = true;
     window.setTimeout(() => {
@@ -1855,7 +1910,14 @@
   document.addEventListener("pointerup", finishPointerDrag);
   document.addEventListener("pointercancel", finishPointerDrag);
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || (!pointerDrag && !sectionDrag)) return;
+    if (event.key !== "Escape") return;
+    if (activeEntryMenu) {
+      event.preventDefault();
+      activeEntryMenu = null;
+      renderForm();
+      return;
+    }
+    if (!pointerDrag && !sectionDrag) return;
     event.preventDefault();
     if (sectionDrag) {
       cancelSectionDrag();
@@ -1873,6 +1935,7 @@
     draggedItem = { section, index };
     const card = handle.closest("[data-draggable-item]");
     card?.classList.add("is-dragging");
+    document.body.classList.add("is-dragging-ui");
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("text/plain", `${section}:${index}`);
   });
@@ -1899,6 +1962,7 @@
     event.preventDefault();
     const moved = moveItemTo(draggedItem.section, draggedItem.index, Number(card.dataset.index));
     draggedItem = null;
+    document.body.classList.remove("is-dragging-ui");
     document.querySelectorAll(".entry-card.is-drop-target, .entry-card.is-dragging").forEach((entry) => {
       entry.classList.remove("is-drop-target", "is-dragging");
     });
@@ -1910,6 +1974,7 @@
 
   form.addEventListener("dragend", () => {
     draggedItem = null;
+    document.body.classList.remove("is-dragging-ui");
     document.querySelectorAll(".entry-card.is-drop-target, .entry-card.is-dragging").forEach((entry) => {
       entry.classList.remove("is-drop-target", "is-dragging");
     });
@@ -1984,6 +2049,11 @@
   downloadMenu?.addEventListener("click", handleDownloadMenuClick);
   mobileDownloadButton?.addEventListener("click", requestPrint);
   document.addEventListener("click", (event) => {
+    if (activeEntryMenu && !event.target.closest("[data-entry-menu], .entry-menu-button")) {
+      activeEntryMenu = null;
+      renderForm();
+    }
+
     if (downloadMenu?.hidden) return;
     if (event.target.closest("#download-menu, #print-cv")) return;
     setDownloadMenu(false);
