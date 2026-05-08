@@ -25,7 +25,8 @@ python3 scripts/generate_cv_site.py /ruta/al/cv.pdf --out . --photo /ruta/foto.j
 
 El comando crea o actualiza:
 
-- `index.html`: web estática final.
+- `index.html`: entrada principal con login de Google/Firebase.
+- `cv-viewer.html`: visor estático final del CV.
 - `builder.html`: formulario web para rellenar datos y generar el CV con el mismo diseño.
 - `cv-data.json`: datos estructurados extraídos del PDF.
 - `cv.pdf`: copia descargable del PDF original.
@@ -64,7 +65,7 @@ Pasos en Firebase:
 
 1. Abre [Firebase Console](https://console.firebase.google.com/) y crea un proyecto.
 2. En `Authentication` activa `Google` como proveedor de acceso.
-3. En `Authentication > Settings > Authorized domains` añade tu dominio de GitHub Pages, por ejemplo `diegaless.github.io`. Para pruebas locales añade también `localhost` si no está.
+3. En `Authentication > Settings > Authorized domains` añade tu dominio de GitHub Pages y el dominio final, por ejemplo `diegaless.github.io` y `cvapp.diegoayala.com`. Para pruebas locales añade también `localhost` si no está.
 4. En `Firestore Database` crea una base de datos en modo producción.
 5. En `Firestore Database > Rules` pega el contenido de `firestore.rules` y publícalo.
 6. En `Project settings > General > Your apps` crea una app Web y copia el objeto `firebaseConfig`.
@@ -99,7 +100,7 @@ Para probar Google Login no uses `file://`. Levanta servidor local:
 python3 -m http.server 4000
 ```
 
-Después abre `http://127.0.0.1:4000/builder.html`.
+Después abre `http://127.0.0.1:4000/` para probar la entrada con login o `http://127.0.0.1:4000/builder.html` para abrir el editor directamente.
 
 ## Añadir Datos Sin Modificar El PDF
 
@@ -149,7 +150,7 @@ python3 scripts/generate_cv_site.py --data cv-data.json --out . --manual-pages
 
 ## Previsualizar
 
-Puedes abrir `index.html` directamente con `file://` o levantar un servidor local:
+Puedes abrir `cv-viewer.html` directamente con `file://` para ver el CV estático o levantar un servidor local para probar la app completa:
 
 ```bash
 python3 -m http.server 4000
