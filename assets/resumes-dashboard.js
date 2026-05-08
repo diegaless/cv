@@ -2,11 +2,13 @@
   const STORAGE_KEY = "cv-builder-state-v3";
   const RESUME_COLLECTION_KEY = "cv-builder-documents-v1";
   const ACTIVE_RESUME_KEY = "cv-builder-active-resume-id";
-  const DEFAULT_RESUME_ID = "44230391";
   const list = document.getElementById("resume-list");
   const coverPanel = document.getElementById("cover-letter-panel");
   const createButton = document.getElementById("create-resume-button");
   const createCard = document.getElementById("create-resume-card");
+  const params = new URLSearchParams(window.location.search);
+  const isGuestMode = params.get("guest") === "1" || sessionStorage.getItem("cv-builder-guest-mode") === "1";
+  if (isGuestMode) sessionStorage.setItem("cv-builder-guest-mode", "1");
   let activeTab = "resumes";
   let toastTimer = null;
 
@@ -39,9 +41,17 @@
     return String(value || "").replace(/\s+/g, " ").trim();
   }
 
+  function appStorage() {
+    return isGuestMode ? sessionStorage : localStorage;
+  }
+
+  function storageKey(key) {
+    return isGuestMode ? `${key}-guest` : key;
+  }
+
   function readJson(key, fallback) {
     try {
-      const saved = localStorage.getItem(key);
+      const saved = appStorage().getItem(storageKey(key));
       return saved ? JSON.parse(saved) : fallback;
     } catch (error) {
       console.warn(`No se pudo leer ${key}`, error);
@@ -50,117 +60,23 @@
   }
 
   function writeDocuments(documents) {
-    localStorage.setItem(RESUME_COLLECTION_KEY, JSON.stringify(documents));
+    appStorage().setItem(storageKey(RESUME_COLLECTION_KEY), JSON.stringify(documents));
   }
 
-  function fallbackState() {
+  function blankState() {
     return {
       data: {
-        name: "Diego Ayala Bernal",
-        title: "Ingeniero Informático, Docente",
-        email: "diego.ayala2@um.es",
-        phone: "+34601250396",
+        name: "",
+        title: "",
+        email: "",
+        phone: "",
         linkedin: "",
         postalCode: "",
         city: "",
         country: "",
-        experience: [
-          {
-            date: "Oct 2023 - Presente",
-            title: "Docente FP Grado Superior, Cesur",
-            meta: null,
-            bullets: ["Docente de los modulos DAM, DAW y ASIR."],
-          },
-          {
-            date: "Sep 2023 - Presente",
-            title: "Docente FP Grado Superior y Grado Medio, Colegio Miralmonte",
-            meta: null,
-            bullets: ["Docente de los módulos DAM y SMR.", "Clases impartidas a grupos bilingües.", "Tutor 2°DAM, coordinador FCT."],
-          },
-          {
-            date: "May 2023 - Ago 2023",
-            title: "Docente Titular de Grado Superior, Universae",
-            meta: null,
-            bullets: ["Responsable de crear material didáctico e impartir clases en las titulaciones de DAW, DAM y ASIR."],
-          },
-          {
-            date: "Ene 2023 - May 2023",
-            title: "Profesor de educación secundaria Bilingüe, CEIPS Torre Salinas",
-            meta: null,
-            bullets: [],
-          },
-          {
-            date: "Feb 2021 - Abr 2022",
-            title: "Freelance Ingeniero Software",
-            meta: null,
-            bullets: ["Numerosos proyectos de diversa índole."],
-          },
-          {
-            date: "Ene 2021 - Feb 2022",
-            title: "Profesor Particular",
-            meta: null,
-            bullets: ["Enfocadas al alumnado de Bachillerato, FP, Universidad, Master.", "Flexibles y adaptadas a los requisitos solicitados por el alumno."],
-          },
-          {
-            date: "Ene 2020 - Abr 2021",
-            title: "Ingeniero Software Junior, Tecnoavanz S.L",
-            meta: null,
-            bullets: ["Startup Tecnológica subsidiaria de Orange.", "Construí características clave del CRM, como desarrollador Symfony, dentro de un equipo ágil de 5 personas.", "Implementación de reglas de negocio, para mejorar la calidad de los datos de los clientes."],
-          },
-        ],
-        education: [
-          {
-            date: "Oct 2022 - Jun 2023",
-            title: "Máster Universitario en Formación del Profesorado, VIU",
-            meta: "Media de 8.9",
-            bullets: [],
-          },
-          {
-            date: "Sep 2014 - Jul 2019",
-            title: "Ingeniería Informática Mención en Software, Universidad Murcia",
-            meta: null,
-            bullets: [],
-          },
-          {
-            date: "Jul 2022 - Jul 2022",
-            title: "Overall CEFR Grade English C, British Council Aptis",
-            meta: null,
-            bullets: [],
-          },
-          {
-            date: "Ene 2022 - May 2022",
-            title: "Lengua de Signos Española A2, Lengua de Signos",
-            meta: null,
-            bullets: [],
-          },
-        ],
-        awards: [
-          {
-            date: "Ene 2023",
-            title: "3 Cartas de recomendación expedidas por profesores titulados de la Universidad de Murcia",
-            meta: null,
-            bullets: ["3 cartas de recomendación redactadas y firmadas por profesores titulados de la Universidad de Murcia, donde se da muestra de mis conocimientos, cualidades e hitos alcanzados en mi paso por la facultad de Informática. (adjuntadas en el propio correo o en el siguiente link: bit.ly/4deEQHl )"],
-          },
-          {
-            date: "Mar 2021 - Ago 2021",
-            title: "Finalista Lanzadera, Marina de Empresas",
-            meta: null,
-            bullets: ["Finalista en Lanzadera (2021), la mayor aceleradora e incubadora de startups a nivel nacional, con una iniciativa de corte educativo, realizando un pitch presencial ante el jurado en la sede de Lanzadera. Siendo finalista junto a otros 30 proyectos restantes de entre los 2500 iniciales."],
-          },
-          {
-            page_break_before: true,
-            date: "Ago 2021 - Dic 2021",
-            title: "Entrepreneurship World Cup (EWC) - Preseleccionado",
-            meta: null,
-            bullets: ["Preseleccionado en la mayor iniciativa de emprendimiento a nivel global, Entrepreneurship World Cup (EWC), con una iniciativa de corte educativo."],
-          },
-          {
-            date: "Dic 2021",
-            title: "NextCarm (Next Generation) - Aprobación y remisión del proyecto por la Región de Murcia al Gobierno Central.",
-            meta: null,
-            bullets: ["Propuesta integrada y aprobada en el documento conjunto de iniciativas de la Región de Murcia que se remitió al Gobierno de España para su evaluación y financiación a través de los fondos Next Generation."],
-          },
-        ],
+        experience: [],
+        education: [],
+        awards: [],
       },
       photoSrc: "",
     };
@@ -169,20 +85,7 @@
   function ensureDocuments() {
     const documents = readJson(RESUME_COLLECTION_KEY, []);
     if (Array.isArray(documents) && documents.length) return documents;
-
-    const currentState = readJson(STORAGE_KEY, null) || fallbackState();
-    const seeded = [{
-      id: DEFAULT_RESUME_ID,
-      kind: "resume",
-      title: "CV ESPAÑOL",
-      language: "Español",
-      score: 66,
-      updatedAt: "2026-04-22T02:23:00+02:00",
-      state: currentState,
-    }];
-    writeDocuments(seeded);
-    localStorage.setItem(ACTIVE_RESUME_KEY, DEFAULT_RESUME_ID);
-    return seeded;
+    return [];
   }
 
   function getDocuments() {
@@ -190,13 +93,14 @@
   }
 
   function saveActiveDocument(document) {
-    localStorage.setItem(ACTIVE_RESUME_KEY, document.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(document.state || fallbackState()));
+    appStorage().setItem(storageKey(ACTIVE_RESUME_KEY), document.id);
+    appStorage().setItem(storageKey(STORAGE_KEY), JSON.stringify(document.state || blankState()));
   }
 
   function openBuilder(document) {
     saveActiveDocument(document);
-    window.location.href = `./builder.html?resumeId=${encodeURIComponent(document.id)}`;
+    const guestParam = isGuestMode ? "&guest=1" : "";
+    window.location.href = `./builder.html?resumeId=${encodeURIComponent(document.id)}${guestParam}`;
   }
 
   function createResume() {
@@ -208,22 +112,7 @@
       language: "Español",
       score: 0,
       updatedAt: new Date().toISOString(),
-      state: {
-        data: {
-          name: "",
-          title: "",
-          email: "",
-          phone: "",
-          linkedin: "",
-          postalCode: "",
-          city: "",
-          country: "",
-          experience: [],
-          education: [],
-          awards: [],
-        },
-        photoSrc: "",
-      },
+      state: blankState(),
     };
     const documents = ensureDocuments();
     documents.unshift(document);
@@ -320,13 +209,14 @@
   function printPdf(document) {
     saveActiveDocument(document);
     showToast("Abriendo vista de impresión para descargar PDF.");
-    window.open(`./builder.html?resumeId=${encodeURIComponent(document.id)}#print`, "_blank", "noopener");
+    const guestParam = isGuestMode ? "&guest=1" : "";
+    window.open(`./builder.html?resumeId=${encodeURIComponent(document.id)}${guestParam}#print`, "_blank", "noopener");
   }
 
   function renderMiniPreview(document) {
     const data = document.state?.data || {};
-    const name = compactSpaces(data.name || "Diego Ayala Bernal");
-    const title = compactSpaces(data.title || "Ingeniero Informático, Docente");
+    const name = compactSpaces(data.name || "Tu nombre");
+    const title = compactSpaces(data.title || "Tu puesto objetivo");
     const firstExperience = data.experience?.[0]?.title || "Experiencia profesional";
     const secondExperience = data.experience?.[1]?.title || "Formación y logros";
     return `

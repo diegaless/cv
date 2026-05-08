@@ -43,13 +43,16 @@
   const downloadMenu = document.getElementById("download-menu");
   const mobileDownloadButton = document.getElementById("mobile-download-button");
   const photoFallback = "";
-  let activeResumeId = new URLSearchParams(window.location.search).get("resumeId")
-    || localStorage.getItem(ACTIVE_RESUME_KEY)
-    || DEFAULT_RESUME_ID;
+  const queryParams = new URLSearchParams(window.location.search);
+  const isGuestMode = queryParams.get("guest") === "1" || sessionStorage.getItem("cv-builder-guest-mode") === "1";
+  if (isGuestMode) sessionStorage.setItem("cv-builder-guest-mode", "1");
+  let activeResumeId = queryParams.get("resumeId")
+    || appStorage().getItem(storageKey(ACTIVE_RESUME_KEY))
+    || (isGuestMode ? "" : DEFAULT_RESUME_ID);
   const initialData = readInitialData();
   const savedState = readLocalResumeState(activeResumeId) || readSavedState();
   let state = hasUsableCvData(savedState?.data) ? savedState : {
-    data: normalizeData(initialData),
+    data: normalizeData(isGuestMode ? {} : initialData),
     photoSrc: photoFallback,
   };
   state.formSectionOrder = normalizeFormSectionOrder(state.formSectionOrder);
@@ -118,9 +121,17 @@
     });
   }
 
+  function appStorage() {
+    return isGuestMode ? sessionStorage : localStorage;
+  }
+
+  function storageKey(key) {
+    return isGuestMode ? `${key}-guest` : key;
+  }
+
   function readSavedState() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = appStorage().getItem(storageKey(STORAGE_KEY));
       if (!saved) return null;
       const parsed = JSON.parse(saved);
       return {
@@ -136,7 +147,7 @@
 
   function readResumeCollection() {
     try {
-      const saved = localStorage.getItem(RESUME_COLLECTION_KEY);
+      const saved = appStorage().getItem(storageKey(RESUME_COLLECTION_KEY));
       const parsed = saved ? JSON.parse(saved) : [];
       return Array.isArray(parsed) ? parsed : [];
     } catch (error) {
@@ -146,7 +157,7 @@
   }
 
   function writeResumeCollection(documents) {
-    localStorage.setItem(RESUME_COLLECTION_KEY, JSON.stringify(documents));
+    appStorage().setItem(storageKey(RESUME_COLLECTION_KEY), JSON.stringify(documents));
   }
 
   function readLocalResumeState(resumeId) {
@@ -185,12 +196,12 @@
   }
 
   function persist() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    appStorage().setItem(storageKey(STORAGE_KEY), JSON.stringify(state));
     syncLocalResumeDocument();
   }
 
   function syncLocalResumeDocument() {
-    if (!activeResumeId) activeResumeId = DEFAULT_RESUME_ID;
+    if (!activeResumeId) activeResumeId = isGuestMode ? `resume-${Date.now()}` : DEFAULT_RESUME_ID;
     const documents = readResumeCollection();
     const currentIndex = documents.findIndex((entry) => entry.id === activeResumeId);
     const existing = currentIndex >= 0 ? documents[currentIndex] : {};
@@ -207,7 +218,7 @@
     if (currentIndex >= 0) documents[currentIndex] = { ...documents[currentIndex], ...entry };
     else documents.unshift(entry);
 
-    localStorage.setItem(ACTIVE_RESUME_KEY, activeResumeId);
+    appStorage().setItem(storageKey(ACTIVE_RESUME_KEY), activeResumeId);
     writeResumeCollection(documents);
   }
 
