@@ -719,7 +719,7 @@
         </button>
         <div class="section-content" ${expandedSections.has("personal") ? "" : "hidden"}>
           <div class="field-grid">
-            ${renderField("Puesto laboral", "title", state.data.title, "text", "Ingeniero Informático, Docente")}
+            ${renderField("Puesto laboral", "title", state.data.title, "text", "p. ej., desarrollador/a web")}
             <div class="field photo-field">
               <label for="photo-input">Foto</label>
               <div class="photo-row">
@@ -734,11 +734,11 @@
                 </div>
               </div>
             </div>
-            ${renderField("Nombre", "firstName", person.firstName, "text", "Diego")}
-            ${renderField("Apellidos", "lastName", person.lastName, "text", "Ayala Bernal")}
+            ${renderField("Nombre", "firstName", person.firstName, "text", "Nombre")}
+            ${renderField("Apellidos", "lastName", person.lastName, "text", "Apellidos")}
             ${renderField("Email", "email", state.data.email, "email", "correo@ejemplo.com")}
             ${renderField("Teléfono", "phone", state.data.phone, "text", "+34 600 000 000")}
-            ${renderField("LinkedIn URL", "linkedin", state.data.linkedin, "text", "linkedin.com/in/yourprofile")}
+            ${renderField("LinkedIn URL", "linkedin", state.data.linkedin, "text", "linkedin.com/in/tu-perfil")}
             ${renderField("Código postal", "postalCode", state.data.postalCode)}
             ${renderField("Ciudad", "city", state.data.city)}
             ${renderField("País", "country", state.data.country, "text", "", "", "For users outside the US")}
