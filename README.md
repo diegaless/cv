@@ -39,7 +39,9 @@ Las pruebas cubren el modelo, Word, catálogo y disponibilidad; los emuladores c
 
 ## Publicación
 
-Firebase Hosting aloja los archivos de la aplicación. npm run build:site prepara .public-site con una lista explícita de recursos públicos; excluye borradores de diseños, pruebas, documentos internos, expedientes y herramientas. npm run deploy:site publica en el proyecto cvapp-2538e. El dominio se conecta por un registro CNAME solo DNS en Cloudflare. GitHub se utiliza para el código, no para alojar el servicio comercial.
+Firebase Hosting aloja los archivos de la aplicación. npm run build:site prepara .public-site con una lista explícita de recursos públicos; excluye borradores de diseños, pruebas, documentos internos, expedientes y herramientas. npm run deploy:site publica en el proyecto cvapp-2538e. Cloudflare conecta el dominio mediante un registro A a 199.36.158.100, sin proxy, y un TXT de propiedad hosting-site=cvapp-2538e. Se mantiene el TXT de validación del certificado que pide Firebase. El dominio funciona con HTTPS y aparece conectado en Hosting.
+
+GitHub conserva únicamente el código público en un repositorio nuevo con historial limpio. El repositorio anterior queda como archivo privado cv-archive-20261003-legal y no tiene Pages; existe además una copia local privada del historial. No volver a publicar ramas o etiquetas del archivo. La instantánea inicial limpia es 2db7393c843c82f953788053fd492797a83ffb7e. Los registros DNS, herramientas internas y expedientes particulares no deben copiarse al sitio publicado.
 
 Las reglas se publican por separado con firebase deploy --only firestore:rules --project cvapp-2538e. Antes de desplegar límites nuevos, comprobar la compatibilidad de los registros existentes y ejecutar los emuladores. Ver [ESTADO_PROYECTO.md](ESTADO_PROYECTO.md) para el alcance y los pendientes.
 

@@ -3,8 +3,6 @@ logo: /cv-profile.jpg
 description: Ingeniero Informático | Docente de FP en DAM, DAW, ASIR y SMR
 repository: diegaless/cv
 theme: jekyll-theme-minimal
-include:
-  - .well-known
 exclude:
   - node_modules
   - tests
