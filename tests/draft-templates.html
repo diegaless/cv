@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Pruebas · Plantillas internas</title>
+<link rel="stylesheet" href="../drafts/templates/templates.css">
+<body><pre id="results">Ejecutando…</pre><main style="width:816px"><div id="pages"></div></main>
+<script type="module">
+import {renderDraftPreview} from '../drafts/templates/preview.js';
+import {draftSample,longDraftSample,photoDraftSample} from '../drafts/templates/fixtures.mjs';
+import {DRAFT_TEMPLATES} from '../drafts/templates/catalog.mjs';
+const pages=document.getElementById('pages'), results=[];
+const requested=new URLSearchParams(location.search).get('template');
+const requestedScenario=new URLSearchParams(location.search).get('scenario');
+const manual=structuredClone(draftSample);manual.data.experience[1].page_break_before=true;
+const huge=structuredClone(draftSample);huge.data.experience=[{title:'Entrada extensa',date:'2020 - 2026',bullets:[Array.from({length:1800},(_,i)=>`palabra${i}`).join(' ')]}];
+huge.data.experience[0].links=[{target:'bullet:0',label:Array.from({length:21},(_,i)=>`palabra${i+44}`).join(' '),url:'https://example.com/enlace-entre-fragmentos'}];
+const withPhoto=await photoDraftSample();
+const longSide=structuredClone(draftSample);longSide.data.skills=Array.from({length:90},(_,i)=>`COMPETENCIA_${i} · Diseño y coordinación de proyectos con equipos de desarrollo`);
+for(const template of Object.keys(DRAFT_TEMPLATES)) for(const [name,state] of [['normal',draftSample],['18 experiencias',longDraftSample()],['salto manual',manual],['entrada extensa',huge],['foto',withPhoto],['columna extensa',longSide]]) {
+  if(requested && requested!==template)continue;
+  if(requestedScenario && requestedScenario!==name)continue;
+  if(template==='cvapp-classic' && name!=='normal')continue; // Production Classic has its own regression fixtures.
+  if(name==='columna extensa' && !(DRAFT_TEMPLATES[template].layout?.startsWith('sidebar') || DRAFT_TEMPLATES[template].layout==='editorial'))continue;
+  try {
+  const result=await renderDraftPreview(pages,state,{template});
+  const text=pages.innerText;
+  const expected=[...state.data.experience.flatMap(e=>e.bullets||[]),...state.data.skills].flatMap(t=>t.match(/MARCADOR_\d+_\d+|palabra\d+|COMPETENCIA_\d+/g)||[]);
+  const missing=expected.filter(word=>text.split(new RegExp(`\\b${word}\\b`)).length!==2);
+  let overflow=0,overlaps=0;
+  for(const page of pages.children) {
+    const r=page.getBoundingClientRect(),scale=r.width/(parseFloat(getComputedStyle(page).width));
+    const b=page.querySelector('.draft-page-body').getBoundingClientRect(), f=page.querySelector('.draft-folio')?.getBoundingClientRect();
+    if(b.bottom>r.bottom-parseFloat(getComputedStyle(page).paddingBottom)*scale+1)overflow++;
+    if(f && b.bottom>f.top)overlaps++;
+  }
+  const linkExpected=state.data.experience.flatMap(e=>e.links||[]);
+  const label=value=>template==='cvapp-classic' ? value.replace(/\s+/g,'') : value.trim();
+  const linksLost=linkExpected.filter(l=>label([...pages.querySelectorAll('a')].filter(a=>!a.closest('[aria-hidden="true"]')&&a.getAttribute('href')===l.url).map(a=>a.textContent).join(''))!==label(l.label)).length;
+  const pageTexts=[...pages.children].map(p=>p.textContent);
+  const manualWorks=name!=='salto manual'||pageTexts.findIndex(t=>t.includes(state.data.experience[1].title))>pageTexts.findIndex(t=>t.includes(state.data.experience[0].title));
+  let photoWorks=name!=='foto'||pages.querySelectorAll('.draft-photo').length===(DRAFT_TEMPLATES[template].supportsPhoto?1:0);
+  if(name==='foto')photoWorks&&=[...pages.querySelectorAll('.draft-photo')].every(photo=>photo.complete&&photo.naturalWidth>=256&&photo.naturalHeight>=256);
+  if(name==='foto' && DRAFT_TEMPLATES[template].engine==='catalog' && DRAFT_TEMPLATES[template].supportsPhoto) {
+    const p=pages.querySelector('.draft-photo').getBoundingClientRect(),h=pages.querySelector('h1').getBoundingClientRect();
+    photoWorks&&=!(p.left<h.right&&p.right>h.left&&p.top<h.bottom&&p.bottom>h.top);
+  }
+  const sideWorks=name!=='columna extensa'||[...pages.children].findIndex(p=>p.querySelector('[data-column="side"]')?.textContent.includes('COMPETENCIA_89'))>0;
+  results.push({...result,name,overflow,overlaps,missing:missing.length,linksLost,pass:!overflow&&!overlaps&&!missing.length&&!linksLost&&manualWorks&&photoWorks&&sideWorks});
+  } catch(e) {results.push({template,name,pass:false,error:e.message});}
+  document.getElementById('results').textContent=JSON.stringify(results,null,2);
+  await new Promise(resolve=>setTimeout(resolve,0));
+}
+document.getElementById('results').textContent=JSON.stringify(results,null,2);
+document.title=results.every(r=>r.pass)?'PASS · Plantillas internas':'FAIL · Plantillas internas';
+document.body.dataset.ready='true';
+</script></body></html>

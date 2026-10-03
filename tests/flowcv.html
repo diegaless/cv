@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Pruebas · FlowCV</title><link rel="stylesheet" href="../drafts/flowcv/flowcv.css">
+<body><pre id="results">Ejecutando…</pre><main style="width:794px"><div id="pages"></div></main>
+<script type="module">
+import {renderFlowPreview} from '../drafts/flowcv/preview.mjs';
+import {draftSample,longDraftSample,photoDraftSample} from '../drafts/templates/fixtures.mjs';
+import {FLOW_TEMPLATES} from '../drafts/flowcv/catalog.mjs';
+const pages=document.getElementById('pages'),results=[],params=new URLSearchParams(location.search);
+const manual=structuredClone(draftSample);manual.data.experience[1].page_break_before=true;
+const huge=structuredClone(draftSample);huge.data.experience=[{title:'Entrada extensa',date:'2020 - 2026',bullets:[Array.from({length:1800},(_,i)=>`palabra${i}`).join(' ')]}];
+huge.data.experience[0].links=[{target:'bullet:0',label:Array.from({length:21},(_,i)=>`palabra${i+44}`).join(' '),url:'https://example.com/enlace-entre-fragmentos'}];
+const withPhoto=await photoDraftSample();
+const longSide=structuredClone(draftSample);longSide.data.skills=Array.from({length:90},(_,i)=>`COMPETENCIA_${i} · Diseño y coordinación de proyectos con equipos de desarrollo`);
+for(const template of Object.keys(FLOW_TEMPLATES))for(const [scenario,state] of [['normal',draftSample],['largo',longDraftSample()],['salto',manual],['extenso',huge],['foto',withPhoto],['columna',longSide]]) {
+  if(params.get('template')&&params.get('template')!==template)continue;
+  if(params.get('scenario')&&params.get('scenario')!==scenario)continue;
+  if(scenario==='columna'&&(FLOW_TEMPLATES[template].engine==='original'?FLOW_TEMPLATES[template].layout!=='sidebar-right':FLOW_TEMPLATES[template].columns.length<2))continue;
+  try {
+    const result=await renderFlowPreview(pages,state,{template,pageNumbers:true});
+    const text=pages.innerText,expected=[...state.data.experience.flatMap(e=>e.bullets||[]),...state.data.skills].flatMap(t=>t.match(/MARCADOR_\d+_\d+|palabra\d+|COMPETENCIA_\d+/g)||[]);
+    const missing=expected.filter(word=>text.split(new RegExp(`\\b${word}\\b`)).length!==2);
+    let overflow=0,overlap=0,horizontal=0;
+    for(const page of pages.children) {
+      const r=page.getBoundingClientRect(),f=page.querySelector('.flow-folio').getBoundingClientRect();
+      for(const flow of page.querySelectorAll('.flow-content')) {
+        if(!flow.children.length)continue;
+        const b=flow.getBoundingClientRect();if(b.bottom>r.bottom+1)overflow++;if(b.bottom>f.top)overlap++;
+        for(const entry of flow.querySelectorAll('.flow-entry,h2')){const e=entry.getBoundingClientRect();if(e.left<r.left-.5||e.right>r.right+.5)horizontal++;}
+      }
+    }
+    const linksLost=state.data.experience.flatMap(e=>e.links||[]).filter(l=>[...pages.querySelectorAll('a')].filter(a=>a.getAttribute('href')===l.url).map(a=>a.textContent).join('').trim()!==l.label.trim()).length;
+    const texts=[...pages.children].map(p=>p.textContent);
+    const manualWorks=scenario!=='salto'||texts.findIndex(t=>t.includes(state.data.experience[1].title))>texts.findIndex(t=>t.includes(state.data.experience[0].title));
+    const sideWorks=scenario!=='columna'||texts.findIndex(t=>t.includes('COMPETENCIA_89'))>0;
+    let photoWorks=true;
+    if(scenario==='foto') {
+      const photo=pages.querySelector('.flow-photo'),name=pages.querySelector('h1');photoWorks=pages.querySelectorAll('.flow-photo').length===1;
+      const p=photo.getBoundingClientRect(),h=name.getBoundingClientRect();photoWorks&&=!(p.left<h.right&&p.right>h.left&&p.top<h.bottom&&p.bottom>h.top);
+      photoWorks&&=photo.complete&&photo.naturalWidth>=256&&photo.naturalHeight>=256;
+    }
+    results.push({...result,scenario,overflow,overlap,horizontal,missing:missing.length,linksLost,pass:!overflow&&!overlap&&!horizontal&&!missing.length&&!linksLost&&manualWorks&&sideWorks&&photoWorks});
+  } catch(error){results.push({template,scenario,pass:false,error:error.message});}
+  document.getElementById('results').textContent=JSON.stringify(results,null,2);await new Promise(resolve=>setTimeout(resolve,0));
+}
+document.title=results.every(r=>r.pass)?'PASS · FlowCV':'FAIL · FlowCV';document.body.dataset.ready='true';
+</script></body></html>

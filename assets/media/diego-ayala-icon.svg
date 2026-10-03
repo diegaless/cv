@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>Diego Ayala</title>
+  <path d="M17 4h24l15 15v34a7 7 0 0 1-7 7H17a7 7 0 0 1-7-7V11a7 7 0 0 1 7-7Z" fill="#168BE5"/>
+  <path d="M41 4v11a4 4 0 0 0 4 4h11" fill="#8BCEF9"/>
+  <path d="M19 25v18h4a9 9 0 0 0 0-18h-4Zm17 18 6-18 6 18m-10-6h8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

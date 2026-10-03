@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="64" viewBox="0 0 256 64" fill="none">
+  <title>Diego Ayala · Creador de CV</title>
+  <path d="M9 4h24l15 15v34a7 7 0 0 1-7 7H9a7 7 0 0 1-7-7V11a7 7 0 0 1 7-7Z" fill="#168BE5"/>
+  <path d="M33 4v11a4 4 0 0 0 4 4h11" fill="#8BCEF9"/>
+  <path d="M11 25v18h4a9 9 0 0 0 0-18h-4Zm17 18 6-18 6 18m-10-6h8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="62" y="31" fill="#1E2532" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="-.7">Diego Ayala</text>
+  <text x="63" y="49" fill="#6E7B91" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="500" letter-spacing="1.55">CREADOR DE CV</text>
+</svg>

@@ -1,0 +1,888 @@
+[
+  {
+    "family": "Alegreya",
+    "cssFamily": "CV Flow Alegreya",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/alegreya-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/Alegreya%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/alegreya-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/Alegreya%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/alegreya-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/Alegreya-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/alegreya-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/Alegreya-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Aleo",
+    "cssFamily": "CV Flow Aleo",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/aleo/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/aleo-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/aleo/Aleo%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/aleo-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/aleo/Aleo%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/aleo-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/aleo/Aleo-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/aleo-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/aleo/Aleo-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Abril Fatface",
+    "cssFamily": "CV Flow Abril Fatface",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/abrilfatface/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/abrilfatface-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/abrilfatface/AbrilFatface-Regular.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Asap",
+    "cssFamily": "CV Flow Asap",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/asap/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/asap-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/asap/Asap%5Bwdth%2Cwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/asap-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/asap/Asap%5Bwdth%2Cwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/asap-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/asap/Asap-Italic%5Bwdth%2Cwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/asap-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/asap/Asap-Italic%5Bwdth%2Cwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Comfortaa",
+    "cssFamily": "CV Flow Comfortaa",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/comfortaa/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/comfortaa-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/comfortaa/Comfortaa%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/comfortaa-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/comfortaa/Comfortaa%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Amiri",
+    "cssFamily": "CV Flow Amiri",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/amiri-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Regular.ttf"
+      },
+      {
+        "file": "./fonts/amiri-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Bold.ttf"
+      },
+      {
+        "file": "./fonts/amiri-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Italic.ttf"
+      },
+      {
+        "file": "./fonts/amiri-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Courier Prime",
+    "cssFamily": "CV Flow Courier Prime",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/courierprime/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/courierprime-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/courierprime/CourierPrime-Regular.ttf"
+      },
+      {
+        "file": "./fonts/courierprime-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/courierprime/CourierPrime-Bold.ttf"
+      },
+      {
+        "file": "./fonts/courierprime-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/courierprime/CourierPrime-Italic.ttf"
+      },
+      {
+        "file": "./fonts/courierprime-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/courierprime/CourierPrime-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Crimson Text",
+    "cssFamily": "CV Flow Crimson Text",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsontext/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/crimsontext-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsontext/CrimsonText-Regular.ttf"
+      },
+      {
+        "file": "./fonts/crimsontext-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsontext/CrimsonText-Bold.ttf"
+      },
+      {
+        "file": "./fonts/crimsontext-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsontext/CrimsonText-Italic.ttf"
+      },
+      {
+        "file": "./fonts/crimsontext-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsontext/CrimsonText-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Crimson Pro",
+    "cssFamily": "CV Flow Crimson Pro",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsonpro/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/crimsonpro-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsonpro/CrimsonPro%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/crimsonpro-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsonpro/CrimsonPro%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/crimsonpro-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsonpro/CrimsonPro-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/crimsonpro-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsonpro/CrimsonPro-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "EB Garamond",
+    "cssFamily": "CV Flow EB Garamond",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/ebgaramond/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/ebgaramond-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/ebgaramond-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/ebgaramond-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ebgaramond/EBGaramond-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/ebgaramond-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ebgaramond/EBGaramond-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Elsie",
+    "cssFamily": "CV Flow Elsie",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/elsie/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/elsie-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/elsie/Elsie-Regular.ttf"
+      },
+      {
+        "file": "./fonts/elsie-900.ttf",
+        "weight": 900,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/elsie/Elsie-Black.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Bungee Shade",
+    "cssFamily": "CV Flow Bungee Shade",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/bungeeshade/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/bungeeshade-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/bungeeshade/BungeeShade-Regular.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Jost",
+    "cssFamily": "CV Flow Jost",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/OFL.txt",
+    "fonts": [
+      {
+        "file": "../templates/fonts/jost-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "../templates/fonts/jost-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "./fonts/jost-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/Jost-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/jost-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/Jost-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Inconsolata",
+    "cssFamily": "CV Flow Inconsolata",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/inconsolata/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/inconsolata-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inconsolata/Inconsolata%5Bwdth%2Cwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/inconsolata-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inconsolata/Inconsolata%5Bwdth%2Cwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Lato",
+    "cssFamily": "CV Flow Lato",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/OFL.txt",
+    "fonts": [
+      {
+        "file": "../templates/fonts/lato-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "../templates/fonts/lato-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "./fonts/lato-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Italic.ttf"
+      },
+      {
+        "file": "./fonts/lato-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Lora",
+    "cssFamily": "CV Flow Lora",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/lora-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/Lora%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/lora-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/Lora%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/lora-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/Lora-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/lora-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/Lora-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Mulish",
+    "cssFamily": "CV Flow Mulish",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/mulish-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/Mulish%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/mulish-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/Mulish%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/mulish-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/Mulish-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/mulish-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/Mulish-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Nunito",
+    "cssFamily": "CV Flow Nunito",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/nunito-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/nunito-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/nunito-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/nunito-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Caveat",
+    "cssFamily": "CV Flow Caveat",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/caveat-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/Caveat%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/caveat-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/Caveat%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Open Sans",
+    "cssFamily": "CV Flow Open Sans",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OFL.txt",
+    "fonts": [
+      {
+        "file": "../templates/fonts/opensans-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "../templates/fonts/opensans-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "./fonts/opensans-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OpenSans-Italic%5Bwdth%2Cwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/opensans-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OpenSans-Italic%5Bwdth%2Cwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Pacifico",
+    "cssFamily": "CV Flow Pacifico",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/pacifico/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/pacifico-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/pacifico/Pacifico-Regular.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Lobster",
+    "cssFamily": "CV Flow Lobster",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/lobster/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/lobster-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lobster/Lobster-Regular.ttf"
+      }
+    ]
+  },
+  {
+    "family": "PT Serif",
+    "cssFamily": "CV Flow PT Serif",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptserif/OFL.txt",
+    "fonts": [
+      {
+        "file": "../templates/fonts/ptserif-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "../templates/fonts/ptserif-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "./fonts/ptserif-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptserif/PT_Serif-Web-Italic.ttf"
+      },
+      {
+        "file": "./fonts/ptserif-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptserif/PT_Serif-Web-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Roboto",
+    "cssFamily": "CV Flow Roboto",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/OFL.txt",
+    "fonts": [
+      {
+        "file": "../templates/fonts/roboto-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "../templates/fonts/roboto-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "reused": true
+      },
+      {
+        "file": "./fonts/roboto-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/Roboto-Italic%5Bwdth%2Cwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/roboto-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/Roboto-Italic%5Bwdth%2Cwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Source Sans Pro",
+    "cssFamily": "CV Flow Source Sans Pro",
+    "license": "https://raw.githubusercontent.com/adobe-fonts/source-sans/2.045R-ro/1.095R-it/LICENSE.txt",
+    "fonts": [
+      {
+        "file": "./fonts/sourcesanspro-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/2.045R-ro/1.095R-it/TTF/SourceSansPro-Regular.ttf"
+      },
+      {
+        "file": "./fonts/sourcesanspro-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/2.045R-ro/1.095R-it/TTF/SourceSansPro-Bold.ttf"
+      },
+      {
+        "file": "./fonts/sourcesanspro-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/2.045R-ro/1.095R-it/TTF/SourceSansPro-It.ttf"
+      },
+      {
+        "file": "./fonts/sourcesanspro-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/2.045R-ro/1.095R-it/TTF/SourceSansPro-BoldIt.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Source Serif Pro",
+    "cssFamily": "CV Flow Source Serif Pro",
+    "license": "https://raw.githubusercontent.com/adobe-fonts/source-serif/2.010R-ro/1.010R-it/LICENSE.md",
+    "fonts": [
+      {
+        "file": "./fonts/sourceserifpro-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-serif/2.010R-ro/1.010R-it/TTF/SourceSerifPro-Regular.ttf"
+      },
+      {
+        "file": "./fonts/sourceserifpro-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-serif/2.010R-ro/1.010R-it/TTF/SourceSerifPro-Bold.ttf"
+      },
+      {
+        "file": "./fonts/sourceserifpro-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-serif/2.010R-ro/1.010R-it/TTF/SourceSerifPro-It.ttf"
+      },
+      {
+        "file": "./fonts/sourceserifpro-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/adobe-fonts/source-serif/2.010R-ro/1.010R-it/TTF/SourceSerifPro-BoldIt.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Work Sans",
+    "cssFamily": "CV Flow Work Sans",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/worksans/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/worksans-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/worksans/WorkSans%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/worksans-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/worksans/WorkSans%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/worksans-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/worksans/WorkSans-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/worksans-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/worksans/WorkSans-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Titillium Web",
+    "cssFamily": "CV Flow Titillium Web",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/titilliumweb/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/titilliumweb-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/titilliumweb/TitilliumWeb-Regular.ttf"
+      },
+      {
+        "file": "./fonts/titilliumweb-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/titilliumweb/TitilliumWeb-Bold.ttf"
+      },
+      {
+        "file": "./fonts/titilliumweb-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/titilliumweb/TitilliumWeb-Italic.ttf"
+      },
+      {
+        "file": "./fonts/titilliumweb-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/titilliumweb/TitilliumWeb-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Zilla Slab",
+    "cssFamily": "CV Flow Zilla Slab",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/zillaslab/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/zillaslab-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/zillaslab/ZillaSlab-Regular.ttf"
+      },
+      {
+        "file": "./fonts/zillaslab-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/zillaslab/ZillaSlab-Bold.ttf"
+      },
+      {
+        "file": "./fonts/zillaslab-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/zillaslab/ZillaSlab-Italic.ttf"
+      },
+      {
+        "file": "./fonts/zillaslab-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/zillaslab/ZillaSlab-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Fira Sans",
+    "cssFamily": "CV Flow Fira Sans",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/firasans/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/firasans-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/firasans/FiraSans-Regular.ttf"
+      },
+      {
+        "file": "./fonts/firasans-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/firasans/FiraSans-Bold.ttf"
+      },
+      {
+        "file": "./fonts/firasans-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/firasans/FiraSans-Italic.ttf"
+      },
+      {
+        "file": "./fonts/firasans-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/firasans/FiraSans-BoldItalic.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Parisienne",
+    "cssFamily": "CV Flow Parisienne",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/parisienne/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/parisienne-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/parisienne/Parisienne-Regular.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Cormorant Garamond",
+    "cssFamily": "CV Flow Cormorant Garamond",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/OFL.txt",
+    "fonts": [
+      {
+        "file": "./fonts/cormorantgaramond-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/cormorantgaramond-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/cormorantgaramond-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond-Italic%5Bwght%5D.ttf"
+      },
+      {
+        "file": "./fonts/cormorantgaramond-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond-Italic%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "Latin Modern Roman",
+    "cssFamily": "CV Flow Latin Modern Roman",
+    "license": "https://ctan.org/license/gfl",
+    "fonts": [
+      {
+        "file": "./fonts/latinmodernroman-400.ttf",
+        "weight": 400,
+        "style": "normal",
+        "url": "https://mirrors.ctan.org/fonts/lm.zip#lm/fonts/opentype/public/lm/lmroman10-regular.otf"
+      },
+      {
+        "file": "./fonts/latinmodernroman-700.ttf",
+        "weight": 700,
+        "style": "normal",
+        "url": "https://mirrors.ctan.org/fonts/lm.zip#lm/fonts/opentype/public/lm/lmroman10-bold.otf"
+      },
+      {
+        "file": "./fonts/latinmodernroman-400-italic.ttf",
+        "weight": 400,
+        "style": "italic",
+        "url": "https://mirrors.ctan.org/fonts/lm.zip#lm/fonts/opentype/public/lm/lmroman10-italic.otf"
+      },
+      {
+        "file": "./fonts/latinmodernroman-700-italic.ttf",
+        "weight": 700,
+        "style": "italic",
+        "url": "https://mirrors.ctan.org/fonts/lm.zip#lm/fonts/opentype/public/lm/lmroman10-bolditalic.otf"
+      }
+    ],
+    "conversion": "Original Latin Modern 2.005 OpenType outlines converted using fontTools cu2qu (0.5 font-unit tolerance); original metrics, renamed family."
+  }
+]

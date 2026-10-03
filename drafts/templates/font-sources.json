@@ -1,0 +1,385 @@
+[
+  {
+    "family": "arimo",
+    "cssFamily": "CV Catalog arimo",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/arimo/OFL.txt",
+    "fonts": [
+      {
+        "file": "arimo-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/arimo/Arimo%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 321496
+      },
+      {
+        "file": "arimo-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/arimo/Arimo%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 322072
+      }
+    ]
+  },
+  {
+    "family": "carlito",
+    "cssFamily": "CV Catalog carlito",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/OFL.txt",
+    "fonts": [
+      {
+        "file": "carlito-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Regular.ttf",
+        "weight": 400,
+        "bytes": 628072
+      },
+      {
+        "file": "carlito-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Bold.ttf",
+        "weight": 700,
+        "bytes": 682528
+      }
+    ]
+  },
+  {
+    "family": "cormorantgaramond",
+    "cssFamily": "CV Catalog cormorantgaramond",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/OFL.txt",
+    "fonts": [
+      {
+        "file": "cormorantgaramond-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 774056
+      },
+      {
+        "file": "cormorantgaramond-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 773192
+      }
+    ]
+  },
+  {
+    "family": "ibmplexsans",
+    "cssFamily": "CV Catalog ibmplexsans",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/OFL.txt",
+    "fonts": [
+      {
+        "file": "ibmplexsans-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/IBMPlexSans%5Bwdth%2Cwght%5D.ttf",
+        "weight": 400,
+        "bytes": 218080
+      },
+      {
+        "file": "ibmplexsans-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/IBMPlexSans%5Bwdth%2Cwght%5D.ttf",
+        "weight": 700,
+        "bytes": 218160
+      },
+      {
+        "file": "ibmplexsans-600.ttf",
+        "weight": 600,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/IBMPlexSans%5Bwdth%2Cwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "inter",
+    "cssFamily": "CV Catalog inter",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt",
+    "fonts": [
+      {
+        "file": "inter-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+        "weight": 400,
+        "bytes": 341404
+      },
+      {
+        "file": "inter-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+        "weight": 700,
+        "bytes": 343096
+      }
+    ]
+  },
+  {
+    "family": "jost",
+    "cssFamily": "CV Catalog jost",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/OFL.txt",
+    "fonts": [
+      {
+        "file": "jost-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/Jost%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 61064
+      },
+      {
+        "file": "jost-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/Jost%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 61156
+      }
+    ]
+  },
+  {
+    "family": "lato",
+    "cssFamily": "CV Catalog lato",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/OFL.txt",
+    "fonts": [
+      {
+        "file": "lato-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Regular.ttf",
+        "weight": 400,
+        "bytes": 656632
+      },
+      {
+        "file": "lato-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Bold.ttf",
+        "weight": 700,
+        "bytes": 656636
+      }
+    ]
+  },
+  {
+    "family": "manrope",
+    "cssFamily": "CV Catalog manrope",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt",
+    "fonts": [
+      {
+        "file": "manrope-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 97516
+      },
+      {
+        "file": "manrope-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 97524
+      }
+    ]
+  },
+  {
+    "family": "montserrat",
+    "cssFamily": "CV Catalog montserrat",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/OFL.txt",
+    "fonts": [
+      {
+        "file": "montserrat-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 374576
+      },
+      {
+        "file": "montserrat-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 374700
+      },
+      {
+        "file": "montserrat-600.ttf",
+        "weight": 600,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "murmure",
+    "cssFamily": "CV Catalog murmure",
+    "license": "https://gitlab.com/velvetyne/murmure",
+    "fonts": [
+      {
+        "file": "murmure-400.ttf",
+        "weight": 400,
+        "bytes": 263276
+      }
+    ],
+    "conversion": "Original OFL OpenType/CFF contours converted to TrueType with fontTools cu2qu, maximum error 0.5 font units; metrics preserved, family renamed."
+  },
+  {
+    "family": "notosansjp",
+    "cssFamily": "CV Catalog notosansjp",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansjp/OFL.txt",
+    "fonts": [
+      {
+        "file": "notosansjp-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansjp/NotoSansJP%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 5766876
+      },
+      {
+        "file": "notosansjp-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansjp/NotoSansJP%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 5761688
+      }
+    ]
+  },
+  {
+    "family": "opensans",
+    "cssFamily": "CV Catalog opensans",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OFL.txt",
+    "fonts": [
+      {
+        "file": "opensans-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OpenSans%5Bwdth%2Cwght%5D.ttf",
+        "weight": 400,
+        "bytes": 130520
+      },
+      {
+        "file": "opensans-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OpenSans%5Bwdth%2Cwght%5D.ttf",
+        "weight": 700,
+        "bytes": 130528
+      }
+    ]
+  },
+  {
+    "family": "oswald",
+    "cssFamily": "CV Catalog oswald",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/OFL.txt",
+    "fonts": [
+      {
+        "file": "oswald-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/Oswald%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 88608
+      },
+      {
+        "file": "oswald-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/Oswald%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 88980
+      }
+    ]
+  },
+  {
+    "family": "playfairdisplay",
+    "cssFamily": "CV Catalog playfairdisplay",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/OFL.txt",
+    "fonts": [
+      {
+        "file": "playfairdisplay-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 194596
+      },
+      {
+        "file": "playfairdisplay-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 194956
+      },
+      {
+        "file": "playfairdisplay-900.ttf",
+        "weight": 900,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "ptserif",
+    "cssFamily": "CV Catalog ptserif",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptserif/OFL.txt",
+    "fonts": [
+      {
+        "file": "ptserif-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptserif/PT_Serif-Web-Regular.ttf",
+        "weight": 400,
+        "bytes": 359124
+      },
+      {
+        "file": "ptserif-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptserif/PT_Serif-Web-Bold.ttf",
+        "weight": 700,
+        "bytes": 340052
+      }
+    ]
+  },
+  {
+    "family": "roboto",
+    "cssFamily": "CV Catalog roboto",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/OFL.txt",
+    "fonts": [
+      {
+        "file": "roboto-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf",
+        "weight": 400,
+        "bytes": 157688
+      },
+      {
+        "file": "roboto-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf",
+        "weight": 700,
+        "bytes": 158404
+      },
+      {
+        "file": "roboto-900-italic.ttf",
+        "weight": 900,
+        "style": "italic",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/Roboto-Italic%5Bwdth%2Cwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "sourcesans3",
+    "cssFamily": "CV Catalog sourcesans3",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/OFL.txt",
+    "fonts": [
+      {
+        "file": "sourcesans3-400.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/SourceSans3%5Bwght%5D.ttf",
+        "weight": 400,
+        "bytes": 379544
+      },
+      {
+        "file": "sourcesans3-700.ttf",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/SourceSans3%5Bwght%5D.ttf",
+        "weight": 700,
+        "bytes": 379436
+      },
+      {
+        "file": "sourcesans3-600.ttf",
+        "weight": 600,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/SourceSans3%5Bwght%5D.ttf"
+      }
+    ]
+  },
+  {
+    "family": "tinos",
+    "cssFamily": "CV Catalog tinos",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "fonts": [
+      {
+        "file": "tinos-400.ttf",
+        "weight": 400
+      },
+      {
+        "file": "tinos-700.ttf",
+        "weight": 700
+      }
+    ]
+  },
+  {
+    "family": "ubuntu",
+    "cssFamily": "CV Catalog ubuntu",
+    "license": "https://raw.githubusercontent.com/google/fonts/main/ufl/ubuntu/LICENCE.txt",
+    "fonts": [
+      {
+        "file": "ubuntu-400.ttf",
+        "weight": 400
+      },
+      {
+        "file": "ubuntu-700.ttf",
+        "weight": 700
+      },
+      {
+        "file": "ubuntu-500.ttf",
+        "weight": 500,
+        "style": "normal",
+        "url": "https://raw.githubusercontent.com/google/fonts/main/ufl/ubuntu/Ubuntu-Medium.ttf"
+      }
+    ]
+  }
+]

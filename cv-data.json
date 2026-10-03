@@ -1,0 +1,127 @@
+{
+  "name": "Diego Ayala Bernal",
+  "title": "Ingeniero Informático, Docente",
+  "email": "diego.ayala2@um.es",
+  "phone": "+34601250396",
+  "experience": [
+    {
+      "date": "Oct 2023 - Presente",
+      "title": "Docente FP Grado Superior, Cesur",
+      "meta": null,
+      "bullets": [
+        "Docente de los modulos DAM, DAW y ASIR."
+      ]
+    },
+    {
+      "date": "Sep 2023 - Presente",
+      "title": "Docente FP Grado Superior y Grado Medio, Colegio Miralmonte",
+      "meta": null,
+      "bullets": [
+        "Docente de los módulos DAM y SMR.",
+        "Clases impartidas a grupos bilingües.",
+        "Tutor 2°DAM, coordinador FCT."
+      ]
+    },
+    {
+      "date": "Mayo 2023 - Ago 2023",
+      "title": "Docente Titular de Grado Superior, Universae",
+      "meta": null,
+      "bullets": [
+        "Responsable de crear material didáctico e impartir clases en las titulaciones de DAW, DAM y ASIR."
+      ]
+    },
+    {
+      "date": "Ene 2023 - Mayo 2023",
+      "title": "Profesor de educación secundaria Bilingüe, CEIPS Torre Salinas",
+      "meta": null,
+      "bullets": []
+    },
+    {
+      "date": "Feb 2021 - Abr 2022",
+      "title": "Freelance Ingeniero Software",
+      "meta": null,
+      "bullets": [
+        "Numerosos proyectos de diversa índole."
+      ]
+    },
+    {
+      "date": "Ene 2021 - Feb 2022",
+      "title": "Profesor Particular",
+      "meta": null,
+      "bullets": [
+        "Enfocadas al alumnado de Bachillerato, FP, Universidad, Master.",
+        "Flexibles y adaptadas a los requisitos solicitados por el alumno."
+      ]
+    },
+    {
+      "date": "Ene 2020 - Abr 2021",
+      "title": "Ingeniero Software Junior, Tecnoavanz S.L",
+      "meta": null,
+      "bullets": [
+        "Startup Tecnológica subsidiaria de Orange.",
+        "Construí características clave del CRM, como desarrollador Symfony, dentro de un equipo ágil de 5 personas.",
+        "Implementación de reglas de negocio, para mejorar la calidad de los datos de los clientes."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "date": "Oct 2022 - Jun 2023",
+      "title": "Máster Universitario en Formación del Profesorado, VIU",
+      "meta": "Media de 8.9",
+      "bullets": []
+    },
+    {
+      "date": "Sep 2014 - Jul 2019",
+      "title": "Ingeniería Informática Mención en Software, Universidad Murcia",
+      "meta": null,
+      "bullets": []
+    },
+    {
+      "date": "Jul 2022 - Jul 2022",
+      "title": "Overall CEFR Grade English C, British Council Aptis",
+      "meta": null,
+      "bullets": []
+    },
+    {
+      "date": "Ene 2022 - Mayo 2022",
+      "title": "Lengua de Signos Española A2, Lengua de Signos",
+      "meta": null,
+      "bullets": []
+    }
+  ],
+  "awards": [
+    {
+      "date": "Ene 2023",
+      "title": "3 Cartas de recomendación expedidas por profesores titulados de la Universidad de Murcia",
+      "meta": null,
+      "bullets": [
+        "3 cartas de recomendación redactadas y firmadas por profesores titulados de la Universidad de Murcia, donde se da muestra de mis conocimientos, cualidades e hitos alcanzados en mi paso por la facultad de Informática. (adjuntadas en el propio correo o en el siguiente link: bit.ly/4deEQHl )"
+      ]
+    },
+    {
+      "date": "Mar 2021 - Ago 2021",
+      "title": "Finalista Lanzadera, Marina de Empresas",
+      "meta": null,
+      "bullets": [
+        "Finalista en Lanzadera (2021), la mayor aceleradora e incubadora de startups a nivel nacional, con una iniciativa de corte educativo, realizando un pitch presencial ante el jurado en la sede de Lanzadera. Siendo finalista junto a otros 30 proyectos restantes de entre los 2500 iniciales."
+      ]
+    },
+    {
+      "date": "Ago 2021 - Dic 2021",
+      "title": "Entrepreneurship World Cup (EWC) - Preseleccionado",
+      "meta": null,
+      "bullets": [
+        "Preseleccionado en la mayor iniciativa de emprendimiento a nivel global, Entrepreneurship World Cup (EWC), con una iniciativa de corte educativo."
+      ]
+    },
+    {
+      "date": "Dic 2021",
+      "title": "NextCarm (Next Generation) - Aprobación y remisión del proyecto por la Región de Murcia al Gobierno Central.",
+      "meta": null,
+      "bullets": [
+        "Propuesta integrada y aprobada en el documento conjunto de iniciativas de la Región de Murcia que se remitió al Gobierno de España para su evaluación y financiación a través de los fondos Next Generation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+.site-credit {
+  flex-shrink: 0;
+  padding: 20px 24px;
+  color: #71809a;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+}
+.site-credit a { color: #52617b; text-decoration: none; }
+.site-credit a:hover, .site-credit a:focus-visible { color: #147cc1; text-decoration: underline; text-underline-offset: 3px; }
+@media print {
+  .site-credit { display: none !important; }
+}

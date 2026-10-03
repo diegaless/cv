@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><base href="/drafts/templates/">
+<link rel="stylesheet" href="/assets/cv-builder.css"><link rel="stylesheet" href="/assets/cv-app.css">
+<link rel="stylesheet" href="/drafts/templates/templates.css"><link rel="stylesheet" href="/drafts/flowcv/flowcv.css">
+<style>html,body{margin:0;padding:0;overflow:visible;background:white}#preview{width:1120px;margin:0;padding:0}.cv-page,.draft-page,.flow-page{box-shadow:none!important}</style>
+</head><body class="cv-focused"><div id="preview"></div>
+<script type="module">
+import {normalizeState} from '/assets/cv-model.js';
+import {renderPreview,preparePrint} from '/assets/cv-preview.js';
+import {renderDraftPreview} from '/drafts/templates/preview.js';
+import {renderFlowPreview} from '/drafts/flowcv/preview.mjs';
+import {draftSample,longDraftSample,samplePortrait} from '/drafts/templates/fixtures.mjs';
+import {DRAFT_TEMPLATES} from '/drafts/templates/catalog.mjs';
+import {FLOW_TEMPLATES} from '/drafts/flowcv/catalog.mjs';
+const root=document.getElementById('preview');
+window.renderDesign=async(id,long=false,withPhoto=true)=>{
+  root.replaceChildren();root.className='';root.removeAttribute('style');
+  for(const key of Object.keys(root.dataset))delete root.dataset[key];
+  document.querySelector('base').href=id.startsWith('flow-')?'/drafts/flowcv/':'/drafts/templates/';
+  const input=structuredClone(long?longDraftSample():draftSample);
+  const definition=id.startsWith('cvapp-')?DRAFT_TEMPLATES[id.slice(6)]:FLOW_TEMPLATES[id];
+  const supportsPhoto=['classic','compact'].includes(id)||Boolean(definition?.supportsPhoto??definition?.photo);
+  if(withPhoto&&supportsPhoto)input.photoSrc=await samplePortrait();
+  if(['classic','compact'].includes(id)){
+    const state=normalizeState({...input,design:{...input.design,template:id}});
+    renderPreview(root,state);await preparePrint(root,state);
+    root.style.setProperty('--preview-zoom','1');
+  }else if(id.startsWith('cvapp-')){
+    await renderDraftPreview(root,input,{template:id.slice(6)});
+    root.style.setProperty('--draft-zoom','1');
+  }else{
+    await renderFlowPreview(root,input,{template:id});
+    root.style.setProperty('--flow-zoom','1');
+  }
+  await document.fonts.ready;
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const pages=[...root.children];
+  for(const img of root.querySelectorAll('img')){
+    if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;});
+    if(!img.naturalWidth)throw new Error('Missing preview image: '+img.src);
+  }
+  const backgrounds=new Set();
+  for(const node of root.querySelectorAll('*')){
+    for(const match of getComputedStyle(node).backgroundImage.matchAll(/url\(["']?([^"')]+)["']?\)/g)){
+      if(!match[1].startsWith('data:'))backgrounds.add(new URL(match[1],document.baseURI).href);
+    }
+  }
+  await Promise.all([...backgrounds].map(async url=>{const img=new Image();img.src=url;try{await img.decode();}catch{throw new Error('Cannot decode background: '+url);}}));
+  const photos=[...root.querySelectorAll('.profile-photo,.draft-photo,.flow-photo,.own-photo')];
+  return {pages:pages.length,text:root.textContent,photoExpected:withPhoto&&supportsPhoto,photos:photos.length,photoDecoded:photos.every(photo=>photo.complete&&photo.naturalWidth>=256&&photo.naturalHeight>=256),fonts:[...new Set([...root.querySelectorAll('h1,h2,h3,p,time,li')].map(node=>getComputedStyle(node).fontFamily))]};
+};
+window.ready=true;
+</script></body></html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi cuenta · CV</title>
+  <link rel="icon" type="image/png" href="./assets/media/diego-ayala-icon-v3.png" />
+  <link rel="stylesheet" href="./assets/cv-builder.css?v=20261003-legal" /><link rel="stylesheet" href="./assets/cv-app.css?v=20261002-spacing" /><link rel="stylesheet" href="./assets/cv-brand.css?v=20260927-credit" />
+  <link rel="stylesheet" href="./assets/cv-privacy.css?v=20261003-legal" />
+  <script src="./assets/firebase-config.js"></script><script type="module" src="./assets/cv-account.js?v=20261003-legal"></script>
+</head>
+<body class="account-page cv-focused">
+  <header class="account-page-header"><a href="./resumes.html" class="dashboard-logo" aria-label="Mis CVs"><img src="./assets/media/diego-ayala-icon-v3.png" width="1254" height="1254" alt="Logo de la aplicación" /></a><a class="back-to-cvs" href="./resumes.html" id="account-back">← Mis CVs</a></header>
+  <main class="account-content">
+    <p class="section-eyebrow">TU ESPACIO</p><h1>Mi cuenta</h1>
+    <p class="account-intro">Gestiona tu acceso y tus datos.</p>
+    <p id="account-error" class="app-error" role="alert" hidden></p>
+    <p id="account-loading" role="status">Cargando tu cuenta…</p>
+    <div id="account-settings" hidden>
+      <section class="account-card" aria-labelledby="profile-heading">
+        <div class="account-identity"><span class="dashboard-avatar" id="profile-initial" aria-hidden="true"></span><div><h2 id="profile-heading">Tu perfil</h2><p id="profile-name"></p></div></div>
+        <dl class="account-details"><div><dt>Email</dt><dd id="profile-email"></dd></div><div><dt>Acceso</dt><dd>Cuenta de Google</dd></div></dl>
+        <button class="secondary-btn" type="button" id="account-sign-out">Cerrar sesión</button>
+      </section>
+      <section class="account-card privacy-profile" aria-labelledby="privacy-heading">
+        <h2 id="privacy-heading">Privacidad y tus datos</h2>
+        <p>Consulta cómo se guardan tus CVs, cuánto tiempo se conservan y cómo solicitar acceso, rectificación o eliminación.</p>
+        <p><a href="./privacidad.html">Ver la política de privacidad</a> · <a class="privacy-address" href="mailto:diego.ayala.bernal2@gmail.com">Contactar sobre mis datos</a></p>
+        <div class="privacy-account-actions"><button class="secondary-btn" type="button" id="export-account-data">Descargar todos mis datos</button><button class="secondary-btn" type="button" id="clear-account-drafts">Borrar borradores de este navegador</button></div>
+        <p id="account-data-status" role="status" aria-live="polite"></p>
+      </section>
+      <section class="account-card account-danger" aria-labelledby="delete-heading">
+        <h2 id="delete-heading">Eliminar cuenta</h2>
+        <p>Se eliminarán tu cuenta en esta web y todos tus currículums guardados. Esta acción es permanente.</p>
+        <p>Descarga antes los CVs que quieras conservar. Tu cuenta de Google no se elimina.</p>
+        <p class="account-pending" id="deletion-pending" role="status" hidden>La eliminación ya ha comenzado. Verifica de nuevo tu identidad para completarla.</p>
+        <button class="danger-btn" type="button" id="delete-account">Eliminar mi cuenta</button>
+        <p class="account-progress" id="deletion-progress" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-credit">Creado por <a href="https://www.linkedin.com/in/diego-ayala/" target="_blank" rel="noopener noreferrer">Diego Ayala</a> · <a href="./privacidad.html">Privacidad</a></footer>
+</body>
+</html>

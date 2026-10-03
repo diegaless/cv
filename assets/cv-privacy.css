@@ -1,0 +1,80 @@
+/* Only privacy content and notices: document composition is kept separate. */
+@font-face {
+  font-family: "Inter UI";
+  src: url("./fonts/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.privacy-notice {
+  margin: 18px 0 0;
+  color: #52617b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.privacy-notice a, .privacy-profile a, .privacy-page a { color: #147cc1; text-underline-offset: 3px; }
+.privacy-address { overflow-wrap: anywhere; }
+.cv-focused .editor-privacy { margin: 0 4px 18px; }
+.privacy-menu-link { display: block; padding: 10px 0; color: #34415a; text-decoration: none; }
+.privacy-menu-link:hover, .privacy-menu-link:focus-visible { color: #147cc1; text-decoration: underline; }
+
+.privacy-page, .privacy-page * { box-sizing: border-box; }
+.privacy-page {
+  margin: 0;
+  min-height: 100dvh;
+  background: #f7f9fc;
+  color: #253044;
+  font: 16px/1.65 "Inter UI", "Segoe UI", Arial, sans-serif;
+}
+.privacy-page :focus-visible { outline: 3px solid #1a91f0; outline-offset: 4px; }
+.privacy-skip { position: absolute; top: 12px; left: 16px; padding: 10px 16px; background: #fff; transform: translateY(-180%); z-index: 1; }
+.privacy-skip:focus { transform: none; }
+.privacy-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 18px 32px; border-bottom: 1px solid #e7eaf0; background: #fff; }
+.privacy-header img { display: block; width: 48px; height: 48px; }
+.privacy-header > a:last-child { font-size: 14px; text-decoration: none; }
+.privacy-content { width: min(100%, 940px); margin: 0 auto; padding: 48px 24px 36px; }
+.privacy-heading { max-width: 800px; }
+.privacy-eyebrow { margin: 0 0 12px; color: #52617b; font-size: 12px; font-weight: 600; letter-spacing: .12em; }
+.privacy-page h1 { margin: 0 0 18px; font-size: clamp(30px, 5vw, 42px); line-height: 1.15; letter-spacing: -.025em; }
+.privacy-lead { margin: 0; color: #52617b; font-size: 17px; }
+.privacy-updated { margin: 16px 0 0; color: #52617b; font-size: 13px; }
+.privacy-nav { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 24px 0 32px; font-size: 14px; }
+.privacy-card { margin: 0 0 20px; padding: 30px 32px; border: 1px solid #e0e6ef; border-radius: 12px; background: #fff; }
+.privacy-page h2 { margin: 0 0 18px; font-size: 22px; line-height: 1.35; scroll-margin-top: 24px; }
+.privacy-card p { margin: 0 0 16px; }
+.privacy-card p:last-child, .privacy-card ul:last-child { margin-bottom: 0; }
+.privacy-card ul { padding-left: 22px; margin: 0 0 18px; }
+.privacy-card li { margin-bottom: 10px; }
+.privacy-card li:last-child { margin-bottom: 0; }
+.privacy-details { margin: 0 0 18px; }
+.privacy-details > div { display: grid; grid-template-columns: 125px minmax(0, 1fr); gap: 8px 16px; margin-bottom: 10px; }
+.privacy-page dt { font-weight: 600; }
+.privacy-page dd { margin: 0; }
+.privacy-retention { margin: 0 0 22px; }
+.privacy-retention > div { padding: 16px 0; border-bottom: 1px solid #edf0f5; }
+.privacy-retention > div:first-child { padding-top: 0; }
+.privacy-retention > div:last-child { padding-bottom: 0; border-bottom: 0; }
+.privacy-retention dt { margin-bottom: 5px; }
+.privacy-page code { font-size: .9em; overflow-wrap: anywhere; }
+.privacy-closing { margin: 28px 4px 0; font-size: 14px; color: #52617b; }
+
+@media (max-width: 600px) {
+  .privacy-header { padding: 14px 18px; gap: 16px; }
+  .privacy-header img { width: 42px; height: 42px; }
+  .privacy-content { padding: 30px 16px 24px; }
+  .privacy-page { font-size: 15px; }
+  .privacy-card { padding: 22px 20px; }
+  .privacy-page h2 { font-size: 20px; }
+  .privacy-details > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .privacy-lead { font-size: 16px; }
+}
+@media print {
+  .privacy-notice, .privacy-profile, .privacy-menu-link { display: none !important; }
+  .privacy-page { background: #fff; color: #000; }
+  .privacy-page .privacy-header, .privacy-page .privacy-nav, .privacy-page .privacy-skip { display: none; }
+  .privacy-page .privacy-content { width: 100%; max-width: none; padding: 0; }
+  .privacy-page .privacy-card { padding: 16px 0; border: 0; border-radius: 0; }
+}
+.privacy-account-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+#account-data-status{overflow-wrap:anywhere;font-size:13px;line-height:1.5}

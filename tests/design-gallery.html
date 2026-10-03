@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comprobación de plantillas bloqueadas</title><link rel="stylesheet" href="../assets/cv-builder.css"><link rel="stylesheet" href="../assets/cv-app.css"><style>body{padding:24px}#test-controls{max-width:880px}#results{white-space:pre-wrap} @media print{body{padding:0}#test-controls,#results{display:none!important}}</style></head>
+<body class="cv-focused"><main id="test-controls"><h1>Plantillas bloqueadas</h1><label for="search">Buscar plantilla</label><input id="search" type="search"><label for="group">Catálogo</label><select id="group"><option value="all">Todas</option><option value="app">Nuestras plantillas</option><option value="more">Más plantillas</option></select><p id="status" role="status"></p><div id="catalog"></div></main><pre id="results"></pre>
+<script type="module">
+import {mountDesignGallery} from '../assets/cv-design-gallery.js';
+import {normalizeState} from '../assets/cv-model.js';
+import {renderPreview} from '../assets/cv-preview.js';
+import {draftSample} from '../drafts/templates/fixtures.mjs';
+let state=normalizeState({...draftSample,design:{template:'compact'}});
+if(new URLSearchParams(location.search).get('sample')==='compact') {
+  document.getElementById('test-controls').remove();
+  const preview=document.createElement('div');preview.className='cv-preview-pages';document.body.append(preview);
+  await document.fonts.ready;renderPreview(preview,state);document.body.dataset.ready='true';
+} else {
+  const results=[],root=document.getElementById('catalog'),search=document.getElementById('search'),group=document.getElementById('group'),status=document.getElementById('status');
+  let changes=0;
+  const gallery=mountDesignGallery(root,{search,group,status,onSelect(id){changes++;state.design.template=id;gallery.sync(id);}});
+  gallery.sync('compact');
+  const check=(name,condition)=>results.push({name,pass:Boolean(condition)});
+  const originalData=JSON.stringify(state.data),buttons=[...root.querySelectorAll('button')];
+  check('144 names and real preview images',buttons.length===144&&buttons.every(b=>b.querySelector('img')&&new URL(b.querySelector('img').src).pathname.endsWith('.webp')&&b.querySelector('strong')?.textContent));
+  check('only Classic is enabled',buttons.filter(b=>!b.disabled).map(b=>b.dataset.templateId).join()==='classic');
+  check('a saved Compact CV is displayed without changing it',state.design.template==='compact'&&root.querySelector('[data-template-id="compact"]').getAttribute('aria-pressed')==='true');
+  for(const button of buttons.filter(b=>b.disabled))button.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+  check('blocked cards cannot change the CV',changes===0&&state.design.template==='compact'&&JSON.stringify(state.data)===originalData);
+  const blocked=buttons.find(b=>b.dataset.templateId.startsWith('flow-'));blocked.disabled=false;blocked.dispatchEvent(new MouseEvent('click',{bubbles:true}));blocked.disabled=true;
+  check('availability guard also rejects forced clicks',changes===0&&state.design.template==='compact');
+  root.querySelector('[data-template-id="classic"]').click();root.querySelector('[data-template-id="classic"]').click();
+  check('Classic can be selected once without changing content',changes===1&&state.design.template==='classic'&&JSON.stringify(state.data)===originalData);
+  group.value='more';group.dispatchEvent(new Event('change'));check('More templates contains all 142 additional locked designs',root.querySelectorAll('button:not([hidden])').length===142&&root.querySelectorAll('button:not([hidden]):enabled').length===0);
+  group.value='all';group.dispatchEvent(new Event('change'));search.value='clasica';search.dispatchEvent(new Event('input'));check('search finds names without needing accents',root.querySelectorAll('button:not([hidden])').length===1&&root.querySelector('button:not([hidden])').dataset.templateId==='classic');
+  search.value='no existe esta plantilla';search.dispatchEvent(new Event('input'));check('empty search is clear',root.querySelectorAll('button:not([hidden])').length===0&&status.textContent.includes('No hay'));
+  search.value='';search.dispatchEvent(new Event('input'));check('clearing search restores every design',root.querySelectorAll('button:not([hidden])').length===144);
+  document.getElementById('results').textContent=JSON.stringify(results,null,2);document.body.dataset.ready='true';
+}
+</script></body></html>

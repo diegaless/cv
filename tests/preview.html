@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Pruebas del PDF y la vista previa</title>
+<link rel="stylesheet" href="../assets/cv-builder.css"><link rel="stylesheet" href="../assets/cv-app.css">
+<body class="cv-focused" style="overflow:auto"><pre id="results">Ejecutando…</pre><main style="width:842px"><div class="cv-preview-pages" id="pages"></div></main>
+<script type="module">
+import {sample} from './fixture.mjs';
+import {renderPreview} from '../assets/cv-preview.js';
+await document.fonts.ready;
+const pages=document.getElementById('pages'), results=[];
+const long=structuredClone(sample);
+long.data.experience=Array.from({length:22},(_,i)=>({date:`${2000+i} - ${2001+i}`,title:`Experiencia ${i}`,bullets:Array.from({length:5},(_,j)=>`Elemento ${i}.${j}: Desarrollé soluciones accesibles con documentación y pruebas. MARCADOR_${i}_${j}`)}));
+long.data.experience[0].links=[{target:'bullet:0',label:'MARCADOR_0_0',url:'https://example.com/linked-marker'}];
+const huge=structuredClone(sample);
+huge.data.experience=[{date:'2020 - 2026',title:'Entrada extensa',bullets:[Array.from({length:1800},(_,i)=>`palabra${i}`).join(' ')]}];
+const manual=structuredClone(long);manual.data.experience=manual.data.experience.slice(0,2);manual.data.experience[1].page_break_before=true;
+const formatted=structuredClone(sample);formatted.data.experience[0].title='Título con  dos espacios';formatted.data.experience[0].spaceAfter=.625;formatted.data.experience[0].bullets=['MARCADOR_9_9 enlaceparcial y más texto.'];formatted.data.experience[0].links=[{target:'bullet:0',label:'parcial',url:'https://example.com/partial'}];
+for(const [name,state] of [['clásica',sample],['22 experiencias',long],['entrada extensa',huge],['salto manual',manual],['sin números',{...long,design:{template:'classic',pageNumbers:false}}],['espacios y enlace parcial',formatted],['compacta',{...long,design:{template:'compact',accent:'#24745c'}}]]){
+  const count=renderPreview(pages,state), expected=state.data.experience.flatMap(e=>e.bullets||[]).flatMap(t=>t.match(/MARCADOR_\d+_\d+|palabra\d+/g)||[]);
+  let overflow=0,overlaps=0;
+  for(const page of pages.children){
+    const rect=page.getBoundingClientRect(),scale=rect.width/page.offsetWidth,body=page.querySelector('.cv-page-body');
+    if(body.getBoundingClientRect().bottom>rect.bottom-parseFloat(getComputedStyle(page).paddingBottom)*scale+2) overflow++;
+    const footer=page.querySelector('.cv-page-number');
+    if(footer){
+      const f=footer.getBoundingClientRect(),walker=document.createTreeWalker(body,NodeFilter.SHOW_TEXT),range=document.createRange();
+      while(walker.nextNode()){
+        range.selectNodeContents(walker.currentNode);
+        if([...range.getClientRects()].some(r=>r.bottom>f.top && r.top<f.bottom && r.right>f.left && r.left<f.right)) overlaps++;
+      }
+    }
+  }
+  const visiblePages=[...pages.children].map(page=>page.querySelector('.cv-vector-page')||page);
+  const visibleText=visiblePages.map(page=>page.textContent).join('\n');
+  const missing=expected.filter(word=>!visibleText.includes(word));
+  const expectedLinks=state.data.experience.flatMap(e=>e.links||[]);
+  const missingLinks=expectedLinks.filter(link=>!visiblePages.flatMap(page=>[...page.querySelectorAll('a')]).some(a=>a.getAttribute('href')===link.url&&a.textContent.trim()===link.label)).length;
+  for(const page of pages.children){
+    const rect=page.getBoundingClientRect(),scale=rect.height/841.89;
+    for(const text of page.querySelectorAll('.cv-vector-body text')) if(text.getBoundingClientRect().bottom>rect.bottom-21.6*scale+1)overflow++;
+  }
+  const allText=[...pages.children].map(p=>p.textContent);
+  const manualWorks=name!=='salto manual'||allText.findIndex(t=>t.includes('MARCADOR_1_0'))>allText.findIndex(t=>t.includes('MARCADOR_0_0'));
+  const vectorPages=pages.querySelectorAll(".cv-vector-page").length;
+  results.push({name,pages:count,vectorPages,overflow,overlaps,missing:missing.length,missingLinks,pass:(state.design?.template === "compact" || vectorPages===count)&&overflow===0&&overlaps===0&&missing.length===0&&missingLinks===0&&manualWorks});
+}
+renderPreview(pages,sample);
+document.getElementById('results').textContent=JSON.stringify(results,null,2);
+document.title=results.every(r=>r.pass)?'PASS · Vista previa y PDF':'FAIL · Vista previa y PDF';
+</script></body></html>

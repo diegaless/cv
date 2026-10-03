@@ -1,0 +1,194 @@
+@font-face{font-family:"CV Own Sans";src:url("../../assets/fonts/InterVariable.woff2") format("woff2");font-weight:100 900;font-display:block}
+@font-face{font-family:"CV Own Serif";src:url("../templates/fonts/EBGaramond-Regular.ttf") format("truetype");font-weight:400;font-display:block}
+@font-face{font-family:"CV Own Serif";src:url("../templates/fonts/EBGaramond-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:block}
+.original-preview{display:flex;flex-direction:column;align-items:center;gap:20px}
+.original-preview,.original-preview *{box-sizing:border-box}
+.original-preview>.original-page{position:relative;isolation:isolate;flex:none;width:595.28pt;height:841.89pt;margin:0;zoom:var(--draft-zoom,var(--flow-zoom,1));background:#fff;color:#26303b;font:var(--own-body-size,9pt)/1.4 "CV Own Sans",sans-serif;box-shadow:0 2px 16px #1e293b15;overflow-wrap:anywhere;page:own-cv;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.original-page h1,.original-page h2,.original-page h3,.original-page p{margin:0}
+.original-page a{color:inherit;text-decoration:underline;text-underline-offset:1.5pt}
+.original-page .own-header{position:relative;display:grid;grid-template-columns:minmax(0,1fr);row-gap:15pt;padding-bottom:21pt;margin-bottom:23pt;border-bottom:.7pt solid #d9dfe2}
+.original-page .own-header--photo{grid-template-columns:minmax(0,1fr) 58pt;column-gap:20pt}
+.original-page .own-identity{min-width:0;align-self:center}
+.original-page h1{font-family:var(--own-name-font);font-size:var(--own-name-size);font-weight:500;line-height:1.06;letter-spacing:-.5pt;color:var(--own-accent);text-transform:none}
+.original-page .own-job{font-size:10pt;line-height:1.4;margin-top:8pt;font-weight:500}
+.original-page .own-contacts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:5pt 16pt;font-style:normal;font-size:7.9pt;line-height:1.45;color:#515e6a}
+.original-page .own-contacts span{min-width:0;max-width:100%}
+.original-page .own-photo{position:static;width:58pt;height:70pt;object-fit:cover;border-radius:3pt}
+.original-page .own-header-mark{display:none}
+.original-page .own-page-body{height:auto;display:block}
+.original-page .own-layout{display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
+.original-page[data-own-layout="two"] .own-layout{grid-template-columns:minmax(0,1fr) var(--own-rail-width);gap:27pt}
+.original-page .own-flow{min-width:0;display:block}
+.original-page .own-section+.own-section{margin-top:var(--own-section-gap,20pt)}
+.original-page .own-section>h2{margin:0 0 9pt;font-size:8pt;font-weight:650;line-height:1.35;color:var(--own-accent);letter-spacing:1pt;text-transform:uppercase}
+.original-page .own-section-body{display:block}
+.original-page[data-own-layout="one"] .own-section[data-section="skills"] .own-section-body{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6pt 17pt}
+.original-page[data-own-layout="one"] .own-section[data-section="languages"] .own-section-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6pt 17pt}
+.original-page[data-own-layout="one"] .own-section:is([data-section="skills"],[data-section="languages"]) .own-entry+.own-entry{margin-top:0}
+.original-page .own-entry{margin:0;padding:0}
+.original-page .own-entry+.own-entry{margin-top:var(--own-entry-gap,11pt)}
+.original-page .catalog-entry-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12pt}
+.original-page .catalog-entry-heading h3{min-width:0;font-size:9pt;font-weight:600;line-height:1.4;color:#26303b}
+.original-page .catalog-entry-heading time{flex:none;max-width:35%;font-size:7.5pt;line-height:1.4;text-align:right;color:#64727b;white-space:normal}
+.original-page .catalog-entry-content{margin:3pt 0 0;padding:0}
+.original-page .draft-entry-meta{font-size:8pt;color:#64727b}
+.original-page .draft-paragraph{margin:0;white-space:pre-wrap}
+.original-page ul{margin:4pt 0 0;padding-left:12pt}
+.original-page li+li{margin-top:1.5pt}
+.original-page .own-rail{padding-left:17pt;border-left:.7pt solid #d9dfe2;font-size:8pt}
+.original-page .own-rail .catalog-entry-heading{display:block}
+.original-page .own-rail .catalog-entry-heading h3{font-size:8.2pt}
+.original-page .own-rail .catalog-entry-heading time{display:block;text-align:left;max-width:none;margin-top:2pt}
+.original-page .own-rail .own-section+.own-section{margin-top:18pt}
+.original-page .own-folio{position:absolute;inset:auto 39pt 18pt auto;color:#75818a;font:7pt/1 "CV Own Sans",sans-serif;text-align:right}
+
+/* Profesional: an open serif identity above a narrow credentials rail. */
+.original-page[data-own-theme="professional"] .own-header{border-bottom:2pt solid var(--own-accent)}
+.original-page[data-own-theme="professional"] .own-rail{border-left:0;padding-left:15pt;background:linear-gradient(var(--own-soft),var(--own-soft)) left top/3pt 100% no-repeat}
+.original-page[data-own-theme="professional"] .own-section>h2{font-size:8.5pt;letter-spacing:.5pt;text-transform:none}
+
+/* Limpio: one reading column, compact identity and unruled section labels. */
+.original-page[data-own-theme="clean"] .own-header{border:0;padding-bottom:4pt;margin-bottom:23pt}
+.original-page[data-own-theme="clean"] .own-job{font-weight:400;color:#66727f}
+.original-page[data-own-theme="clean"] .own-section>h2{font-size:7.5pt;letter-spacing:1.7pt}
+.original-page[data-own-theme="clean"] .catalog-entry-heading{display:block}
+.original-page[data-own-theme="clean"] .catalog-entry-heading time{display:block;text-align:left;max-width:none;margin-top:2pt}
+.original-page[data-own-theme="clean"] .own-section+.own-section{padding-top:7pt;border-top:.45pt solid #e3e8ec;margin-top:8pt}
+
+/* Industrial: warm metal accents and a chronological gutter on white paper. */
+.original-page[data-own-theme="industrial"] .own-header{padding:0 0 17pt 15pt;border-bottom:0;border-left:4pt solid var(--own-accent)}
+.original-page[data-own-theme="industrial"] .own-section>h2{letter-spacing:.4pt;font-size:9pt;text-transform:none}
+.original-page[data-own-theme="industrial"] .own-section[data-section="experience"] .own-entry{position:relative;padding-left:100pt!important;min-height:28pt}
+.original-page[data-own-theme="industrial"] .own-section[data-section="experience"] time{position:absolute;left:0;top:1pt;width:78pt;max-width:none;text-align:left;color:var(--own-accent)}
+.original-page[data-own-theme="industrial"] .own-section[data-section="experience"] .own-entry::before{content:"";position:absolute;left:88pt;top:2pt;bottom:0;border-left:.6pt solid #dfd0c6}
+
+/* Caligráfico: quiet centered calligraphy, sequential entries, no ordinal icons. */
+.original-page[data-own-theme="calligraphic"] .own-header{text-align:center;padding:3pt 0 14pt;border-bottom:.5pt solid #ded1d5}
+.original-page[data-own-theme="calligraphic"] .own-header--photo{grid-template-columns:1fr;justify-items:center}
+.original-page[data-own-theme="calligraphic"] .own-photo{grid-row:1;border-radius:50%;width:52pt;height:52pt}
+.original-page[data-own-theme="calligraphic"] h1{font-style:italic;letter-spacing:.3pt}
+.original-page[data-own-theme="calligraphic"] .own-contacts{justify-content:center}
+.original-page[data-own-theme="calligraphic"] .own-section>h2{font:italic 400 15pt/1.2 "CV Own Serif",serif;letter-spacing:0;text-transform:none;margin-bottom:7pt}
+.original-page[data-own-theme="calligraphic"] .own-section+.own-section{margin-top:12pt}
+
+/* Sólido: dark ink is restricted to a modest identity block, paper stays white. */
+.original-page[data-own-theme="solid"] .own-header{background:var(--own-accent);padding:21pt;color:white;border:0;margin-bottom:25pt}
+.original-page[data-own-theme="solid"] h1{color:white;font-size:29pt;letter-spacing:-.3pt}
+.original-page[data-own-theme="solid"] .own-contacts{color:#e4eaf0}
+.original-page[data-own-theme="solid"] .own-rail{border-left:0;background:var(--own-soft);padding:14pt;font-size:8pt}
+.original-page[data-own-theme="solid"] .own-section>h2{font-size:8pt;letter-spacing:.7pt}
+
+/* Colorido: restrained plum/copper details, with no overlapping figure backdrop. */
+.original-page[data-own-theme="colorful"] .own-header{border-bottom:0;padding:20pt 0 19pt;background:linear-gradient(90deg,var(--own-accent) 0 37%,var(--own-secondary) 37% 70%,#d7b4a0 70%) left top/100% 4pt no-repeat}
+.original-page[data-own-theme="colorful"] .own-header-mark{display:block;grid-column:1/-1;height:5pt;width:37pt;background:var(--own-secondary)}
+.original-page[data-own-theme="colorful"] .own-rail{background:var(--own-soft);padding:14pt;border:0;border-radius:6pt}
+.original-page[data-own-theme="colorful"] .own-section>h2{font-size:8.6pt;letter-spacing:0;text-transform:none;color:var(--own-secondary)}
+.original-page[data-own-theme="colorful"] .own-section[data-section="summary"]{padding-left:12pt;border-left:2pt solid var(--own-accent)}
+
+/* Atlántico: small blue chapter labels beside one full-width reading flow. */
+.original-page[data-own-theme="atlantic"] .own-header{border:0;padding-bottom:22pt;margin-bottom:20pt}
+.original-page[data-own-theme="atlantic"] .own-header-mark{display:block;position:absolute;left:0;bottom:0;width:54pt;height:2pt;background:var(--own-accent)}
+.original-page[data-own-theme="atlantic"] .own-section{display:grid;grid-template-columns:84pt minmax(0,1fr);gap:20pt}
+.original-page[data-own-theme="atlantic"] .own-section>h2{font-size:7.5pt;line-height:1.65;letter-spacing:.45pt;padding-top:1pt}
+.original-page[data-own-theme="atlantic"] .catalog-entry-heading{display:block}
+.original-page[data-own-theme="atlantic"] .catalog-entry-heading time{display:block;text-align:left;max-width:none;margin-top:2pt}
+
+/* Órbita: a pale horizontal identity and two white columns with generous space. */
+.original-page[data-own-theme="orbit"] .own-header{padding:19pt;background:var(--own-soft);border:0;border-radius:0 0 12pt 0}
+.original-page[data-own-theme="orbit"] .own-rail{padding-left:0;border:0}
+.original-page[data-own-theme="orbit"] .own-rail>section{padding-top:9pt;border-top:1.5pt solid #c7c4d7}
+.original-page[data-own-theme="orbit"] .own-section>h2{font-size:8.2pt;text-transform:none;letter-spacing:.2pt}
+.original-page[data-own-theme="orbit"] .own-contacts{font-size:7.8pt}
+
+/* Optimista: a warm role highlight and open chronological content. */
+.original-page[data-own-theme="optimist"] .own-header{border-bottom:0;margin-bottom:21pt}
+.original-page[data-own-theme="optimist"] .own-job{display:inline-block;background:var(--own-soft);padding:4pt 8pt;margin-top:10pt;border-left:2pt solid var(--own-secondary)}
+.original-page[data-own-theme="optimist"] .own-section>h2{letter-spacing:.3pt;text-transform:none;font-size:10pt}
+.original-page[data-own-theme="optimist"] .own-section+.own-section{border-top:.5pt solid #e9e1d2;padding-top:7pt;margin-top:8pt}
+.original-page[data-own-theme="optimist"] h1{color:#303b42}
+
+/* Áurea: a serif identity and golden ticks on an unframed white sheet. */
+.original-page[data-own-theme="aurea"] .own-header{border:0;padding-left:18pt;border-left:1.5pt solid var(--own-accent);padding-bottom:0;margin-bottom:25pt}
+.original-page[data-own-theme="aurea"] .own-job{font-weight:400;color:#626262}
+.original-page[data-own-theme="aurea"] .own-section>h2{font-size:8.4pt;letter-spacing:1.1pt;padding-left:12pt;position:relative}
+.original-page[data-own-theme="aurea"] .own-section>h2::before{content:"";position:absolute;left:0;top:1pt;bottom:1pt;width:2pt;background:var(--own-accent)}
+.original-page[data-own-theme="aurea"] .catalog-entry-heading h3{font-weight:550}
+
+/* Twelve independently specified families, each with eleven ink palettes. */
+.original-page[data-own-theme="editorial"] .own-header{border:0;padding-bottom:15pt;margin-bottom:21pt}
+.original-page[data-own-theme="editorial"] .own-header-mark{display:block;width:55pt;height:1.6pt;background:var(--own-accent)}
+.original-page[data-own-theme="editorial"] .own-section>h2{font-size:7.5pt;letter-spacing:1.1pt}
+.original-page[data-own-theme="editorial"] .own-job{font-weight:400}
+
+.original-page[data-own-theme="archive"] .own-header{border-bottom:.7pt solid var(--own-accent);padding-bottom:16pt;margin-bottom:20pt}
+.original-page[data-own-theme="archive"] .own-job{border-left:1.8pt solid var(--own-accent);padding-left:8pt}
+.original-page[data-own-theme="archive"] .own-section>h2{text-transform:none;letter-spacing:.2pt;font-size:9pt}
+.original-page[data-own-theme="archive"] .own-rail{padding-left:15pt;border-color:#dde5e4}
+
+.original-page[data-own-theme="compass"] .own-header{border:0;margin-bottom:21pt;padding-bottom:5pt}
+.original-page[data-own-theme="compass"] .own-section{display:grid;grid-template-columns:75pt minmax(0,1fr);gap:17pt}
+.original-page[data-own-theme="compass"] .own-section>h2{font-size:7.3pt;letter-spacing:.7pt;line-height:1.55}
+.original-page[data-own-theme="compass"] .catalog-entry-heading{display:block}
+.original-page[data-own-theme="compass"] time{display:block;text-align:left;max-width:none;margin-top:2pt}
+
+.original-page[data-own-theme="prism"] .own-layout{grid-template-columns:var(--own-rail-width) minmax(0,1fr);gap:23pt}
+.original-page[data-own-theme="prism"] [data-column="main"]{grid-column:2;grid-row:1}
+.original-page[data-own-theme="prism"] .own-rail{grid-column:1;grid-row:1;padding:0 14pt 0 0;border-left:0;border-right:.7pt solid #e1e7e8}
+.original-page[data-own-theme="prism"] .own-header{border:0;padding-bottom:11pt;margin-bottom:23pt}
+.original-page[data-own-theme="prism"] .own-section>h2{text-transform:none;font-size:8.8pt;letter-spacing:.15pt}
+.original-page[data-own-theme="prism"] .own-rail h2{border-left:2pt solid var(--own-accent);padding-left:7pt}
+
+.original-page[data-own-theme="atelier"] .own-header{text-align:center;border:0;padding-bottom:12pt;margin-bottom:21pt}
+.original-page[data-own-theme="atelier"] .own-header--photo{grid-template-columns:1fr;justify-items:center;row-gap:11pt}
+.original-page[data-own-theme="atelier"] .own-photo{grid-row:1;width:45pt;height:45pt;border-radius:50%}
+.original-page[data-own-theme="atelier"] .own-contacts{justify-content:center}
+.original-page[data-own-theme="atelier"] .own-section>h2{font:400 13pt/1.2 "CV Own Serif",serif;text-transform:none;letter-spacing:.2pt;margin-bottom:8pt}
+.original-page[data-own-theme="atelier"] .own-job{font-weight:400;font-size:9pt}
+
+.original-page[data-own-theme="chronicle"] .own-header{border:0;padding-bottom:9pt;margin-bottom:20pt}
+.original-page[data-own-theme="chronicle"] .own-header-mark{display:block;width:32pt;height:2pt;background:var(--own-accent)}
+.original-page[data-own-theme="chronicle"] .own-section>h2{font-size:8.4pt;text-transform:none;letter-spacing:.1pt}
+.original-page[data-own-theme="chronicle"] .own-section[data-section="experience"] .own-entry{position:relative;padding-left:88pt!important;min-height:23pt}
+.original-page[data-own-theme="chronicle"] .own-section[data-section="experience"] time{position:absolute;left:0;top:1pt;width:72pt;max-width:none;text-align:left;color:var(--own-accent)}
+.original-page[data-own-theme="chronicle"] .own-section[data-section="experience"] .own-entry::before{content:"";position:absolute;left:79pt;top:3pt;bottom:0;border-left:.6pt solid #dde4e6}
+
+.original-page[data-own-theme="threshold"] .own-header{border:0;border-left:2.5pt solid var(--own-accent);padding-left:14pt;padding-bottom:0;margin-bottom:25pt}
+.original-page[data-own-theme="threshold"] .own-rail{border:0;padding-left:10pt}
+.original-page[data-own-theme="threshold"] .own-rail .own-section{padding-top:8pt;border-top:.7pt solid var(--own-accent)}
+.original-page[data-own-theme="threshold"] .own-section>h2{font-size:8.1pt;letter-spacing:.8pt}
+
+.original-page[data-own-theme="horizon"] .own-header{border:0;padding-bottom:10pt;margin-bottom:23pt}
+.original-page[data-own-theme="horizon"] .own-header-mark{display:block;grid-column:1/-1;justify-self:end;width:58pt;height:1.7pt;background:var(--own-accent)}
+.original-page[data-own-theme="horizon"] .own-section>h2{text-transform:none;font-size:9.2pt;letter-spacing:0;padding-top:4pt}
+.original-page[data-own-theme="horizon"] .own-section+.own-section{padding-top:7pt;border-top:.5pt solid #e3e7e9;margin-top:9pt}
+.original-page[data-own-theme="horizon"] .own-photo{height:58pt}
+
+.original-page[data-own-theme="module"] .own-header{border:0;padding-bottom:5pt;margin-bottom:23pt}
+.original-page[data-own-theme="module"] .own-rail{border:0;background:var(--own-soft);padding:14pt;border-radius:3pt}
+.original-page[data-own-theme="module"] .own-section>h2{font-size:7.6pt;letter-spacing:1.1pt}
+.original-page[data-own-theme="module"] .own-job{font-size:9.4pt;font-weight:400}
+.original-page[data-own-theme="module"] .own-photo{width:58pt;height:58pt;border-radius:4pt}
+
+.original-page[data-own-theme="essence"] .own-header{border:0;padding-bottom:4pt;margin-bottom:21pt}
+.original-page[data-own-theme="essence"] .own-job{font-size:9.3pt;font-weight:400;color:#5a6770}
+.original-page[data-own-theme="essence"] .own-section>h2{font-size:7.4pt;letter-spacing:1.2pt}
+.original-page[data-own-theme="essence"] .catalog-entry-heading{display:block}
+.original-page[data-own-theme="essence"] time{display:block;text-align:left;max-width:none;margin-top:2pt}
+.original-page[data-own-theme="essence"] .own-section+.own-section{padding-top:8pt;border-top:.45pt solid #e3e7e9;margin-top:10pt}
+
+.original-page[data-own-theme="notebook"] .own-header{border:0;padding-bottom:13pt;margin-bottom:20pt}
+.original-page[data-own-theme="notebook"] .own-header-mark{display:block;width:40pt;height:.7pt;background:var(--own-accent)}
+.original-page[data-own-theme="notebook"] .own-section>h2{font:italic 400 13pt/1.2 "CV Own Serif",serif;text-transform:none;letter-spacing:0}
+.original-page[data-own-theme="notebook"] .own-job{font-size:9.5pt;font-weight:400}
+
+.original-page[data-own-theme="index"] .own-header{border:0;padding-bottom:6pt;margin-bottom:22pt}
+.original-page[data-own-theme="index"] .own-section{display:grid;grid-template-columns:80pt minmax(0,1fr);gap:19pt}
+.original-page[data-own-theme="index"] .own-section>h2{font:400 11pt/1.35 "CV Own Serif",serif;text-transform:none;letter-spacing:0;border-top:.8pt solid var(--own-accent);padding-top:6pt}
+.original-page[data-own-theme="index"] .own-job{font-weight:400}
+
+@page own-cv{size:A4;margin:0}
+@media print{
+  .original-preview{display:block;--draft-zoom:1!important;--flow-zoom:1!important}
+  .original-preview>.original-page{zoom:1!important;box-shadow:none;break-after:page;margin:0}
+  .original-preview>.original-page:last-child{break-after:auto}
+}

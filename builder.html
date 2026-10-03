@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editar currículum</title><meta name="description" content="Edita y descarga tu currículum en PDF o Word." />
+  <link rel="icon" type="image/png" href="./assets/media/diego-ayala-icon-v3.png" />
+  <link rel="stylesheet" href="./assets/cv-builder.css?v=20261003-legal" /><link rel="stylesheet" href="./assets/cv-app.css?v=20261003-scroll" /><link rel="stylesheet" href="./assets/cv-brand.css?v=20260927-credit" />
+  <link rel="stylesheet" href="./assets/cv-privacy.css?v=20261003-legal" />
+  <script src="./assets/firebase-config.js"></script><script type="module" src="./assets/cv-builder.js?v=20261003-legal"></script>
+</head>
+<body class="builder-page cv-focused" data-builder-tab="editor">
+  <main class="builder-shell">
+    <header class="app-header">
+      <div class="editor-identity"><a class="back-to-cvs" id="back-to-cvs" href="./resumes.html">← Mis CVs</a><label class="visually-hidden" for="resume-title">Nombre del currículum</label><input id="resume-title" class="resume-title-input" value="Mi CV" maxlength="100" disabled /></div>
+      <div class="app-tabs" aria-label="Modo de edición"><button class="is-active" type="button" data-tab-action="editor">Editar</button><button type="button" data-tab-action="design">Diseño</button></div>
+      <div class="top-actions">
+        <span id="cloud-status" class="save-status" role="status">Cargando CV…</span>
+        <button class="secondary-btn" type="button" id="save-cloud" disabled>Guardar</button>
+        <button class="primary-btn download-trigger" type="button" id="print-cv" aria-expanded="false" aria-controls="download-menu" disabled>Descargar <span class="download-chevron" aria-hidden="true">⌄</span></button>
+        <div class="download-menu" id="download-menu" hidden><button type="button" data-download-action="pdf">PDF</button><button type="button" data-download-action="docx">Word (.docx)</button><button type="button" data-download-action="txt">Texto (.txt)</button></div>
+        <button class="icon-only account-trigger" type="button" id="account-menu-button" aria-label="Menú de cuenta">⚙</button>
+        <aside class="account-popover" id="account-popover" hidden><strong id="account-name">Tu cuenta</strong><span id="account-detail"></span><hr /><button type="button" id="login-google">Guardar en mi cuenta de Google</button><button type="button" id="manage-account" hidden>Mi cuenta</button><button type="button" id="logout-google" hidden>Cerrar sesión</button><a class="privacy-menu-link" href="./privacidad.html" target="_blank" rel="noopener noreferrer">Privacidad y tus datos</a></aside>
+      </div>
+    </header>
+    <p class="app-error editor-error" id="editor-error" role="alert" hidden></p>
+    <div class="builder-workspace">
+      <aside class="builder-editor" aria-label="Formulario de datos del CV"><div class="editor-scroll">
+        <div id="draft-recovery" class="draft-recovery" hidden><strong>Hay cambios sin guardar en este navegador.</strong><p>Elige qué versión quieres seguir editando.</p><button type="button" class="secondary-btn" id="recover-draft">Recuperar borrador</button><button type="button" class="ghost-btn" id="discard-draft">Usar la versión de mi cuenta</button></div>
+        <div data-builder-tab-panel="editor">
+          <div class="score-card" aria-label="Progreso del currículum"><div class="score-header"><strong><span id="cv-score">0</span>%</strong><span>Datos completados</span></div><div class="score-track"><span id="cv-score-bar"></span></div><ul id="score-list"></ul></div>
+          <p class="guest-notice" id="guest-notice" hidden>Estás editando como invitado. Descarga tu CV o guárdalo en tu cuenta antes de cerrar esta pestaña. <button type="button" class="text-button" id="guest-login">Guardar en mi cuenta</button></p>
+          <p class="privacy-notice editor-privacy">Diego Ayala Bernal trata estos datos para crear y guardar tu CV. Con Google, los cambios se guardan en Firebase; como invitado, en esta pestaña. Consulta la conservación y tus derechos en <a href="./privacidad.html" target="_blank" rel="noopener noreferrer">Privacidad y tus datos</a>.</p>
+          <form id="cv-form" autocomplete="on"></form>
+          <div class="cv-data-tools" aria-label="Copias de tus datos"><button class="ghost-btn" type="button" id="import-json">Importar copia JSON</button><button class="ghost-btn" type="button" id="download-json">Descargar copia JSON</button><input class="visually-hidden" type="file" id="json-file" accept="application/json,.json" /></div>
+        </div>
+        <section class="cv-design-panel" data-builder-tab-panel="design" hidden>
+          <p class="section-eyebrow">DALE TU ESTILO</p><h1>Diseño del currículum</h1><p>Clásica está disponible. Puedes ver los demás diseños, que por ahora están bloqueados.</p>
+          <div class="cv-design-settings">
+            <section><h2>Color de los títulos y líneas</h2><div class="design-swatches"><button type="button" data-accent="#212121" style="--swatch:#212121" aria-label="Negro"></button><button type="button" data-accent="#1a91f0" style="--swatch:#1a91f0" aria-label="Azul"></button><button type="button" data-accent="#26344a" style="--swatch:#26344a" aria-label="Azul oscuro"></button><button type="button" data-accent="#24745c" style="--swatch:#24745c" aria-label="Verde"></button><button type="button" data-accent="#74436f" style="--swatch:#74436f" aria-label="Ciruela"></button></div></section>
+            <section><h2>Páginas</h2><label class="check-field"><input type="checkbox" id="design-page-numbers" /> Mostrar número de página</label><div class="field"><label for="design-page-prefix">Texto antes del número</label><input id="design-page-prefix" maxlength="30" placeholder="Página" /></div></section>
+          </div>
+          <div class="cv-template-toolbar"><div class="cv-template-filters"><div><label for="design-template-search">Buscar plantilla</label><input id="design-template-search" type="search" placeholder="Nombre de la plantilla" /></div><div><label for="design-template-group">Catálogo</label><select id="design-template-group"><option value="all">Todas</option><option value="app">Nuestras plantillas</option><option value="more">Más plantillas</option></select></div></div><p id="design-template-status" role="status"></p></div>
+          <div id="cv-template-catalog" aria-label="Plantillas del currículum"></div>
+        </section>
+        <footer class="site-credit">Creado por <a href="https://www.linkedin.com/in/diego-ayala/" target="_blank" rel="noopener noreferrer">Diego Ayala</a> · <a href="./privacidad.html" target="_blank" rel="noopener noreferrer">Privacidad</a></footer>
+      </div></aside>
+      <section class="builder-preview" aria-label="Vista previa del CV"><div class="preview-toolbar"><strong id="page-count-label">1 página</strong><p>PDF listo para imprimir en A4</p></div><div class="preview-scroll"><section class="cv-preview-pages" id="cv-preview-pages"></section></div><button class="preview-design-button" type="button" data-tab-action="design" aria-label="Cambiar diseño" title="Cambiar diseño"><span aria-hidden="true"></span></button><div class="preview-page-pill" aria-label="Página actual"><span id="preview-current-page">1</span><span>/</span><span id="preview-total-pages">1</span></div></section>
+    </div>
+  </main>
+</body>
+</html>

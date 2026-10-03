@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Pruebas de miniaturas</title>
+<link rel="stylesheet" href="../assets/cv-builder.css"><link rel="stylesheet" href="../assets/cv-app.css">
+<body class="cv-focused" style="overflow:auto;padding:24px">
+<pre id="results">Ejecutando…</pre>
+<div id="cards" style="display:flex;gap:28px;align-items:start;flex-wrap:wrap"></div>
+<main style="width:842px;margin-top:32px"><div class="cv-preview-pages" id="pages"></div></main>
+<script type="module">
+import {sample} from './fixture.mjs';
+import {renderPreview} from '../assets/cv-preview.js';
+import {renderThumbnail,fitThumbnail} from '../assets/cv-thumbnail.js';
+import {samplePortrait} from '../drafts/templates/fixtures.mjs';
+const pages=document.getElementById('pages'),cards=document.getElementById('cards'),results=[];
+const multiple=structuredClone(sample);
+multiple.data.experience.push({title:'CONTENIDO_EXCLUSIVO_PAGINA_2',page_break_before:true,bullets:['Esta entrada debe comenzar en la segunda página.']});
+const photo=await samplePortrait();
+await document.fonts.ready;
+for(const [name,state] of [['clásica',sample],['clásica con foto',{...sample,photoSrc:photo}],['varias páginas',multiple],['compacta con foto',{...sample,photoSrc:photo,design:{template:'compact',accent:'#26796b',pageNumbers:true}}],['vacía',{}]]){
+  const pageCount=renderPreview(pages,state),reference=pages.firstElementChild;
+  pages.style.setProperty('--preview-zoom','1');
+  const card=document.createElement('section');
+  card.style.width='174px';
+  card.innerHTML=`<p>${name}</p><div class="cv-thumbnail" aria-hidden="true" inert><div class="cv-preview-pages cv-thumbnail-pages"></div></div>`;
+  cards.append(card);
+  const thumbnail=card.querySelector('.cv-thumbnail-pages');
+  await renderThumbnail(thumbnail,state);
+  const page=thumbnail.firstElementChild;
+  const ink=element=>element.querySelector('.cv-vector-page')||element;
+  const sameText=ink(reference).textContent===ink(page).textContent;
+  const sameFont=getComputedStyle(reference).fontFamily===getComputedStyle(page).fontFamily;
+  const sameLinks=JSON.stringify([...ink(reference).querySelectorAll('a')].map(a=>a.getAttribute('href')))===JSON.stringify([...ink(page).querySelectorAll('a')].map(a=>a.getAttribute('href')));
+  const origin=element=>{
+    const rect=element.getBoundingClientRect(),scale=rect.width/parseFloat(getComputedStyle(element).width);
+    return [...element.querySelectorAll('.cv-header,.cv-section,.cv-page-number')].map(node=>{
+      const box=node.getBoundingClientRect();return [(box.x-rect.x)/scale,(box.y-rect.y)/scale,box.width/scale,box.height/scale];
+    });
+  };
+  const before=origin(reference),after=origin(page);
+  const maxLayoutError=before.length===after.length?Math.max(0,...before.flatMap((box,i)=>box.map((value,j)=>Math.abs(value-after[i][j])))):Infinity;
+  const fits=()=>{
+    const frame=thumbnail.parentElement.getBoundingClientRect(),paper=page.getBoundingClientRect();
+    return Math.abs(frame.width-paper.width)<1&&Math.abs(frame.height-paper.height)<1;
+  };
+  const desktopFits=fits();
+  card.style.width='132px';fitThumbnail(thumbnail);
+  const mobileFits=fits();
+  card.style.width='174px';fitThumbnail(thumbnail);
+  const firstPageOnly=thumbnail.children.length===1&&(name!=='varias páginas'||pageCount>1&&!page.textContent.includes('CONTENIDO_EXCLUSIVO_PAGINA_2'));
+  const portrait=page.querySelector('.profile-photo');
+  if(portrait)await portrait.decode();
+  const photoPresent=!state.photoSrc||portrait?.getAttribute('src')===photo&&portrait.naturalWidth>=256&&portrait.naturalHeight>=256;
+  results.push({name,sameText,sameFont,sameLinks,maxLayoutError,desktopFits,mobileFits,firstPageOnly,photoPresent,pass:sameText&&sameFont&&sameLinks&&maxLayoutError<.4&&desktopFits&&mobileFits&&firstPageOnly&&photoPresent});
+}
+// A late font-ready callback must not render a card removed by a fresh repository snapshot.
+const detached=document.createElement('div');await renderThumbnail(detached,sample);
+results.push({name:'tarjeta retirada',pass:detached.children.length===0});
+renderPreview(pages,sample);
+document.getElementById('results').textContent=JSON.stringify(results,null,2);
+document.title=results.every(result=>result.pass)?'PASS · Miniaturas':'FAIL · Miniaturas';
+</script></body></html>

@@ -1,0 +1,65 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // CVs: private normalized data/design maps, photoSrc, formSectionOrder,
+    // title, ownerUid, createdAt and updatedAt. Photos live inside the CV.
+    // accountDeletions/{uid}: immutable requestedAt timestamp only; prevents
+    // existing sessions from recreating CVs during/after account deletion.
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    function boundedText(value, maximum) {
+      return value is string && value.size() <= maximum;
+    }
+    function validCvData(data) {
+      return data is map
+        && data.keys().hasOnly(['name', 'firstName', 'lastName', 'title', 'email', 'phone', 'linkedin', 'postalCode', 'city', 'country', 'summary', 'skills', 'languages', 'websites', 'experience', 'education', 'awards'])
+        && boundedText(data.name, 600) && boundedText(data.firstName, 200) && boundedText(data.lastName, 300)
+        && boundedText(data.title, 500) && boundedText(data.email, 500) && boundedText(data.phone, 100)
+        && boundedText(data.linkedin, 3000) && boundedText(data.postalCode, 50)
+        && boundedText(data.city, 300) && boundedText(data.country, 300) && boundedText(data.summary, 200000)
+        && data.skills is list && data.skills.size() <= 400
+        && data.languages is list && data.languages.size() <= 200
+        && data.websites is list && data.websites.size() <= 200
+        && data.experience is list && data.experience.size() <= 500
+        && data.education is list && data.education.size() <= 500
+        && data.awards is list && data.awards.size() <= 500;
+    }
+    function validDesign(design) {
+      return design is map && design.keys().hasOnly(['template', 'accent', 'pageNumbers', 'pageNumberPrefix'])
+        && design.template in ['classic', 'compact']
+        && design.accent is string && design.accent.matches('^#[0-9a-fA-F]{6}$')
+        && design.pageNumbers is bool && boundedText(design.pageNumberPrefix, 30);
+    }
+    function isValidCv(data, userId) {
+      return data.keys().hasOnly(['data', 'design', 'photoSrc', 'formSectionOrder', 'title', 'ownerUid', 'createdAt', 'updatedAt'])
+        && data.ownerUid == userId
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 100
+        && validCvData(data.data) && validDesign(data.design)
+        && data.formSectionOrder is list && data.formSectionOrder.size() <= 7
+        && data.formSectionOrder.hasOnly(['summary', 'experience', 'education', 'skills', 'languages', 'awards', 'websites'])
+        && boundedText(data.photoSrc, 900000)
+        && (data.photoSrc == '' || data.photoSrc.matches('^data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$'))
+        && data.createdAt is timestamp && data.updatedAt == request.time;
+    }
+    function isValidDeletion(data) {
+      return data.keys().hasOnly(['requestedAt']) && data.requestedAt == request.time;
+    }
+    match /accountDeletions/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidDeletion(request.resource.data)
+        && timestamp.value(request.auth.token.auth_time * 1000) > request.time - duration.value(5, 'm');
+      allow list, update, delete: if false;
+    }
+    match /users/{userId}/cvs/{cvId} {
+      allow read, delete: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidCv(request.resource.data, userId)
+        && request.resource.data.createdAt == request.time
+        && !exists(/databases/$(database)/documents/accountDeletions/$(userId));
+      allow update: if isOwner(userId) && isValidCv(request.resource.data, userId)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && !exists(/databases/$(database)/documents/accountDeletions/$(userId));
+    }
+  }
+}

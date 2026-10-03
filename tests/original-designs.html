@@ -1,0 +1,46 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Pruebas · Diseños propios</title>
+<body><pre id="results">Ejecutando…</pre><main style="width:816px"><div id="pages"></div></main>
+<script type="module">
+import {renderOriginalPreview} from '../drafts/originals/preview.mjs';
+import {ORIGINAL_DESIGNS} from '../drafts/originals/catalog.mjs';
+import {draftSample,longDraftSample,photoDraftSample} from '../drafts/templates/fixtures.mjs';
+const pages=document.getElementById('pages'),results=[];
+const requested=new URLSearchParams(location.search).get('template');
+const requestedScenario=new URLSearchParams(location.search).get('scenario');
+const manual=structuredClone(draftSample);manual.data.experience[1].page_break_before=true;
+const huge=structuredClone(draftSample);huge.data.experience=[{title:'Entrada extensa',date:'2020 - 2026',bullets:[Array.from({length:1800},(_,i)=>'palabra'+i).join(' ')]}];
+huge.data.experience[0].links=[{target:'bullet:0',label:Array.from({length:21},(_,i)=>'palabra'+(i+44)).join(' '),url:'https://example.com/enlace-entre-fragmentos'}];
+const withPhoto=await photoDraftSample();
+const longSkills=structuredClone(draftSample);longSkills.data.skills=Array.from({length:90},(_,i)=>'COMPETENCIA_'+i+' · Diseño y coordinación de proyectos con equipos de desarrollo');
+for(const template of Object.keys(ORIGINAL_DESIGNS))for(const [scenario,state] of [['normal',draftSample],['largo',longDraftSample()],['salto',manual],['extenso',huge],['foto',withPhoto],['competencias',longSkills],['vacío',{}]]) {
+  if(requested&&requested!==template)continue;
+  if(requestedScenario&&requestedScenario!==scenario)continue;
+  try {
+    const result=await renderOriginalPreview(pages,state,{template});
+    // Inspect geometry at actual paper scale, independently of thumbnail zoom.
+    pages.style.setProperty('--draft-zoom','1');pages.style.setProperty('--flow-zoom','1');
+    const text=pages.innerText,expected=[...(state.data?.experience||[]).flatMap(e=>e.bullets||[]),...(state.data?.skills||[])].flatMap(t=>t.match(/MARCADOR_\d+_\d+|palabra\d+|COMPETENCIA_\d+/g)||[]);
+    const missing=expected.filter(word=>text.split(new RegExp('\\b'+word+'\\b')).length!==2);
+    let overflow=0,horizontal=0,overlap=0,emptyPages=0;
+    for(const page of pages.children) {
+      const paper=page.getBoundingClientRect(),folio=page.querySelector('.own-folio').getBoundingClientRect();
+      if(!page.querySelector('.own-header')&&!page.querySelector('.own-entry'))emptyPages++;
+      for(const flow of page.querySelectorAll('.own-flow'))if(flow.children.length) {
+        if(flow.getBoundingClientRect().bottom>folio.top-4)overflow++;
+        for(const entry of flow.querySelectorAll('.own-entry,h2')){const b=entry.getBoundingClientRect();if(b.left<paper.left||b.right>paper.right+.5)horizontal++;}
+      }
+      const photo=page.querySelector('.own-photo'),name=page.querySelector('h1');
+      if(photo&&name){const p=photo.getBoundingClientRect(),h=name.getBoundingClientRect();if(p.left<h.right&&p.right>h.left&&p.top<h.bottom&&p.bottom>h.top)overlap++;}
+    }
+    const linksLost=(state.data?.experience||[]).flatMap(e=>e.links||[]).filter(l=>[...pages.querySelectorAll('a')].filter(a=>a.getAttribute('href')===l.url).map(a=>a.textContent).join('').trim()!==l.label.trim()).length;
+    const texts=[...pages.children].map(p=>p.textContent);
+    const manualWorks=scenario!=='salto'||texts.findIndex(t=>t.includes(state.data.experience[1].title))>texts.findIndex(t=>t.includes(state.data.experience[0].title));
+    const photos=[...pages.querySelectorAll('.own-photo')];
+    const photoWorks=scenario!=='foto'||photos.length===(ORIGINAL_DESIGNS[template].supportsPhoto?1:0)&&photos.every(photo=>photo.complete&&photo.naturalWidth>=256&&photo.naturalHeight>=256);
+    const sampleWorks=scenario!=='normal'||result.pages===1;
+    results.push({...result,scenario,overflow,horizontal,overlap,emptyPages,missing:missing.length,linksLost,pass:!overflow&&!horizontal&&!overlap&&!emptyPages&&!missing.length&&!linksLost&&manualWorks&&photoWorks&&sampleWorks});
+  }catch(error){results.push({template,scenario,pass:false,error:error.message});}
+  document.getElementById('results').textContent=JSON.stringify(results,null,2);await new Promise(resolve=>setTimeout(resolve,0));
+}
+document.title=results.every(r=>r.pass)?'PASS · Diseños propios':'FAIL · Diseños propios';document.body.dataset.ready='true';
+</script></body></html>

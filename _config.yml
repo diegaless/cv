@@ -1,0 +1,19 @@
+title: Diego Ayala Bernal
+logo: /cv-profile.jpg
+description: Ingeniero Informático | Docente de FP en DAM, DAW, ASIR y SMR
+repository: diegaless/cv
+theme: jekyll-theme-minimal
+include:
+  - .well-known
+exclude:
+  - node_modules
+  - tests
+  - drafts
+  - docs
+  - scripts
+  - package.json
+  - package-lock.json
+  - firebase.json
+  - firestore.rules
+  - ESTADO_PROYECTO.md
+  - assets/cv-docx.js

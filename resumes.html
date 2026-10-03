@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mis CVs</title><meta name="description" content="Crea, guarda y descarga tus currículums." />
+  <link rel="icon" type="image/png" href="./assets/media/diego-ayala-icon-v3.png" />
+  <link rel="stylesheet" href="./assets/cv-builder.css?v=20261003-legal" /><link rel="stylesheet" href="./assets/cv-app.css?v=20261002-spacing" /><link rel="stylesheet" href="./assets/cv-brand.css?v=20260927-credit" />
+  <link rel="stylesheet" href="./assets/cv-privacy.css?v=20261003-legal" />
+  <script src="./assets/firebase-config.js"></script><script type="module" src="./assets/resumes-dashboard.js?v=20260927-account"></script>
+</head>
+<body class="dashboard-page cv-focused">
+  <div class="documents-app" id="resumes-dashboard">
+    <aside class="documents-sidebar" aria-label="Mis currículums">
+      <a class="dashboard-logo" href="./resumes.html" aria-label="Mis CVs" data-home-link><img src="./assets/media/diego-ayala-icon-v3.png" width="1254" height="1254" alt="Logo de la aplicación" /></a>
+      <a class="dashboard-user-card" id="account-profile-link" href="./account.html" aria-label="Mi cuenta"><span class="dashboard-avatar" id="account-initial" aria-hidden="true">U</span><span><strong id="account-name">Tu cuenta</strong><small id="account-detail">Conectando…</small></span></a>
+      <nav class="dashboard-menu"><a class="is-active" href="./resumes.html" data-home-link aria-current="page"><span class="cv-document-icon" aria-hidden="true">▤</span>Mis CVs</a></nav>
+      <p class="sidebar-note">Un currículum para cada oportunidad.</p>
+    </aside>
+    <div class="documents-main">
+      <header class="documents-topbar"><span class="account-status" id="account-status" role="status">Cargando tus CVs…</span><div class="topbar-spacer"></div><button type="button" class="secondary-btn" id="account-action" disabled>Entrar con Google</button></header>
+      <main class="documents-content">
+        <div class="documents-heading-row"><div><p class="section-eyebrow">TU PRÓXIMO PASO</p><h1>Mis currículums</h1><p class="documents-intro">Crea tu CV, dale forma y descárgalo cuando esté listo.</p></div><button class="create-new-button" id="create-resume-button" type="button" disabled><span>+ Crear un CV</span></button></div>
+        <p id="dashboard-error" class="app-error" role="alert" hidden></p>
+        <div class="documents-grid">
+          <section class="documents-list" id="resume-list" aria-label="Currículums guardados" aria-live="polite"><p class="dashboard-empty">Cargando tus currículums…</p></section>
+          <section class="new-document-card"><button type="button" id="create-resume-card" disabled><span class="new-document-plus" aria-hidden="true">+</span><span><strong>Nuevo CV</strong><small>Empieza desde cero o duplica uno de tus currículums.</small></span></button></section>
+        </div>
+      </main>
+      <footer class="site-credit">Creado por <a href="https://www.linkedin.com/in/diego-ayala/" target="_blank" rel="noopener noreferrer">Diego Ayala</a> · <a href="./privacidad.html">Privacidad</a></footer>
+    </div>
+  </div>
+</body>
+</html>

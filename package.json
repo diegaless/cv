@@ -1,0 +1,22 @@
+{
+  "name": "cvapp-editor",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:exports": "node scripts/build-exports.mjs",
+    "build:site": "node scripts/prepare-public-site.mjs",
+    "deploy:site": "firebase deploy --only hosting --project cvapp-2538e",
+    "test": "node --test tests/model.test.mjs tests/docx.test.mjs tests/draft-templates.test.mjs tests/flowcv.test.mjs tests/design-gallery.test.mjs tests/original-designs.test.mjs tests/privacy-retention.test.mjs",
+    "test:firebase": "firebase emulators:exec --project demo-cvapp --only auth,firestore \"node --test tests/store.test.mjs\""
+  },
+  "dependencies": {
+    "@react-pdf/textkit": "7.0.1",
+    "docx": "9.7.2"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "firebase": "10.14.1",
+    "firebase-tools": "^15.0.0",
+    "jszip": "3.10.2"
+  }
+}
